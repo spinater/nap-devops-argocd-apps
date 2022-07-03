@@ -1,4 +1,5 @@
 domain: devops.napbiotec.io
+backendService: ingress-nginx-production-controller
 
 ingress-nginx:
   enabled: true

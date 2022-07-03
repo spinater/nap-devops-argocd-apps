@@ -17,6 +17,6 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: ingress-nginx-controller
+                name: {{ .Values.backendService }}
                 port:
                   number: 443

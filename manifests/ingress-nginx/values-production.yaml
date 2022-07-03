@@ -1,13 +1,2 @@
 domain: devops.napbiotec.io
-
-ingress-nginx:
-  enabled: true
-
-  controller:
-    service:
-      enabled: true
-      type: ClusterIP
-      annotations:
-        cloud.google.com/neg: '{"ingress": true}'
-        cloud.google.com/backend-config: '{"default": "nginx-hc-config"}'
-        cloud.google.com/app-protocols: '{"https":"HTTPS", "http":"HTTP"}'
+backendService: ingress-nginx-production-controller
