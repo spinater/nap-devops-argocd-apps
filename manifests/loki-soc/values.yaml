@@ -1,0 +1,83 @@
+domain: devops.napbiotec.io
+
+helm-loki:
+  enabled: true
+  exposes: {}
+
+  grafana: {}
+
+  promtail:
+    enabled: false
+
+  loki-distributed:
+    enabled: true
+    fullnameOverride: loki-soc
+    
+    loki:    
+      image:
+        tag: 2.4.0
+
+    gateway:
+      replicas: 3
+
+    customParams:
+      backendStorageType: gcs
+      gcsBucket: nap-devops-prod-loki
+      #gcsKeySecretName: gcp-sa
+
+    compactor:
+      enabled: true
+
+    querier:
+      extraVolumes:
+        - name: gcp-sa
+          secret:
+            secretName: gcp-sa
+            items:
+            - key: gcp-sa-file
+              path: gcp-sa-file.json
+
+      extraVolumeMounts:
+        - name: gcp-sa
+          mountPath: "/secrets"
+          readOnly: true
+
+      extraEnv:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /secrets/gcp-sa-file.json
+
+    ingester:
+      extraVolumes:
+        - name: gcp-sa
+          secret:
+            secretName: gcp-sa
+            items:
+            - key: gcp-sa-file
+              path: gcp-sa-file.json
+
+      extraVolumeMounts:
+        - name: gcp-sa
+          mountPath: "/secrets"
+          readOnly: true
+
+      extraEnv:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /secrets/gcp-sa-file.json
+
+    compactor:
+      extraVolumes:
+        - name: gcp-sa
+          secret:
+            secretName: gcp-sa
+            items:
+            - key: gcp-sa-file
+              path: gcp-sa-file.json
+
+      extraVolumeMounts:
+        - name: gcp-sa
+          mountPath: "/secrets"
+          readOnly: true
+
+      extraEnv:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /secrets/gcp-sa-file.json
