@@ -4,6 +4,7 @@ grafana:
   enabled: true
 
   fullnameOverride: grafana-soc
+  envFromSecret: google-oidc-secret
   envRenderSecret: {}
 
   datasources:
