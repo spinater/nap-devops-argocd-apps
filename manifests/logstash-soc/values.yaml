@@ -23,8 +23,8 @@ logstash-syslog:
 
   logstashPipeline:
     logstash.conf: |
-      # echo "message" | nc -q0 10.10.1.21 30140
-      # logger -P 30140 -T -n 10.10.1.21 "hello world this is seub"
+      # echo "message" | nc -q0 syslog.devops.napbiotec.io 5140
+      # logger -P 5140 -T -n syslog.devops.napbiotec.io "hello world this is seub"
       input {
         syslog {
           port => 5140
@@ -40,7 +40,7 @@ logstash-syslog:
       }
 
       output {
-        #stdout { codec => rubydebug }
+        stdout { codec => rubydebug }
 
         loki {
           url => "http://loki-soc-gateway.loki-soc.svc.cluster.local/loki/api/v1/push"
