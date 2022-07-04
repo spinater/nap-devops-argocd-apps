@@ -21,7 +21,7 @@ helm-loki:
 
       grafana.ini:
         server:
-          root_url: https://grafana-loki.domain.here
+          root_url: https://grafana-loki.devops.napbiotec.io
 
         auth.generic_oauth:
           name: Google
