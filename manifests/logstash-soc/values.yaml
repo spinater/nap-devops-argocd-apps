@@ -41,10 +41,9 @@ logstash-syslog:
       }
 
       output {
-        #stdout { codec => rubydebug }
+        stdout { codec => json }
 
         loki {
-          codec => json
           url => "http://loki-soc-gateway.loki-soc.svc.cluster.local/loki/api/v1/push"
         }
       }   
