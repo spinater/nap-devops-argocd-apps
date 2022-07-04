@@ -5,12 +5,12 @@ logstash-syslog:
   image: "grafana/logstash-output-loki"
   imageTag: 2.5.0-amd64
 
-#  service:
-#    type: NodePort
-#    ports:
-#    - port: 5140
-#      targetPort: 5140
-#      nodePort: 30140
+  service:
+    type: LoadBalancer
+    loadBalancerIP: 34.160.107.182 #gke-syslog-svc-1
+    ports:
+    - port: 5140
+      targetPort: 5140
 
   extraEnvs:
     - name: LS_JAVA_OPTS
