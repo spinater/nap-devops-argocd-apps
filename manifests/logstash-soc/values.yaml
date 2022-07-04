@@ -1,7 +1,7 @@
 logstash-syslog:
   enabled: true
 
-  replicas: 2
+  replicas: 1
   fullnameOverride: logstash-syslog #From Syslog to Kafka
   image: "grafana/logstash-output-loki"
   imageTag: 2.5.0-amd64
@@ -44,6 +44,7 @@ logstash-syslog:
         #stdout { codec => rubydebug }
 
         loki {
+          codec => json
           url => "http://loki-soc-gateway.loki-soc.svc.cluster.local/loki/api/v1/push"
         }
       }   
