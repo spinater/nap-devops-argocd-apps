@@ -37,7 +37,7 @@ grafana:
     log:
       level: debug
     server:
-      root_url: ""
+      root_url: "https://{{ .Values.domain }}"
 
     auth.generic_oauth:
       name: Google
