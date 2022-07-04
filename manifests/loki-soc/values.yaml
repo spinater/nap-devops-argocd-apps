@@ -13,6 +13,9 @@ helm-loki:
     enabled: true
     fullnameOverride: loki-soc
     
+    distributor:
+      replicas: 1
+
     loki:
       replicas: 1 
       image:
