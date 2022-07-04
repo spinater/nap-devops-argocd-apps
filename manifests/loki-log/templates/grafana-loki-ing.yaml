@@ -18,6 +18,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: loki-log-grafana
+                name: {{ .Values.grafanaBackend }}
                 port:
                   number: 80
