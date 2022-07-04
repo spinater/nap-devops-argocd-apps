@@ -37,7 +37,7 @@ grafana:
     log:
       level: debug
     server:
-      root_url: "https://{{ .Values.domain }}"
+      root_url: "https://grafana-soc.devops.napbiotec.io"
 
     auth.generic_oauth:
       name: Google
