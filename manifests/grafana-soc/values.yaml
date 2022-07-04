@@ -1,0 +1,54 @@
+domain: grafana-soc.devops.napbiotec.io
+
+grafana:
+  enabled: true
+
+  fullnameOverride: grafana-soc
+  envRenderSecret: {}
+
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+      - name: Loki-SOC
+        type: loki
+        access: Server
+        url: http://loki-soc-query-frontend.loki-soc.svc.cluster.local:3100
+        #skip tls
+
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+      - name: 'SOC'
+        orgId: 1
+        folder: 'SOC'
+        folderUid: ''
+        type: file
+        options:
+          path: /var/lib/grafana/dashboards
+
+#  dashboardsConfigMaps:
+#    grafana-dashboard-apiserver: grafana-dashboard-apiserver
+#    grafana-dashboard-cluster-total: grafana-dashboard-cluster-total
+
+  grafana.ini:
+    log:
+      level: debug
+    server:
+      root_url: ""
+
+    auth.generic_oauth:
+      name: Google
+      enabled: true
+      allow_sign_up: true
+      team_ids:
+      allowed_organizations:
+      client_id: ${GOOGLE_CLIENT_ID}
+      client_secret: ${GOOGLE_CLIENT_SECRET}
+      scopes: https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
+      auth_url: https://accounts.google.com/o/oauth2/auth
+      token_url: https://accounts.google.com/o/oauth2/token
+      api_url: https://www.googleapis.com/oauth2/v1/userinfo
+      role_attribute_path: to_string('Editor')
+      allowed_domains: napbiotec.io
