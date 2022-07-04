@@ -29,7 +29,6 @@ logstash-syslog:
       input {
         syslog {
           port => 5140
-          codec => "json"
         }
       }
 
