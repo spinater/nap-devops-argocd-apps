@@ -23,6 +23,8 @@ helm-loki:
 
     gateway:
       replicas: 1
+      basicAuth:
+        enabled: false
 
     customParams:
       backendStorageType: gcs
