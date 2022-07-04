@@ -1,6 +1,7 @@
 logstash-syslog:
   enabled: true
 
+  replicas: 2
   fullnameOverride: logstash-syslog #From Syslog to Kafka
   image: "grafana/logstash-output-loki"
   imageTag: 2.5.0-amd64
