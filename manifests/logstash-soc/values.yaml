@@ -1,0 +1,48 @@
+logstash-syslog:
+  enabled: true
+
+  fullnameOverride: logstash-syslog #From Syslog to Kafka
+  image: "grafana/logstash-output-loki"
+  imageTag: 2.5.0-amd64
+
+#  service:
+#    type: NodePort
+#    ports:
+#    - port: 5140
+#      targetPort: 5140
+#      nodePort: 30140
+
+  extraEnvs:
+    - name: LS_JAVA_OPTS
+      value: "-Xmx256m -Xms256m"
+
+  logstashConfig:
+    logstash.yml: |
+      http.host: "0.0.0.0"
+      pipeline.ecs_compatibility: "disabled"
+
+  logstashPipeline:
+    logstash.conf: |
+      # echo "message" | nc -q0 10.10.1.21 30140
+      # logger -P 30140 -T -n 10.10.1.21 "hello world this is seub"
+      input {
+        syslog {
+          port => 5140
+        }
+      }
+
+      filter {
+        mutate {
+          add_field => {
+            "job" => "syslog"
+          }
+        }
+      }
+
+      output {
+        #stdout { codec => rubydebug }
+
+        loki {
+          url => "http://loki-soc-gateway.loki-soc.svc.cluster.local/loki/api/v1/push"
+        }
+      }   
