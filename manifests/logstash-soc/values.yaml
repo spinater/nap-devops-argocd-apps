@@ -12,10 +12,6 @@ logstash-syslog:
     ports:
     - port: 443
       targetPort: 5140
-      protocol: TCP
-
-    - port: 443
-      targetPort: 5140
       protocol: UDP
 
   extraEnvs:
