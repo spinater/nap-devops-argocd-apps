@@ -10,7 +10,13 @@ logstash-syslog:
     type: LoadBalancer
     loadBalancerIP: 34.124.235.129 #gke-syslog-svc-1
     ports:
-    - port: 443
+    - name: syslog-tcp
+      port: 443
+      targetPort: 5140
+      protocol: TCP
+
+    - name: syslog-udp
+      port: 443
       targetPort: 5140
       protocol: UDP
 
