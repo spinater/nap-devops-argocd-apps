@@ -10,7 +10,7 @@ logstash-syslog:
     type: LoadBalancer
     loadBalancerIP: 34.124.235.129 #gke-syslog-svc-1
     ports:
-    - port: 5140
+    - port: 443
       targetPort: 5140
 
   extraEnvs:
@@ -24,8 +24,8 @@ logstash-syslog:
 
   logstashPipeline:
     logstash.conf: |
-      # echo "message" | nc -q0 syslog.devops.napbiotec.io 5140
-      # logger -P 5140 -T -n syslog.devops.napbiotec.io "hello world this is seub"
+      # echo "message" | nc -q0 syslog.devops.napbiotec.io 443
+      # logger -P 443 -T -n syslog.devops.napbiotec.io "hello world this is seub"
       input {
         syslog {
           port => 5140
