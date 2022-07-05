@@ -28,6 +28,7 @@ logstash-syslog:
     logstash.conf: |
       # echo "message" | nc -q0 syslog.devops.napbiotec.io 443
       # logger -P 443 -T -n syslog.devops.napbiotec.io "hello world this is seub"
+
       input {
         syslog {
           port => 5140
@@ -40,6 +41,12 @@ logstash-syslog:
             "job" => "syslog"
           }
         }
+
+        grok {
+          match => {
+            "message" => "%{WORD:category}"
+          }
+        }        
       }
 
       output {
