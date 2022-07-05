@@ -44,7 +44,7 @@ logstash-syslog:
 
         grok {
           match => {
-            "message" => "%{WORD:category}"
+            "message" => "(?<category>(.+)),"
           }
         }        
       }
