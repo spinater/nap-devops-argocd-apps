@@ -26,8 +26,8 @@ logstash-syslog:
 
   logstashPipeline:
     logstash.conf: |
-      # echo "message" | nc -q0 syslog.devops.napbiotec.io 443
-      # logger -P 443 -T -n syslog.devops.napbiotec.io "hello world this is seub"
+      # echo "message" | nc -q0 syslog.devops.napbiotec.io 5140
+      # logger -P 5140 -d -n syslog.devops.napbiotec.io "hello-abc,world this is seub"
 
       input {
         syslog {
@@ -44,7 +44,7 @@ logstash-syslog:
 
         grok {
           match => {
-            "message" => "(?<category>(.+)),"
+            "message" => "(?<category>(.+?)),"
           }
         }        
       }
