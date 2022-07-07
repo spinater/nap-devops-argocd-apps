@@ -1,6 +1,9 @@
 wordpress:
   replicaCount: 1
   wordpressScheme: https
+  wordpressUsername: admin
+  existingSecret: 'wordpress-user-login'
+
   image:
     tag: 5.9.1
 
