@@ -14,3 +14,8 @@ wordpress:
 
   service:
     type: ClusterIP
+
+  mariadb:
+    auth:
+      database: wordpress
+      existingSecret: wordpress-db-login
