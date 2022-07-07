@@ -9,3 +9,8 @@ dependencies:
     version: "15.0.7"
     repository: "https://charts.bitnami.com/bitnami"
     condition: wordpress.enabled
+
+  - name: mysql
+    version: "9.2.0"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: mysql.enabled
