@@ -1,0 +1,9 @@
+wordpress:
+  replicaCount: 1
+  wordpressScheme: https
+  image:
+    tag: 5.9.1
+
+  ingress:
+    enabled: true
+    hostname: aldamex.napbiotec.io
