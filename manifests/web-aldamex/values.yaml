@@ -19,3 +19,4 @@ wordpress:
     auth:
       database: wordpress
       existingSecret: wordpress-db-login
+
