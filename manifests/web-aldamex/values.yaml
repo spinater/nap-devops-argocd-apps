@@ -6,4 +6,4 @@ wordpress:
 
   ingress:
     enabled: true
-    hostname: aldamex.napbiotec.io
+    hostname: aldamex.devops.napbiotec.io
