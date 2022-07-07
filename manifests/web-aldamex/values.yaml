@@ -5,6 +5,7 @@ wordpress:
     tag: 5.9.1
 
   ingress:
+    ingressClassName: nginx
     enabled: true
     hostname: aldamex.devops.napbiotec.io
 
