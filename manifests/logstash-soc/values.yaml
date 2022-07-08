@@ -26,7 +26,7 @@ logstash-syslog:
 
   extraVolumeMounts:
     - name: scripts
-      mountPath: /script/
+      mountPath: /scripts/
       readOnly: true
 
   extraVolumes:
@@ -59,7 +59,7 @@ logstash-syslog:
         }
 
         ruby {
-          path => "/script/filter.rb"
+          path => "/scripts/filter.rb"
           script_params => { "category" => [category] }
         }
       }
