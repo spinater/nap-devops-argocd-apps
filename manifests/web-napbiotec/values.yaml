@@ -1,0 +1,42 @@
+wordpress:
+  enabled: true
+  replicaCount: 1
+  wordpressScheme: https
+  wordpressUsername: admin
+  existingSecret: 'wordpress-user-login'
+
+  image:
+    tag: 5.9.1
+
+  ingress:
+    ingressClassName: nginx
+    enabled: true
+    hostname: nabpiotec.io
+    extraHosts:
+      - name: www.napbiotec.io
+
+  service:
+    type: ClusterIP
+
+  mariadb:
+    enabled: false
+
+  externalDatabase:
+    host: web-napbiotec-production-mysql
+    port: 3306
+    database: wordpress
+    user: root
+    existingSecret: wordpress-db-login
+
+mysql:
+  enabled: true
+  image:
+    tag: 8.0.28
+  auth:
+    database: wordpress
+    existingSecret: wordpress-db-login
+  #primary:
+    #command:
+    #- --default_authentication_plugin=mysql_native_password
+    #- --character-set-server=utf8mb4
+    #- --collation-server=utf8mb4_unicode_ci
