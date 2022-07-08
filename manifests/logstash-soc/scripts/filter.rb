@@ -7,12 +7,14 @@ end
 
 def filter(event)
     arr1 = event.get('message').split(',')
-
+    event.set('debug_field1', 'debug_field1')
+    
     if @category == 'hotspot'
         data1 = arr1[2]
         arr2 = data1.split(':')
         data2 = arr2[1]
         event.set('user', data2)
+        event.set('debug_field1', 'aaaaaaa')
     elsif @category == 'web-proxy'
         data1 = arr1[1]
         #   0         1              2        3                  4                            5
@@ -23,6 +25,7 @@ def filter(event)
 
         event.set('src_ip', src_ip)
         event.set('url', url)
+        event.set('debug_field1', 'bbbbbbbb')
     end
 
     return [event]
