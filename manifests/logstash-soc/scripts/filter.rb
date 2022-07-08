@@ -1,5 +1,5 @@
 #Example : https://fabianlee.org/2017/04/24/elk-using-ruby-in-logstash-filters/
-#Labels {'user', 'domain', 'src_ip', 'dst_ip', 'mac'}
+#Labels {'user', 'domain', 'src_ip', 'dst_ip', 'mac', 'src_net', 'dst_net', 'src_port', 'dst_port'}
 
 def register(params)
 end
@@ -40,6 +40,25 @@ def filter(event)
 
         event.set('src_ip', src_ip)
         event.set('mac', mac)
+        event.set('debug_field1', category)
+    elsif category == 'firewall'
+        #1 info 0-Napbiotec: forward: in:vlan20-office out:pppoe-tot, 
+        #2 src-mac 4c:d1:a1:d1:60:3d, 
+        #3 proto TCP (SYN), 
+        #4 192.168.20.29:60802->172.217.26.74:443, 
+        #5 len 60
+
+        src_net, det_net, = arr1[1].scan(/^.+in:(.+?)\s*out:(.+?)$/i)
+        mac = = arr1[2].scan(/^src-mac\s*(.+?)$/i)
+        src_ip, src_port, dst_ip, dst_port, = arr1[4].scan(/^(.+?):(.+?)->(.+?):(.+?)$/i)
+
+        event.set('src_net', src_net)
+        event.set('det_net', det_net)
+        event.set('mac', mac)
+        event.set('src_ip', src_ip)
+        event.set('src_port', src_port)
+        event.set('dst_ip', dst_ip)
+        event.set('dst_port', dst_port)
         event.set('debug_field1', category)        
     end
 
