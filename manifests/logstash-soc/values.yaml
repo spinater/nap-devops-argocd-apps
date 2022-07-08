@@ -24,6 +24,16 @@ logstash-syslog:
       http.host: "0.0.0.0"
       pipeline.ecs_compatibility: "disabled"
 
+  extraVolumeMounts:
+    - name: scripts
+      mountPath: /script/
+      readOnly: true
+
+  extraVolumes:
+    - name: scripts
+      configMap:
+        name: ruby-filter-cm
+
   logstashPipeline:
     logstash.conf: |
       # echo "message" | nc -q0 syslog.devops.napbiotec.io 5140
@@ -46,7 +56,12 @@ logstash-syslog:
           match => {
             "message" => "(?<category>(.+?)),"
           }
-        }        
+        }
+
+        ruby {
+          path => "/script/filter.rb"
+          script_params => { "category" => [category] }
+        }
       }
 
       output {

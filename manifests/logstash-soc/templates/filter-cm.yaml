@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ruby-filter-cm
+data:
+  filter.rb: |-
+{{ .Files.Get "scripts/filter.rb" |  indent 4 }}
