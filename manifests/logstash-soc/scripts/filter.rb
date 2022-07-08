@@ -1,5 +1,5 @@
 #Example : https://fabianlee.org/2017/04/24/elk-using-ruby-in-logstash-filters/
-#Labels {'user', 'domain', 'src_ip', 'dst_ip'}
+#Labels {'user', 'domain', 'src_ip', 'dst_ip', 'mac'}
 
 def register(params)
 end
@@ -30,6 +30,17 @@ def filter(event)
         event.set('src_ip', src_ip)
         event.set('domain', URI.parse(url).host)
         event.set('debug_field1', category)
+    elsif category == 'dhcp'
+        data1 = arr1[1]
+        # 0        1         2      3           4         5       6   
+        #info 0-Napbiotec: dhcp6 assigned 192.168.30.236 to E2:9B:9D:A9:DF:5B
+        arr2 = data1.split(' ')
+        src_ip = arr2[4]
+        mac = arr2[6]
+
+        event.set('src_ip', src_ip)
+        event.set('mac', mac)
+        event.set('debug_field1', category)        
     end
 
     event.set('debug_field1', 'not-matched')
