@@ -1,4 +1,7 @@
 domain: devops.napbiotec.io
+domain2: napbiotec.io
+domain3: aldamex.com
+
 backendService: ingress-nginx-production-controller
 
 ingress-nginx:

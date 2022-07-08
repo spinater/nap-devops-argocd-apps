@@ -11,7 +11,7 @@ wordpress:
   ingress:
     ingressClassName: nginx
     enabled: true
-    hostname: aldamex.devops.napbiotec.io
+    hostname: aldamex.com
 
   service:
     type: ClusterIP
