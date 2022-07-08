@@ -14,10 +14,10 @@ def filter(event)
         arr2 = data1.split(':')
         data2 = arr2[1] #chandet.pun@napbiotec.io (192.168.20.171)
 
-        user, src_ip, = ryan_string.scan(/^(.*)\s+(\(.+\))$/i)
+        user, src_ip, = data2.scan(/^\s*(.*)\s*(\(.+\))$/i)
 
         event.set('user', user)
-        event.set('src_ip', src_ip)        
+        event.set('src_ip', src_ip)
         event.set('debug_field1', category)
     elsif category == 'web-proxy'
         data1 = arr1[1]
