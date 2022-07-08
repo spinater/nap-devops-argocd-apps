@@ -18,6 +18,7 @@ metadata:
 spec:
   secretName: nginx-cert-napbiotec
   dnsNames:
+    - '{{ .Values.domain2 }}'
     - '*.{{ .Values.domain2 }}'
   issuerRef:
     name: lets-encrypt-issuer-top-prod
@@ -31,6 +32,7 @@ metadata:
 spec:
   secretName: nginx-cert-admx
   dnsNames:
+    - '{{ .Values.domain3 }}'
     - '*.{{ .Values.domain3 }}'
   issuerRef:
     name: lets-encrypt-issuer-top-prod
