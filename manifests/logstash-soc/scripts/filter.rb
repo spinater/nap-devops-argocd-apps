@@ -49,8 +49,8 @@ def filter(event)
         #5 len 60
 
         src_net, det_net = arr1[1].scan(/^.+in:(.+?)\s*out:(.+?)$/i)
-        mac = arr1[2].scan(/^src-mac\s*(.+?)$/i)
-        src_ip, src_port, dst_ip, dst_port = arr1[4].scan(/^(.+?):(.+?)->(.+?):(.+?)$/i)
+        mac = arr1[2].scan(/^\s*src-mac\s*(.+?)$/i)
+        src_ip, src_port, dst_ip, dst_port = arr1[4].scan(/^\s*(.+?):(.+?)->(.+?):(.+?)$/i)
 
         event.set('src_net', src_net)
         event.set('det_net', det_net)
