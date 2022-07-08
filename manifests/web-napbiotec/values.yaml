@@ -14,6 +14,7 @@ wordpress:
     hostname: nabpiotec.io
     extraHosts:
       - name: www.napbiotec.io
+      - name: napbiotec.devops.napbiotec.io
 
   service:
     type: ClusterIP
