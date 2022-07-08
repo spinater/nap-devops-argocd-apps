@@ -63,7 +63,7 @@ logstash-syslog:
 
         ruby {
           path => "/scripts/filter.rb"
-          script_params => { "category" => [category] }
+          script_params => {}
         }
       }
 

@@ -2,21 +2,23 @@
 #Labels {'user', 'domain', 'src_ip', 'dst_ip'}
 
 def register(params)
-    @category = params["category"]
 end
 
 def filter(event)
     arr1 = event.get('message').split(',')
     category = arr1[0]
-    event.set('debug_field1', 'debug_field1')
-    event.set('debug_field2', @category)
 
     if category == 'hotspot'
         data1 = arr1[2]
+        #debug 0-Napbiotec: chandet.pun@napbiotec.io (192.168.20.171): logged out: lost dhcp lease
         arr2 = data1.split(':')
-        data2 = arr2[1]
-        event.set('user', data2)
-        event.set('debug_field1', 'aaaaaaa')
+        data2 = arr2[1] #chandet.pun@napbiotec.io (192.168.20.171)
+
+        user, src_ip, = ryan_string.scan(/^(.*)\s+(\(.+\))$/i)
+
+        event.set('user', user)
+        event.set('src_ip', src_ip)        
+        event.set('debug_field1', category)
     elsif category == 'web-proxy'
         data1 = arr1[1]
         #   0         1              2        3                  4                            5
@@ -26,9 +28,10 @@ def filter(event)
         url = arr2[4]
 
         event.set('src_ip', src_ip)
-        event.set('url', url)
-        event.set('debug_field1', 'bbbbbbbb')
+        event.set('domain', URI.parse(url).host)
+        event.set('debug_field1', category)
     end
 
+    event.set('debug_field1', 'not-matched')
     return [event]
 end
