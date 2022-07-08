@@ -16,6 +16,9 @@ logstash-syslog:
       protocol: UDP
 
   extraEnvs:
+    - name: DUMMY_FOR_RESTART #Change this when changin Ruby code in order to restart pod
+      value: "0001"
+  
     - name: LS_JAVA_OPTS
       value: "-Xmx256m -Xms256m"
 
