@@ -6,13 +6,13 @@ def register(params)
 end
 
 def filter(event)
-    arr1 = event['message'].split(',')
+    arr1 = event.get('message').split(',')
 
     if @category == 'hotspot'
         data1 = arr1[2]
         arr2 = data1.split(':')
         data2 = arr2[1]
-        event['user'] = data2
+        event.set('user', data2)
     elsif @category == 'web-proxy'
         data1 = arr1[1]
         #   0         1              2        3                  4                            5
@@ -21,9 +21,9 @@ def filter(event)
         src_ip = arr2[2]
         url = arr2[4]
 
-        event['src_ip'] = src_ip
-        event['url'] = url
+        event.set('src_ip', src_ip)
+        event.set('url', url)
     end
-    
+
     return [event]
 end
