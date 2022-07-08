@@ -14,7 +14,9 @@ def filter(event)
         arr2 = data1.split(':')
         data2 = arr2[1] #chandet.pun@napbiotec.io (192.168.20.171)
 
-        user, src_ip = data2.scan(/^\s*(.*)\s*(\(.+\))$/i)
+        dat = data2.scan(/^\s*(.*)\s*(\(.+\))$/i)
+        user = dat[0]
+        src_ip = dat[1]
 
         event.set('user', user)
         event.set('src_ip', src_ip)
@@ -48,12 +50,21 @@ def filter(event)
         #4 192.168.20.29:60802->172.217.26.74:443, 
         #5 len 60
 
-        src_net, det_net = arr1[1].scan(/^.+in:(.+?)\s*out:(.+?)$/i)
-        mac = arr1[2].scan(/^\s*src-mac\s*(.+?)$/i)
-        src_ip, src_port, dst_ip, dst_port = arr1[4].scan(/^\s*(.+?):(.+?)->(.+?):(.+?)$/i)
+        networks = arr1[1].scan(/^.+in:(.+?)\s*out:(.+?)$/i)
+        src_net = networks[0] 
+        dst_net = networks[1] 
+
+        macs = arr1[2].scan(/^\s*src-mac\s*(.+?)$/i)
+        mac = macs[0] 
+
+        ips = arr1[4].scan(/^\s*(.+?):(.+?)->(.+?):(.+?)$/i)
+        src_ip = ips[0]
+        src_port = ips[1]
+        dst_ip = ips[2]
+        dst_port = ips[3]
 
         event.set('src_net', src_net)
-        event.set('det_net', det_net)
+        event.set('dst_net', dst_net)
         event.set('mac', mac)
         event.set('src_ip', src_ip)
         event.set('src_port', src_port)
