@@ -12,6 +12,8 @@ wordpress:
     ingressClassName: nginx
     enabled: true
     hostname: aldamex.com
+    extraHosts:
+      - name: www.aldamex.com
 
   service:
     type: ClusterIP
