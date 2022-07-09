@@ -12,7 +12,7 @@ def filter(event)
 
     if category == 'hotspot'
         #hotspot,account,info,debug 0-Napbiotec: seubpong.mon (192.168.20.29): logged in
-        groups = data.scan(/^.*:\s(.+?)\s(\(.+?\)):.+$/i)[0]
+        groups = data.scan(/^.*:\s(.+?)\s\((.+?)\):.+$/i)[0]
         user = groups[0]
         src_ip = groups[1]
 
