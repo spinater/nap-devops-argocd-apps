@@ -5,19 +5,16 @@ def register(params)
 end
 
 def filter(event)
-    arr1 = event.get('message').split(',')
+    data = event.get('message')
+    arr1 = data.split(',')
     category = arr1[0]
     event.set('debug_field1', 'not-matched')
 
     if category == 'hotspot'
-        data1 = arr1[2]
-        #debug 0-Napbiotec: chandet.pun@napbiotec.io (192.168.20.171): logged out: lost dhcp lease
-        arr2 = data1.split(':')
-        data2 = arr2[1] #chandet.pun@napbiotec.io (192.168.20.171)
-
-        dat = data2.scan(/^\s*(.*?)\s*(\(.+\))$/i)[0]
-        user = dat[0]
-        src_ip = dat[1]
+        #hotspot,account,info,debug 0-Napbiotec: seubpong.mon (192.168.20.29): logged in
+        groups = data.scan(/^.*:\s(.+?)\s(\(.+?\)):.+$/i)[0]
+        user = groups[0]
+        src_ip = groups[1]
 
         event.set('user', user.strip)
         event.set('src_ip', src_ip.strip)
@@ -45,7 +42,6 @@ def filter(event)
         event.set('mac', mac)
         event.set('debug_field1', category)
     elsif category == 'firewall'
-        data = event.get('message')
         #   0                1          2            3               4           5             6           7    8        9                          10                    11                
         # firewall,info 0-Napbiotec: forward: in:vlan20-office out:pppoe-tot, src-mac b4:0f:b3:1d:63:4b, proto TCP (ACK,FIN,PSH), 192.168.20.171:43996->47.241.18.42:443, NAT (192.168.20.171:43996->125.25.69.110:43996)->47.241.18.42:443, len 71
 
