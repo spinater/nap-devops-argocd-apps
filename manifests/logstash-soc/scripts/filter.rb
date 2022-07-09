@@ -45,21 +45,23 @@ def filter(event)
         event.set('mac', mac)
         event.set('debug_field1', category)
     elsif category == 'firewall'
-        arr1 = event.get('message').split(' ')
+        data = event.get('message')
         #   0                1          2            3               4           5             6           7    8        9                          10                    11                
         # firewall,info 0-Napbiotec: forward: in:vlan20-office out:pppoe-tot, src-mac b4:0f:b3:1d:63:4b, proto TCP (ACK,FIN,PSH), 192.168.20.171:43996->47.241.18.42:443, NAT (192.168.20.171:43996->125.25.69.110:43996)->47.241.18.42:443, len 71
 
-        src_networks = arr1[3].scan(/^\s*in:(.+?)$/i)[0]
-        dst_networks = arr1[4].scan(/^\s*out:(.+?)$/i)[0]
-        mac = arr1[6]
-        ips = arr1[10].scan(/^\s*(.+?):(.+?)->(.+?):(.+?)$/i)[0]
+        if my_string.include? "NAT"
+            groups = data.scan(/^.*?in:(.+?)\s+out:(.+?),\s*src-mac\s+(.+?),.*,\s*(.+?):(.+?)->(.+?):(.+?),\sNAT\s(.*)$/i)[0]
+        else
+            groups = data.scan(/^.*?in:(.+?)\s+out:(.+?),\s*src-mac\s+(.+?),.*,\s*(.+?):(.+?)->(.+?):(.+?),\slen\s(.*)$/i)[0]
+        end        
 
-        src_net = src_networks[0]
-        dst_net = dst_networks[1]
-        src_ip = ips[0]
-        src_port = ips[1]
-        dst_ip = ips[2]
-        dst_port = ips[3]
+        src_net = groups[0]
+        dst_net = groups[1]
+        mac = groups[2]
+        src_ip = groups[3]
+        src_port = groups[4]
+        dst_ip = groups[5]
+        dst_port = groups[6]
 
         event.set('src_net', src_net.strip)
         event.set('dst_net', dst_net.strip)
