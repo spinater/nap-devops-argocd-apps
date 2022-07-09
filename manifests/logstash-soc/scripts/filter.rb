@@ -54,27 +54,27 @@ def filter(event)
         networks = arr1[1].scan(/^.+in:(.+?)\s*out:(.+?)$/i)[0]
         macs = arr1[2].scan(/^\s*src-mac\s*(.+?)$/i)[0]
         ips = arr1[4].scan(/^\s*(.+?):(.+?)->(.+?):(.+?)$/i)[0]
-
-        if (networks.nil? || macs.nil? || ips.nil?)
-            event.set('debug_field1', "firewall-null")
-        else
-            src_net = networks[0] 
-            dst_net = networks[1]         
-            mac = macs[0] 
-            src_ip = ips[0]
-            src_port = ips[1]
-            dst_ip = ips[2]
-            dst_port = ips[3]
-    
-            event.set('src_net', src_net.strip)
-            event.set('dst_net', dst_net.strip)
-            event.set('mac', mac.strip)
-            event.set('src_ip', src_ip.strip)
-            event.set('src_port', src_port.strip)
-            event.set('dst_ip', dst_ip.strip)
-            event.set('dst_port', dst_port.strip)
-            event.set('debug_field1', category)
+        if (ips.nil?)
+            #Extra comma in the data
+            ips = arr1[5].scan(/^\s*(.+?):(.+?)->(.+?):(.+?)$/i)[0]
         end
+
+        src_net = networks[0] 
+        dst_net = networks[1]         
+        mac = macs[0] 
+        src_ip = ips[0]
+        src_port = ips[1]
+        dst_ip = ips[2]
+        dst_port = ips[3]
+
+        event.set('src_net', src_net.strip)
+        event.set('dst_net', dst_net.strip)
+        event.set('mac', mac.strip)
+        event.set('src_ip', src_ip.strip)
+        event.set('src_port', src_port.strip)
+        event.set('dst_ip', dst_ip.strip)
+        event.set('dst_port', dst_port.strip)
+        event.set('debug_field1', category)
     end
     
     return [event]
