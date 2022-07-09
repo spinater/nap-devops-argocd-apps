@@ -7,6 +7,7 @@ end
 def filter(event)
     arr1 = event.get('message').split(',')
     category = arr1[0]
+    event.set('debug_field1', 'not-matched')
 
     if category == 'hotspot'
         data1 = arr1[2]
@@ -72,7 +73,6 @@ def filter(event)
         event.set('dst_port', dst_port)
         event.set('debug_field1', category)        
     end
-
-    event.set('debug_field1', 'not-matched')
+    
     return [event]
 end
