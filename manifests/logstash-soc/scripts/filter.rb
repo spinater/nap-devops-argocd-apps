@@ -25,7 +25,7 @@ def filter(event)
     elsif category == 'web-proxy'
         data1 = arr1[1]
         #   0         1              2        3                  4                            5
-        #account 0-Napbiotec: 192.168.20.115 GET http://cu.bwc.brother.com/certset/ver  action=allow cache=MISS
+        #account 0-Napbiotec: 192.168.20.115 GET http://cu.bwc.brother.com/certset/ver  action=allow cache=MISS        
         arr2 = data1.split(' ')
         src_ip = arr2[2]
         url = arr2[4]
@@ -45,23 +45,17 @@ def filter(event)
         event.set('mac', mac)
         event.set('debug_field1', category)
     elsif category == 'firewall'
-        #1 info 0-Napbiotec: forward: in:vlan20-office out:pppoe-tot, 
-        #2 src-mac 4c:d1:a1:d1:60:3d, 
-        #3 proto TCP (SYN), 
-        #4 192.168.20.29:60802->172.217.26.74:443, 
-        #5 len 60
+        arr1 = event.get('message').split(' ')
+        #   0                1          2            3               4           5             6           7    8        9                          10                    11                
+        # firewall,info 0-Napbiotec: forward: in:vlan20-office out:pppoe-tot, src-mac b4:0f:b3:1d:63:4b, proto TCP (ACK,FIN,PSH), 192.168.20.171:43996->47.241.18.42:443, NAT (192.168.20.171:43996->125.25.69.110:43996)->47.241.18.42:443, len 71
 
-        networks = arr1[1].scan(/^.+in:(.+?)\s*out:(.+?)$/i)[0]
-        macs = arr1[2].scan(/^\s*src-mac\s*(.+?)$/i)[0]
-        ips = arr1[4].scan(/^\s*(.+?):(.+?)->(.+?):(.+?)$/i)[0]
-        if (ips.nil?)
-            #Extra comma in the data
-            ips = arr1[5].scan(/^\s*(.+?):(.+?)->(.+?):(.+?)$/i)[0]
-        end
+        src_networks = arr1[3].scan(/^\s*in:(.+?)$/i)[0]
+        dst_networks = arr1[4].scan(/^\s*out:(.+?)$/i)[0]
+        mac = arr1[6]
+        ips = arr1[10].scan(/^\s*(.+?):(.+?)->(.+?):(.+?)$/i)[0]
 
-        src_net = networks[0] 
-        dst_net = networks[1]         
-        mac = macs[0] 
+        src_net = src_networks[0]
+        dst_net = dst_networks[1]
         src_ip = ips[0]
         src_port = ips[1]
         dst_ip = ips[2]
