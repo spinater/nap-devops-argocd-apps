@@ -11,10 +11,11 @@ wordpress:
   ingress:
     ingressClassName: nginx
     enabled: true
-    hostname: nabpiotec.io
+    hostname: napbiotec.io
     extraHosts:
       - name: www.napbiotec.io
-      - name: napbiotec.devops.napbiotec.io
+      - name: www.napbiotec.com
+      - name: napbiotec.com
 
   service:
     type: ClusterIP

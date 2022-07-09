@@ -38,3 +38,17 @@ spec:
     name: lets-encrypt-issuer-top-prod
     kind: ClusterIssuer
     group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nginx-cert-napbiotec
+spec:
+  secretName: nginx-cert-napbiotec-com
+  dnsNames:
+    - '{{ .Values.domain4 }}'
+    - '*.{{ .Values.domain4 }}'
+  issuerRef:
+    name: lets-encrypt-issuer-top-prod
+    kind: ClusterIssuer
+    group: cert-manager.io
