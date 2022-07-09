@@ -15,12 +15,12 @@ def filter(event)
         arr2 = data1.split(':')
         data2 = arr2[1] #chandet.pun@napbiotec.io (192.168.20.171)
 
-        dat = data2.scan(/^\s*(.*)\s*(\(.+\))$/i)[0]
+        dat = data2.scan(/^\s*(.*?)\s*(\(.+\))$/i)[0]
         user = dat[0]
         src_ip = dat[1]
 
-        event.set('user', user)
-        event.set('src_ip', src_ip)
+        event.set('user', user.strip)
+        event.set('src_ip', src_ip.strip)
         event.set('debug_field1', category)
     elsif category == 'web-proxy'
         data1 = arr1[1]
@@ -30,7 +30,7 @@ def filter(event)
         src_ip = arr2[2]
         url = arr2[4]
 
-        event.set('src_ip', src_ip)
+        event.set('src_ip', src_ip.strip)
         event.set('domain', URI.parse(url).host)
         event.set('debug_field1', category)
     elsif category == 'dhcp'
@@ -41,7 +41,7 @@ def filter(event)
         src_ip = arr2[4]
         mac = arr2[6]
 
-        event.set('src_ip', src_ip)
+        event.set('src_ip', src_ip.strip)
         event.set('mac', mac)
         event.set('debug_field1', category)
     elsif category == 'firewall'
@@ -64,13 +64,13 @@ def filter(event)
         dst_ip = ips[2]
         dst_port = ips[3]
 
-        event.set('src_net', src_net)
-        event.set('dst_net', dst_net)
-        event.set('mac', mac)
-        event.set('src_ip', src_ip)
-        event.set('src_port', src_port)
-        event.set('dst_ip', dst_ip)
-        event.set('dst_port', dst_port)
+        event.set('src_net', src_net.strip)
+        event.set('dst_net', dst_net.strip)
+        event.set('mac', mac.strip)
+        event.set('src_ip', src_ip.strip)
+        event.set('src_port', src_port.strip)
+        event.set('dst_ip', dst_ip.strip)
+        event.set('dst_port', dst_port.strip)
         event.set('debug_field1', category)        
     end
     
