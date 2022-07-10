@@ -17,10 +17,10 @@ end
 def extract_firewall(event, message, category)
     #   0                1          2            3               4           5             6           7    8        9                          10                    11                
     # firewall,info 0-Napbiotec: forward: in:vlan20-office out:pppoe-tot, src-mac b4:0f:b3:1d:63:4b, proto TCP (ACK,FIN,PSH), 192.168.20.171:43996->47.241.18.42:443, NAT (192.168.20.171:43996->125.25.69.110:43996)->47.241.18.42:443, len 71
-    if data.include? "NAT"
-        groups = data.scan(/^.*?in:(.+?)\s+out:(.+?),\s*src-mac\s+(.+?),.*,\s*(.+?):(.+?)->(.+?):(.+?),\sNAT\s(.*)$/i)[0]
+    if message.include? "NAT"
+        groups = message.scan(/^.*?in:(.+?)\s+out:(.+?),\s*src-mac\s+(.+?),.*,\s*(.+?):(.+?)->(.+?):(.+?),\sNAT\s(.*)$/i)[0]
     else
-        groups = data.scan(/^.*?in:(.+?)\s+out:(.+?),\s*src-mac\s+(.+?),.*,\s*(.+?):(.+?)->(.+?):(.+?),\slen\s(.*)$/i)[0]
+        groups = message.scan(/^.*?in:(.+?)\s+out:(.+?),\s*src-mac\s+(.+?),.*,\s*(.+?):(.+?)->(.+?):(.+?),\slen\s(.*)$/i)[0]
     end
     src_net = groups[0]
     dst_net = groups[1]
@@ -43,7 +43,7 @@ end
 def extract_webproxy(event, data, category)
     #   0         1              2        3                  4                            5
     #account 0-Napbiotec: 192.168.20.115 GET http://cu.bwc.brother.com/certset/ver  action=allow cache=MISS        
-    arr2 = data1.split(' ')
+    arr2 = data.split(' ')
     src_ip = arr2[2]
     url = arr2[4]
 
@@ -55,7 +55,7 @@ end
 def extract_dhcp(event, data, category)
     # 0        1         2      3           4         5       6   
     #info 0-Napbiotec: dhcp6 assigned 192.168.30.236 to E2:9B:9D:A9:DF:5B
-    arr2 = data1.split(' ')
+    arr2 = data.split(' ')
     src_ip = arr2[4]
     mac = arr2[6]
 
