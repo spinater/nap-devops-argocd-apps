@@ -49,18 +49,6 @@ logstash-syslog:
       }
 
       filter {
-        mutate {
-          add_field => {
-            "job" => "syslog"
-          }
-        }
-
-        grok {
-          match => {
-            "message" => "(?<category>(.+?)),"
-          }
-        }
-
         ruby {
           path => "/scripts/filter.rb"
           script_params => {}

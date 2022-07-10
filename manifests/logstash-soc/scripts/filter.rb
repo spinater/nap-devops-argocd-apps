@@ -1,5 +1,4 @@
 #Labels {'user', 'domain', 'src_ip', 'dst_ip', 'mac', 'src_net', 'dst_net', 'src_port', 'dst_port'}
-#require 'memcached'
 
 def register(params)
 end
@@ -65,13 +64,14 @@ def extract_dhcp(event, data, category)
     event.set('debug_field1', category)
 end
 
-
-
 def filter(event)
     data = event.get('message')
     arr1 = data.split(',')
     category = arr1[0]
+
+    event.set('job', 'syslog')
     event.set('debug_field1', 'not-matched')
+    event.set('category', category)    
 
     if category == 'hotspot'
         extract_hotspot(event, data, category)
