@@ -1,5 +1,5 @@
 #Labels {'user', 'domain', 'src_ip', 'dst_ip', 'mac', 'src_net', 'dst_net', 'src_port', 'dst_port'}
-require 'memcached'
+#require 'memcached'
 
 def register(params)
 end
