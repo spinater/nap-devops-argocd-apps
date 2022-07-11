@@ -64,10 +64,27 @@ def extract_dhcp(event, data, category)
     event.set('debug_field1', category)
 end
 
+def get_category(message)
+    category = "undefined"
+
+    if message.include? "Omada Controller"
+        category = "omda-controller"
+    else
+        arr1 = message.split(',')
+        category = arr1[0]        
+    end
+
+    if category.length > 20
+        category "unknown"
+    end
+
+    return category
+end
+
 def filter(event)
     data = event.get('message')
     arr1 = data.split(',')
-    category = arr1[0]
+    category = get_category(data)
 
     event.set('job', 'syslog')
     event.set('debug_field1', 'not-matched')
