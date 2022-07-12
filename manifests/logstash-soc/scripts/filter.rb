@@ -74,9 +74,9 @@ def get_category(message)
         category = arr1[0]        
     end
 
-    if category.length > 20
-        category = "unknown"
+    if category.length > 20        
         sub_cat = category[0, 4]
+        category = "unknown"
 
         if sub_cat == "dns " #Need a space at the end
             #dns 0-Napbiotec: done query: #16768652 dns name exists, but no appropriate record
