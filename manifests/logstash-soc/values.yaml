@@ -53,6 +53,51 @@ logstash-syslog:
           path => "/scripts/filter.rb"
           script_params => {}
         }
+
+        memcached {
+          hosts => ["memcached.memcached.svc.cluster.local"]
+          namespace => "soc"
+          get => {
+            "[dst_ip]" => "misp_dst_ip"
+            "[domain]" => "misp_domain"
+          }
+        }
+
+        if ![misp_dst_ip] {
+          ruby {
+            path => "/scripts/load-misp-cache.rb"
+            script_params => {cached_field => 'misp_dst_ip'}
+          }
+
+          memcached {
+            hosts => ["memcached.memcached.svc.cluster.local"]
+            namespace => "soc"
+            set => {
+              "misp_dst_ip" => "[dst_ip]"
+              "ttl" => 600 # 10 minutes
+            }
+          }
+        }
+
+        if ![misp_domain] {
+          ruby {
+            path => "/scripts/load-misp-cache.rb"
+            script_params => {cached_field => 'misp_domain'}
+          }
+
+          memcached {
+            hosts => ["memcached.memcached.svc.cluster.local"]
+            namespace => "soc"
+            set => {
+              "misp_domain" => "[domain]"
+              "ttl" => 600 # 10 minutes
+            }
+          }            
+        }
+
+        #ruby {
+        #  path => "/scripts/process-misp-fields.rb"
+        #}
       }
 
       output {
