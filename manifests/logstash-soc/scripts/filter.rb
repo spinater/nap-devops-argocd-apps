@@ -75,7 +75,7 @@ def get_category(message)
     end
 
     if category.length > 20
-        category "unknown"
+        category = "unknown"
     end
 
     return category
