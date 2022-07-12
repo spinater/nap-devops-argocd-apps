@@ -17,7 +17,7 @@ logstash-syslog:
 
   extraEnvs:
     - name: DUMMY_FOR_RESTART #If need to restart pod manually then change this
-      value: "0002"
+      value: "0003"
   
     - name: LS_JAVA_OPTS
       value: "-Xmx256m -Xms256m"
@@ -98,6 +98,11 @@ logstash-syslog:
         #ruby {
         #  path => "/scripts/process-misp-fields.rb"
         #}
+
+        mutate {
+          # Remove temp fields, not to be shown in Loki
+          remove_field => [ "misp_domain", "misp_dst_ip" ]
+        }
       }
 
       output {
