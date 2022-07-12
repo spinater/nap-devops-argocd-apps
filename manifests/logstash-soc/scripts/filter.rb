@@ -64,6 +64,19 @@ def extract_dhcp(event, data, category)
     event.set('debug_field1', category)
 end
 
+def extract_dns(event, message, category)
+    #dns 0-Napbiotec: query from 170.81.19.85: #16897106 peacecorps.gov. ALL
+    event.set('debug_field1', "unknown")
+
+    if match = message.match(/^dns.+query from (.+?): .+ (.+)\..*$/i)
+        src_ip, domain = match.captures
+
+        event.set('src_ip', src_ip.strip)
+        event.set('domain', domain)
+        event.set('debug_field1', category)
+    end
+end
+
 def get_category(message)
     category = "undefined"
 
@@ -74,7 +87,7 @@ def get_category(message)
         category = arr1[0]        
     end
 
-    if category.length > 20        
+    if category.length > 20
         sub_cat = category[0, 4]
         category = "unknown"
 
@@ -106,6 +119,8 @@ def filter(event)
         extract_dhcp(event, data1, category)
     elsif category == 'firewall'
         extract_firewall(event, data, category)
+    elsif category == 'dns'
+        extract_dns(event, data, category)        
     end
 
     return [event]
