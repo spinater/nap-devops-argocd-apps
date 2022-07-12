@@ -58,8 +58,8 @@ logstash-syslog:
           hosts => ["memcached.memcached.svc.cluster.local"]
           namespace => "soc"
           get => {
-            "[dst_ip]" => "misp_dst_ip"
-            "[domain]" => "misp_domain"
+            "%{dst_ip}" => "misp_dst_ip"
+            "%{domain}" => "misp_domain"
           }
         }
 
@@ -73,7 +73,7 @@ logstash-syslog:
             hosts => ["memcached.memcached.svc.cluster.local"]
             namespace => "soc"
             set => {
-              "misp_dst_ip" => "[dst_ip]"
+              "[misp_dst_ip]" => "%{dst_ip}"
               "ttl" => 600 # 10 minutes
             }
           }
@@ -89,7 +89,7 @@ logstash-syslog:
             hosts => ["memcached.memcached.svc.cluster.local"]
             namespace => "soc"
             set => {
-              "misp_domain" => "[domain]"
+              "[misp_domain]" => "%{domain}"
               "ttl" => 600 # 10 minutes
             }
           }            
