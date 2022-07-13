@@ -7,7 +7,7 @@ end
 def filter(event)
     value = event.get(@value_field)
 
-    if value == ''
+    if value.nil? or value == ''
         misp_data = "Nothing to do because the field [#{@value_field}] is blank [#{value}]"
     else
         misp_data = "This is cached data of [#{value}]"
