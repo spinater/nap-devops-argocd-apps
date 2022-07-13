@@ -109,9 +109,9 @@ def filter(event)
     current_time = DateTime.now
     current_time.strftime "%Y%m%d"
 
-    event.set('yyyy', 'current_time[0, 4]')
-    event.set('yyyymm', 'current_time[0, 6]')
-    event.set('yyyymmdd', 'current_time[0, 8]')
+    event.set('yyyy', current_time[0, 4])
+    event.set('yyyymm', current_time[0, 6])
+    event.set('yyyymmdd', current_time[0, 8])
 
     event.set('type', 'syslog')    
     event.set('debug_field1', 'not-matched')
