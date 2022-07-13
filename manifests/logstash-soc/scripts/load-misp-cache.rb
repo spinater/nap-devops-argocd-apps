@@ -9,8 +9,8 @@ def filter(event)
 
     value = event.get(@value_field)
 
-    stdout.puts "Getting MISP from field [#{@value_field}] value [#{value}]"
-    stdout.puts "Load [#{misp_data}] to field [#{@cached_field}]"
+    puts "Getting MISP from field [#{@value_field}] value [#{value}]"
+    puts "Load [#{misp_data}] to field [#{@cached_field}]"
 
     event.set(@cached_field, misp_data)
     return [event]
