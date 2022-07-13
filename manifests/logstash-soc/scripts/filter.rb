@@ -105,7 +105,7 @@ def filter(event)
     arr1 = data.split(',')
     category = get_category(data)
 
-    event.set('job', 'syslog')
+    event.set('type', 'syslog')
     event.set('debug_field1', 'not-matched')
     event.set('category', category)    
 

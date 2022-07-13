@@ -46,4 +46,4 @@ helm-loki:
         - url: http://loki-soc-gateway.loki-soc.svc.cluster.local/loki/api/v1/push
 
     extraArgs:
-      - -client.external-labels=job=applog
+      - -client.external-labels=type=applog
