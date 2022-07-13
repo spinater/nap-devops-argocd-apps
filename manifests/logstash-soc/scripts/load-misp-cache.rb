@@ -12,8 +12,7 @@ def filter(event)
     else
         misp_data = "This is cached data of [#{value}]"
 
-        puts "### Getting MISP from field [#{@value_field}] value [#{value}]"
-        puts "### Loading MISP data to field [#{@cached_field}]\n"    
+        puts "### [#{@cached_field}] Getting MISP from field [#{@value_field}] value [#{value}]"
     end
 
     event.set(@cached_field, misp_data)
