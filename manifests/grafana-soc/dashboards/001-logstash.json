@@ -118,7 +118,7 @@
             "type": "loki",
             "uid": "P3207ED7BE1A28479"
           },
-          "expr": "count_over_time (({type=\"applog\", namespace=\"logstash-soc\"} |= \"Error\")[$Interval])",
+          "expr": "sum(count_over_time (({type=\"applog\", namespace=\"logstash-soc\"} |= \"Error\")[$Interval]))",
           "legendFormat": "Error Count",
           "refId": "A"
         }
@@ -231,7 +231,7 @@
             "type": "loki",
             "uid": "P3207ED7BE1A28479"
           },
-          "expr": "count_over_time(({type=\"applog\", namespace=\"logstash-soc\"} |= \"Getting MISP from\")[$Interval]) ",
+          "expr": "sum(count_over_time(({type=\"applog\", namespace=\"logstash-soc\"} |= \"Getting MISP from\")[$Interval]))",
           "legendFormat": "Load Count",
           "refId": "A"
         }
