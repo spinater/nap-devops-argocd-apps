@@ -30,7 +30,7 @@ grafana:
           path: /var/lib/grafana/dashboards
 
   dashboardsConfigMaps:
-    cm-misp-cache: cm-misp-cache
+    cm-logstash-dashboard: cm-logstash-dashboard
 
   grafana.ini:
     log:
