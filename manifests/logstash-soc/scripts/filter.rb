@@ -1,4 +1,5 @@
 #Labels {'user', 'domain', 'src_ip', 'dst_ip', 'mac', 'src_net', 'dst_net', 'src_port', 'dst_port'}
+require 'date'
 
 def register(params)
 end
@@ -104,6 +105,9 @@ def filter(event)
     data = event.get('message')
     arr1 = data.split(',')
     category = get_category(data)
+
+    current_time = DateTime.now
+    current_time.strftime "%Y%m%d"
 
     event.set('type', 'syslog')
     event.set('debug_field1', 'not-matched')
