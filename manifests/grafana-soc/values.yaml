@@ -29,9 +29,8 @@ grafana:
         options:
           path: /var/lib/grafana/dashboards
 
-#  dashboardsConfigMaps:
-#    grafana-dashboard-apiserver: grafana-dashboard-apiserver
-#    grafana-dashboard-cluster-total: grafana-dashboard-cluster-total
+  dashboardsConfigMaps:
+    cm-misp-cache: cm-misp-cache
 
   grafana.ini:
     log:

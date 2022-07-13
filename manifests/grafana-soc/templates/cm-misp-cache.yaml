@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-misp-cache
+data:
+  001-misp-cache.json: |-
+{{ .Files.Get "dashboards/001-misp-cache.json" |  indent 4 }}
