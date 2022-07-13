@@ -73,7 +73,10 @@ logstash-syslog:
         if ![misp_dst_ip] {
           ruby {
             path => "/scripts/load-misp-cache.rb"
-            script_params => {cached_field => 'misp_dst_ip'}
+            script_params => {
+              cached_field => 'misp_dst_ip'
+              value_field => 'dst_ip'
+            }
           }
 
           memcached {
@@ -89,7 +92,10 @@ logstash-syslog:
         if ![misp_domain] {
           ruby {
             path => "/scripts/load-misp-cache.rb"
-            script_params => {cached_field => 'misp_domain'}
+            script_params => {
+              cached_field => 'misp_domain'
+              value_field => 'domain'
+            }
           }
 
           memcached {
