@@ -5,12 +5,11 @@ def register(params)
 end
 
 def filter(event)
-    misp_data = '{"field":"this is MISP data"}'
-
     value = event.get(@value_field)
+    misp_data = "This is cached data of [#{value}]"    
 
-    puts "Getting MISP from field [#{@value_field}] value [#{value}]"
-    puts "Load [#{misp_data}] to field [#{@cached_field}]"
+    puts "### Getting MISP from field [#{@value_field}] value [#{value}]"
+    puts "### Loading MISP data to field [#{@cached_field}]\n"
 
     event.set(@cached_field, misp_data)
     return [event]
