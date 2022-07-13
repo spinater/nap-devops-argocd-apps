@@ -9,12 +9,12 @@ def filter(event)
     domain = event.get('domain')
 
     if dst_ip != '' and !dst_ip.nil?
-        puts "#### Processing MISP data field [misp_dst_ip] value [#{misp_dst_ip}]"
+        #puts "#### Processing MISP data field [misp_dst_ip] value [#{misp_dst_ip}]"
         #event.set('misp_category', '')
     end
 
     if domain != '' and !domain.nil?
-        puts "#### Processing MISP data field [misp_domain] value [#{misp_domain}]\n"
+        #puts "#### Processing MISP data field [misp_domain] value [#{misp_domain}]\n"
         #event.set('misp_category', '')
     end
 
