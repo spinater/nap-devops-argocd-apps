@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-dst-network-stat
+data:
+  003-dst-network-stat.json: |-
+{{ .Files.Get "dashboards/003-dst-network-stat.json" |  indent 4 }}
