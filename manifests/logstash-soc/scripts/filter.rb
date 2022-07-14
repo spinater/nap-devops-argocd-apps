@@ -1,5 +1,5 @@
 #Labels {'user', 'domain', 'src_ip', 'dst_ip', 'mac', 'src_net', 'dst_net', 'src_port', 'dst_port'}
-require 'date'
+require 'time'
 
 def register(params)
 end
@@ -106,10 +106,11 @@ def filter(event)
     arr1 = data.split(',')
     category = get_category(data)
 
-    current_time = event.get('@timestamp') + '' #convert to string
-    event.set('yyyy', current_time[0, 4])
-    event.set('yyyymm', current_time[0, 7])
-    event.set('yyyymmdd', current_time[0, 10])
+    #current_time = event.get('@timestamp') + '' #convert to string
+    time = Time.new
+    event.set('yyyy', time.strftime("%Y"))
+    event.set('yyyymm', time.strftime("%Y%m"))
+    event.set('yyyymmdd', time.strftime("%Y%m%d"))
 
     event.set('type', 'syslog')
     event.set('debug_field1', 'not-matched')
