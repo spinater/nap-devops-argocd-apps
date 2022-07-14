@@ -106,10 +106,10 @@ def filter(event)
     arr1 = data.split(',')
     category = get_category(data)
 
-    current_time = event.get('@timestamp')
-    #event.set('yyyy', current_time[0, 4])
-    #event.set('yyyymm', current_time[0, 7])
-    event.set('yyyymmdd', current_time)
+    current_time = event.get('@timestamp') + '' #convert to string
+    event.set('yyyy', current_time[0, 4])
+    event.set('yyyymm', current_time[0, 7])
+    event.set('yyyymmdd', current_time[0, 10])
 
     event.set('type', 'syslog')
     event.set('debug_field1', 'not-matched')
