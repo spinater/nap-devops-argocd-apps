@@ -107,10 +107,10 @@ def filter(event)
     category = get_category(data)
 
     #current_time = event.get('@timestamp') + '' #convert to string
-    time = Time.new
-    event.set('yyyy', time.strftime("%Y"))
-    event.set('yyyymm', time.strftime("%Y%m"))
-    event.set('yyyymmdd', time.strftime("%Y%m%d"))
+    #time = Time.new
+    #event.set('yyyy', time.strftime("%Y"))
+    #event.set('yyyymm', time.strftime("%Y%m"))
+    #event.set('yyyymmdd', time.strftime("%Y%m%d"))
 
     event.set('type', 'syslog')
     event.set('debug_field1', 'not-matched')
