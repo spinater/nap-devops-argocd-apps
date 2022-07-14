@@ -31,6 +31,7 @@ grafana:
 
   dashboardsConfigMaps:
     cm-logstash-dashboard: cm-logstash-dashboard
+    cm-events-stat: cm-events-stat
 
   grafana.ini:
     log:

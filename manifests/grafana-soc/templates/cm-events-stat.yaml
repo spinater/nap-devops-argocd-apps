@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-events-stat
+data:
+  002-events-stat.json: |-
+{{ .Files.Get "dashboards/002-events-stat.json" |  indent 4 }}
