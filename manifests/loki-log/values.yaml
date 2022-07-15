@@ -38,12 +38,12 @@ helm-loki:
           role_attribute_path: to_string('Editor')
           allowed_domains: napbiotec.io
 
-  promtail:
-    enabled: true
-    fullnameOverride: loki-soc-promtail
-    config:
-      clients:
-        - url: http://loki-soc-gateway.loki-soc.svc.cluster.local/loki/api/v1/push
+#  promtail:
+#    enabled: true
+#    fullnameOverride: loki-soc-promtail
+#    config:
+#      clients:
+#        - url: http://loki-soc-gateway.loki-soc.svc.cluster.local/loki/api/v1/push
 
-    extraArgs:
-      - -client.external-labels=type=applog
+#    extraArgs:
+#      - -client.external-labels=type=applog
