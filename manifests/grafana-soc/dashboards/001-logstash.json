@@ -24,8 +24,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
-  "iteration": 1657720594249,
+  "id": 4,
+  "iteration": 1657875245537,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -45,7 +45,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "P3207ED7BE1A28479"
+        "uid": "P6FC1DB62B94AB42D"
       },
       "fieldConfig": {
         "defaults": {
@@ -116,9 +116,9 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "P3207ED7BE1A28479"
+            "uid": "P6FC1DB62B94AB42D"
           },
-          "expr": "sum(count_over_time (({type=\"applog\", namespace=\"logstash-soc\"} |= \"Error\")[$Interval]))",
+          "expr": "sum(count_over_time (({namespace=\"logstash-soc\"} |= \"Error\")[$Interval]))",
           "legendFormat": "Error Count",
           "refId": "A"
         }
@@ -156,7 +156,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "P3207ED7BE1A28479"
+        "uid": "P6FC1DB62B94AB42D"
       },
       "fieldConfig": {
         "defaults": {
@@ -229,9 +229,9 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "P3207ED7BE1A28479"
+            "uid": "P6FC1DB62B94AB42D"
           },
-          "expr": "sum(count_over_time(({type=\"applog\", namespace=\"logstash-soc\"} |= \"Getting MISP from\")[$Interval]))",
+          "expr": "sum(count_over_time(({namespace=\"logstash-soc\"} |= \"Getting MISP from\")[$Interval]))",
           "legendFormat": "Load Count",
           "refId": "A"
         }
@@ -326,6 +326,6 @@
   "timezone": "",
   "title": "001 - Logstash",
   "uid": "L88gL3e7z",
-  "version": 7,
+  "version": 1,
   "weekStart": ""
 }
