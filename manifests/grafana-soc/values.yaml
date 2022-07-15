@@ -15,7 +15,11 @@ grafana:
         type: loki
         access: Server
         url: http://loki-soc-query-frontend.loki-soc.svc.cluster.local:3100
-        #skip tls
+
+      - name: Loki-App
+        type: loki
+        access: Server
+        url: http://loki-log-production.loki-log.svc.cluster.local:3100
 
   dashboardProviders:
     dashboardproviders.yaml:
