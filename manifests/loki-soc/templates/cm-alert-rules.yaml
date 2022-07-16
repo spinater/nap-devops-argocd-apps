@@ -7,8 +7,18 @@ data:
     groups:
       - name: should_fire
         rules:
+          - alert: LokiWatchdog
+            expr: |
+              1 + 1 > 0
+            for: 4h
+            labels:
+              severity: none
+            annotations:
+              summary: "This is an alert meant to ensure that the entire Loki alerting is functional."
+
           - alert: UnknownCategoryError1
-            expr: sum(count_over_time({type="syslog", category="unknown"}[1m])) >= 1
+            expr: |
+              sum(count_over_time({type="syslog", category="unknown"}[1m])) >= 1
             for: 1m
             labels:
               severity: warning
@@ -16,7 +26,8 @@ data:
               summary: Found unknown identifiable log lines 1
 
           - alert: UnknownCategoryError2
-            expr: sum(count_over_time({type="syslog", category="firewall"}[1m])) >= 1
+            expr: |
+              sum(count_over_time({type="syslog", category="firewall"}[1m])) >= 1
             for: 2m
             labels:
               severity: warning
