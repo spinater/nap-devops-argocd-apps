@@ -47,6 +47,9 @@ helm-loki:
         - name: gcp-sa
           mountPath: "/secrets"
           readOnly: true
+      extraEnv:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /secrets/gcp-sa-file.json          
       storage:
         type: local
         local:
