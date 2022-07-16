@@ -33,3 +33,12 @@ data:
               severity: warning
             annotations:
               description: Found  {{ "{{" }} printf "%v" $value {{ "}}" }} line(s) of [system] category
+
+          - alert: NoDataToSyslogError
+            expr: |
+              sum(count_over_time({type="syslog"}[5m])) <= 100
+            for: 30s
+            labels:
+              severity: warning
+            annotations:
+              description: Found  {{ "{{" }} printf "%v" $value {{ "}}" }} line(s) of log which less than the threshold [100]
