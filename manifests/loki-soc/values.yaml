@@ -48,7 +48,7 @@ helm-loki:
               path: gcp-sa-file.json
       extraVolumeMounts:
         - name: loki-ruler-alerting-rules
-          mountPath: "/rules/alerts/generic"
+          mountPath: "/etc/loki/rules/fake"
         - name: gcp-sa
           mountPath: "/secrets"
           readOnly: true
@@ -71,9 +71,9 @@ helm-loki:
             groups:
               - name: should_fire
                 rules:
-                  - alert: HighPercentageError
+                  - alert: DebugRule1
                     expr: |
-                      1 + 1
+                      1 + 1 > 0
                     for: 1m
                     labels:
                       severity: none
