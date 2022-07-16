@@ -9,27 +9,27 @@ data:
         rules:
           - alert: LokiWatchdog
             expr: |
-              1 + 1 > 0
+              sum(count_over_time({type="syslog"}[1m])) >= 1
             for: 4h
             labels:
               severity: none
             annotations:
               summary: "This is an alert meant to ensure that the entire Loki alerting is functional."
 
-          - alert: UnknownCategoryError1
-            expr: |
-              sum(count_over_time({type="syslog", category="unknown"}[1m])) >= 1
-            for: 1m
-            labels:
-              severity: warning
-            annotations:
-              summary: Found unknown identifiable log lines 1
+#          - alert: UnknownCategoryError1
+#            expr: |
+#              sum(count_over_time({type="syslog", category="unknown"}[1m])) >= 1
+#            for: 1m
+#            labels:
+#              severity: warning
+#            annotations:
+#              summary: Found unknown identifiable log lines 1
 
-          - alert: UnknownCategoryError2
+          - alert: UnknownCategoryError
             expr: |
               sum(count_over_time({type="syslog", category="dns"}[1m])) >= 1
-            for: 2m
+            for: 30s
             labels:
               severity: warning
             annotations:
-              summary: Found unknown identifiable log lines 2
+              description: Found {{ printf "%d" $value }} unknown identifiable log line(s) 
