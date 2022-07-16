@@ -27,7 +27,7 @@ data:
 
           - alert: UnknownCategoryError2
             expr: |
-              sum(count_over_time({type="syslog", category="firewall"}[1m])) >= 1
+              sum(count_over_time({type="syslog", category="dns"}[1m])) >= 1
             for: 2m
             labels:
               severity: warning
