@@ -74,7 +74,7 @@ helm-loki:
                   - alert: HighPercentageError
                     expr: |
                       1 + 1
-                    for: 4h
+                    for: 1m
                     labels:
                       severity: none
                     annotations:
