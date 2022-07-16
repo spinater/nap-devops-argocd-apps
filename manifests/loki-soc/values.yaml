@@ -34,6 +34,11 @@ helm-loki:
     compactor:
       enabled: true
 
+    ruler:
+      enabled: true
+      extraVolumeMounts: []
+      extraVolumes: []
+
     querier:
       replicas: 1
       extraVolumes:
