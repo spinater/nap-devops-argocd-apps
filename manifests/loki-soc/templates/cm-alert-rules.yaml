@@ -18,9 +18,18 @@ data:
 
           - alert: UnknownCategoryError
             expr: |
-              sum(count_over_time({type="syslog", category="unknown"}[1m])) >= 1
+              sum(count_over_time({type="syslog", category="unknown"}[15m])) >= 1
             for: 30s
             labels:
               severity: warning
             annotations:
               description: Found  {{ "{{" }} printf "%v" $value {{ "}}" }} unknown identifiable log line(s)
+
+          - alert: SystemCategoryFound
+            expr: |
+              sum(count_over_time({type="syslog", category="system"}[15m])) >= 1
+            for: 30s
+            labels:
+              severity: warning
+            annotations:
+              description: Found  {{ "{{" }} printf "%v" $value {{ "}}" }} line(s) of [system] category
