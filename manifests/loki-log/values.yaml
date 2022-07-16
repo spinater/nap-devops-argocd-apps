@@ -11,7 +11,6 @@ helm-loki:
         tag: 2.3.0
       persistence:
         enabled: true
-
       config:
         ruler:
           storage:
@@ -34,7 +33,7 @@ helm-loki:
             labels:
               severity: warning
             annotations:
-              description: Found  {{ "{{" }} printf "%v" $value {{ "}}" }} line(s) of [Error] in [logstash-soc] namespace
+              description: Found  {{ printf "%v" $value }} line(s) of [Error] in [logstash-soc] namespace
 
     grafana:
       envFromSecret: google-oidc-secret
