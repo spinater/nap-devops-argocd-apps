@@ -12,6 +12,16 @@ helm-loki:
       persistence:
         enabled: true
 
+      config:
+        ruler:
+          alertmanager_url: http://alertmanager-main.monitoring.svc.cluster.local:9093
+      alerting_groups:
+        - name: generic_alerts
+          rules:
+          - alert: LogstashError
+            expr: sum (count_over_time({namespace="logstash-soc"} |= "Error" [10m])) > 1
+            for: 30s
+
     grafana:
       envFromSecret: google-oidc-secret
       envRenderSecret: {}
