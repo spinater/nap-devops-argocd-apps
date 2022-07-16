@@ -7,14 +7,10 @@ data:
     groups:
       - name: should_fire
         rules:
-          - alert: HighPercentageError
-            expr: |
-              sum(rate({app="loki"} |= "error" [5m])) by (job)
-                /
-              sum(rate({app="loki"}[5m])) by (job)
-                > 0.05
+          - alert: UnknownCategoryError
+            expr: sum(count_over_time({type="syslog", category="unknown"}[1m])) >= 1
             for: 10m
             labels:
               severity: warning
             annotations:
-              summary: High error rate
+              summary: Found unknown identifiable log lines

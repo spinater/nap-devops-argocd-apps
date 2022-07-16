@@ -67,22 +67,7 @@ helm-loki:
       #external_url: http://alertmanager.xx
       directories:
         fake:
-          dummy.txt: |
-            groups:
-              - name: do_nothing
-                rules:
-                  - alert: DummyAlert
-                    expr: |
-                      sum(rate({app="nothing"} |= "error" [5m])) by (job)
-                        /
-                      sum(rate({app="nothing"}[5m])) by (job)
-                        > 0.05
-                    for: 10m
-                    labels:
-                      severity: warning
-                    annotations:
-                      summary: Dummy - Don't fire anything
-
+          dummy.txt: ""
     querier:
       replicas: 1
       extraVolumes:
