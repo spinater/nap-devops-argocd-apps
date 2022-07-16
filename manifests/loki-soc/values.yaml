@@ -36,8 +36,17 @@ helm-loki:
 
     ruler:
       enabled: true
-      extraVolumeMounts: []
-      extraVolumes: []
+      extraVolumes:
+        - name: gcp-sa
+          secret:
+            secretName: gcp-sa
+            items:
+            - key: gcp-sa-file
+              path: gcp-sa-file.json
+      extraVolumeMounts:
+        - name: gcp-sa
+          mountPath: "/secrets"
+          readOnly: true
       storage:
         type: local
         local:
