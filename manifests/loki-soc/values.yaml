@@ -48,13 +48,13 @@ helm-loki:
               path: gcp-sa-file.json
       extraVolumeMounts:
         - name: loki-ruler-alerting-rules
-          mountPath: "/rules/alerts"
+          mountPath: "/rules/alerts/generic"
         - name: gcp-sa
           mountPath: "/secrets"
           readOnly: true
       extraEnv:
         - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /secrets/gcp-sa-file.json          
+          value: /secrets/gcp-sa-file.json
       storage:
         type: local
         local:
@@ -65,6 +65,23 @@ helm-loki:
       rule_path: /rules/alerts
       #alertmanager_url: http://alertmanager.xx
       #external_url: http://alertmanager.xx
+      directories:
+        fake:
+          dummy.txt: |
+            groups:
+              - name: do_nothing
+                rules:
+                  - alert: DummyAlert
+                    expr: |
+                      sum(rate({app="nothing"} |= "error" [5m])) by (job)
+                        /
+                      sum(rate({app="nothing"}[5m])) by (job)
+                        > 0.05
+                    for: 10m
+                    labels:
+                      severity: warning
+                    annotations:
+                      summary: Dummy - Don't fire anything
 
     querier:
       replicas: 1
