@@ -63,7 +63,7 @@ helm-loki:
         kvstore:
           store: memberlist
       rule_path: /rules/alerts
-      #alertmanager_url: http://alertmanager.xx
+      alertmanager_url: http://alertmanager-main.monitoring.svc.cluster.local:9093
       #external_url: http://alertmanager.xx
       directories:
         fake:
