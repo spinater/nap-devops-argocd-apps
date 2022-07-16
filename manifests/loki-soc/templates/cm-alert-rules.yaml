@@ -23,4 +23,4 @@ data:
             labels:
               severity: warning
             annotations:
-              description: Found  {{ "{{" }} printf "%d" $value {{ "}}" }} unknown identifiable log line(s)
+              description: Found  {{ "{{" }} printf "%v" $value {{ "}}" }} unknown identifiable log line(s)
