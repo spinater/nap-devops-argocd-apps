@@ -14,13 +14,19 @@ helm-loki:
 
       config:
         ruler:
+          #rule_path: /rules/fake
           alertmanager_url: http://alertmanager-main.monitoring.svc.cluster.local:9093
       alerting_groups:
         - name: generic_alerts
           rules:
           - alert: LogstashError
-            expr: sum (count_over_time({namespace="logstash-soc"} |= "Error" [10m])) > 1
+            expr: |
+              sum (count_over_time({namespace="logstash-soc"} |= "Error" [15m])) > 1
             for: 10s
+            labels:
+              severity: warning
+            annotations:
+              description: Found  {{ "{{" }} printf "%v" $value {{ "}}" }} line(s) of [Error] in [logstash-soc] namespace
 
     grafana:
       envFromSecret: google-oidc-secret
