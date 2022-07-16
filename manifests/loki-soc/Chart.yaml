@@ -6,6 +6,6 @@ description: A Helm chart wrapper for Loki Log
 
 dependencies:
   - name: helm-loki
-    version: "1.1.4"
+    version: "1.1.5-rc2"
     repository: "https://its-software-services-devops.github.io/helm-loki/"
     condition: helm-loki.enabled
