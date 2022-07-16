@@ -14,7 +14,7 @@ helm-loki:
 
       config:
         ruler:
-          #rule_path: /rules/fake
+          rule_path: /rules
           alertmanager_url: http://alertmanager-main.monitoring.svc.cluster.local:9093
       alerting_groups:
         - name: generic_alerts
