@@ -20,7 +20,7 @@ helm-loki:
           rules:
           - alert: LogstashError
             expr: sum (count_over_time({namespace="logstash-soc"} |= "Error" [10m])) > 1
-            for: 30s
+            for: 10s
 
     grafana:
       envFromSecret: google-oidc-secret
