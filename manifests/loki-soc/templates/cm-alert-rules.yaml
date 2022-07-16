@@ -18,7 +18,7 @@ data:
 
           - alert: UnknownCategoryError
             expr: |
-              sum(count_over_time({type="syslog", category="dns"}[1m])) >= 1
+              sum(count_over_time({type="syslog", category="unknown"}[1m])) >= 1
             for: 30s
             labels:
               severity: warning
