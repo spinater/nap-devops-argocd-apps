@@ -47,8 +47,8 @@ helm-loki:
             - key: gcp-sa-file
               path: gcp-sa-file.json
       extraVolumeMounts:
-#        - name: loki-ruler-alerting-rules
-#          mountPath: "/rules/alerts/generic"
+        - name: loki-ruler-alerting-rules
+          mountPath: "/rules/alerts/generic"
         - name: gcp-sa
           mountPath: "/secrets"
           readOnly: true
