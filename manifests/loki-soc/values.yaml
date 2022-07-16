@@ -66,8 +66,20 @@ helm-loki:
       #alertmanager_url: http://alertmanager.xx
       #external_url: http://alertmanager.xx
       directories:
-        fake: {}
-          #dummy.txt: ""
+        fake:
+          default.txt: |
+            groups:
+              - name: should_fire
+                rules:
+                  - alert: HighPercentageError
+                    expr: |
+                      1 + 1
+                    for: 4h
+                    labels:
+                      severity: none
+                    annotations:
+                      summary: "This is an alert meant to ensure that the entire Loki alerting is functional."
+
     querier:
       replicas: 1
       extraVolumes:
