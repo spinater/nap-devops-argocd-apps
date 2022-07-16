@@ -36,9 +36,9 @@ data:
 
           - alert: NoDataToSyslogError
             expr: |
-              sum(count_over_time({type="syslog"}[5m])) <= 100
+              sum(count_over_time({type="syslog"}[5m])) <= 50
             for: 30s
             labels:
               severity: warning
             annotations:
-              description: Found  {{ "{{" }} printf "%v" $value {{ "}}" }} line(s) of log which less than the threshold [100]
+              description: Found  {{ "{{" }} printf "%v" $value {{ "}}" }} line(s) of log which less than the threshold [50]
