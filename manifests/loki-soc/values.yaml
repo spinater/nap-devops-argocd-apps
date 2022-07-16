@@ -66,8 +66,8 @@ helm-loki:
       #alertmanager_url: http://alertmanager.xx
       #external_url: http://alertmanager.xx
       directories:
-        fake:
-          dummy.txt: ""
+        fake: {}
+          #dummy.txt: ""
     querier:
       replicas: 1
       extraVolumes:
