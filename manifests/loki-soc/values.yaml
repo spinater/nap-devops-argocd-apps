@@ -38,6 +38,33 @@ helm-loki:
       enabled: true
       extraVolumeMounts: []
       extraVolumes: []
+      storage:
+        type: local
+        local:
+          directory: /etc/loki/rules
+      ring:
+        kvstore:
+          store: memberlist
+      #rule_path: /tmp/loki/scratch
+      #alertmanager_url: http://alertmanager.xx
+      #external_url: http://alertmanager.xx
+      directories:
+        fake:
+          rules1.txt: |
+            groups:
+              - name: should_fire
+                rules:
+                  - alert: HighPercentageError
+                    expr: |
+                      sum(rate({app="loki"} |= "error" [5m])) by (job)
+                        /
+                      sum(rate({app="loki"}[5m])) by (job)
+                        > 0.05
+                    for: 10m
+                    labels:
+                      severity: warning
+                    annotations:
+                      summary: High error rate
 
     querier:
       replicas: 1
