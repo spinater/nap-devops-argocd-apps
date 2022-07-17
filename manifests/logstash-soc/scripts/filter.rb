@@ -123,7 +123,7 @@ def load_misp_cahce(event, cache, value_field)
         # TODO : Get this from REST API instead
         misp_data = "This is cached data of [#{value}]"
 
-        cache.set(key, misp_data, 600) #10 minutes expiration
+        cache.set(key, misp_data, 3600) #60 minutes expiration
     end
 
     #TODO : Process MISP data got from cache here
