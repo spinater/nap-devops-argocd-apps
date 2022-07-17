@@ -1,15 +1,15 @@
 #Labels {'user', 'domain', 'src_ip', 'dst_ip', 'mac', 'src_net', 'dst_net', 'src_port', 'dst_port'}
 require 'time'
-require 'memcache'
+#require 'memcache'
 
 def register(params)
-    @mc_ip = MemCache.new :namespace => 'soc-ip',
-        :debug => false
-    @mc_ip.servers = 'memcached.memcached.svc.cluster.local:11211'
+#    @mc_ip = MemCache.new :namespace => 'soc-ip',
+#        :debug => false
+#    @mc_ip.servers = 'memcached.memcached.svc.cluster.local:11211'
 
-    @mc_dm = MemCache.new :namespace => 'soc-domain',
-        :debug => false
-    @mc_dm.servers = 'memcached.memcached.svc.cluster.local:11211'    
+#    @mc_dm = MemCache.new :namespace => 'soc-domain',
+#        :debug => false
+#    @mc_dm.servers = 'memcached.memcached.svc.cluster.local:11211'    
 end
 
 def extract_hotspot(event, message, category)
@@ -153,8 +153,8 @@ def filter(event)
         extract_dns(event, data, category)        
     end
 
-    load_misp_cahce(event, @mc_ip, 'dst_ip')
-    load_misp_cahce(event, @mc_dm, 'domain')
+    #load_misp_cahce(event, @mc_ip, 'dst_ip')
+    #load_misp_cahce(event, @mc_dm, 'domain')
 
     return [event]
 end
