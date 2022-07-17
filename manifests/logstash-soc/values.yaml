@@ -3,8 +3,8 @@ logstash-syslog:
 
   replicas: 1
   fullnameOverride: logstash-syslog #From Syslog to Kafka
-  image: "grafana/logstash-output-loki"
-  imageTag: 2.5.0-amd64
+  image: gcr.io/its-artifact-commons/logstash-loki #"grafana/logstash-output-loki" 
+  imageTag: develop-ffb7e3a #2.5.0-amd64
 
   service:
     type: LoadBalancer
