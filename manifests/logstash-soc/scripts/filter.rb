@@ -2,6 +2,15 @@
 require 'time'
 
 def register(params)
+    @mc_ip = MemCache.new 
+        :namespace => 'soc-ip',
+        :debug => false
+        @mc_ip.servers = 'memcached.memcached.svc.cluster.local:11211'
+
+    @mc_dm = MemCache.new 
+        :namespace => 'soc-domain',
+        :debug => false
+        @mc_dm.servers = 'memcached.memcached.svc.cluster.local:11211'    
 end
 
 def extract_hotspot(event, message, category)
@@ -101,6 +110,21 @@ def get_category(message)
     return category
 end
 
+def load_misp_cahce(event, cache, value_field)
+    value = event.get(value_field)
+
+    if value.nil? or value == ''
+        misp_data = "Nothing to do because the field [#{value_field}] is blank [#{value}]"
+        return [event]   
+    end
+
+    #Lookup for cache
+    misp_data = "This is cached data of [#{value}]"
+    puts "### Getting MISP from field [#{value_field}] value [#{value}]"
+
+    return [event]    
+end
+
 def filter(event)
     data = event.get('message')
     arr1 = data.split(',')
@@ -129,6 +153,9 @@ def filter(event)
     elsif category == 'dns'
         extract_dns(event, data, category)        
     end
+
+    load_misp_cahce(event, @mc_ip, 'dst_ip')
+    load_misp_cahce(event, @mc_dm, 'domain')
 
     return [event]
 end
