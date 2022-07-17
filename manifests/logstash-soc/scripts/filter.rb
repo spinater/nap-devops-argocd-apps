@@ -120,7 +120,8 @@ def load_misp_cahce(event, cache, value_field)
         puts "### [Notfound] Getting MISP from field [#{value_field}] value [#{value}]"
 
         # TODO : Get this from REST API instead
-        misp_data = "This is cached data of [#{value}]"
+        misp_data = "This is cached data of [#{value}]"ง
+
         cache.set(value, misp_data)
     end
 
