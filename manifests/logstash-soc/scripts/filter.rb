@@ -3,6 +3,7 @@ require 'time'
 require 'dalli'
 
 def register(params)
+    @mc = Dalli::Client.new('memcached.memcached.svc.cluster.local:11211')
 #    @mc_ip = MemCache.new :namespace => 'soc-ip',
 #        :debug => false
 #    @mc_ip.servers = 'memcached.memcached.svc.cluster.local:11211'
