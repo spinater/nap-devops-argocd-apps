@@ -3,6 +3,7 @@ require 'time'
 require 'dalli'
 
 def register(params)
+    $stdout.sync = true
     @mc = Dalli::Client.new('memcached.memcached.svc.cluster.local:11211')   
 end
 
