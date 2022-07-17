@@ -4,7 +4,7 @@ logstash-syslog:
   replicas: 1
   fullnameOverride: logstash-syslog #From Syslog to Kafka
   image: gcr.io/its-artifact-commons/logstash-loki #"grafana/logstash-output-loki" 
-  imageTag: develop-7bb179b #2.5.0-amd64
+  imageTag: develop-c962a1d #2.5.0-amd64
 
   service:
     type: LoadBalancer
@@ -17,7 +17,7 @@ logstash-syslog:
 
   extraEnvs:
     - name: DUMMY_FOR_RESTART #If need to restart pod manually then change this
-      value: "0003"
+      value: "0004"
   
     - name: LS_JAVA_OPTS
       value: "-Xmx256m -Xms256m"
