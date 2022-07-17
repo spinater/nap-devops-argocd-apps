@@ -112,17 +112,19 @@ def load_misp_cahce(event, cache, value_field)
         return [event]
     end
 
-    cached_value = cache.get(value)
-    if cached_value
+    misp_data = cache.get(value)
+    if misp_data
         #Found
         puts "### [Found] Getting MISP from field [#{value_field}] value [#{value}]"
     else
         puts "### [Notfound] Getting MISP from field [#{value_field}] value [#{value}]"
+
+        # TODO : Get this from REST API instead
+        misp_data = "This is cached data of [#{value}]"
+        cache.set(value, misp_data)
     end
 
-    #Lookup for cache
-    #misp_data = "This is cached data of [#{value}]"
-    #puts "### Getting MISP from field [#{value_field}] value [#{value}]"
+    #TODO : Process MISP data got from cache here
 
     return [event]    
 end
