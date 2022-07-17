@@ -3,14 +3,7 @@ require 'time'
 require 'dalli'
 
 def register(params)
-    @mc = Dalli::Client.new('memcached.memcached.svc.cluster.local:11211')
-#    @mc_ip = MemCache.new :namespace => 'soc-ip',
-#        :debug => false
-#    @mc_ip.servers = 'memcached.memcached.svc.cluster.local:11211'
-
-#    @mc_dm = MemCache.new :namespace => 'soc-domain',
-#        :debug => false
-#    @mc_dm.servers = 'memcached.memcached.svc.cluster.local:11211'    
+    @mc = Dalli::Client.new('memcached.memcached.svc.cluster.local:11211')   
 end
 
 def extract_hotspot(event, message, category)
@@ -118,9 +111,17 @@ def load_misp_cahce(event, cache, value_field)
         return [event]   
     end
 
+    cached_value = cache.get(value)
+    if cached_value
+        #Found
+        puts "### [Found] Getting MISP from field [#{value_field}] value [#{value}]"
+    else
+        puts "### [Notfound] Getting MISP from field [#{value_field}] value [#{value}]"
+    end
+
     #Lookup for cache
-    misp_data = "This is cached data of [#{value}]"
-    puts "### Getting MISP from field [#{value_field}] value [#{value}]"
+    #misp_data = "This is cached data of [#{value}]"
+    #puts "### Getting MISP from field [#{value_field}] value [#{value}]"
 
     return [event]    
 end
@@ -154,7 +155,7 @@ def filter(event)
         extract_dns(event, data, category)        
     end
 
-    #load_misp_cahce(event, @mc_ip, 'dst_ip')
+    load_misp_cahce(event, @mc, 'dst_ip')
     #load_misp_cahce(event, @mc_dm, 'domain')
 
     return [event]
