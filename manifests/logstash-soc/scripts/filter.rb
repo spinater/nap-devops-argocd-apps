@@ -112,17 +112,18 @@ def load_misp_cahce(event, cache, value_field)
         return [event]
     end
 
-    misp_data = cache.get(value)
+    key = "#{value_field}:#{value}"
+    misp_data = cache.get(key)
     if misp_data
         #Found
         #puts "### [Found] Getting MISP from cached [#{value_field}] value [#{value}]"
     else
-        puts "### [Notfound] Getting MISP from field [#{value_field}] value [#{value}]"
+        puts "### [Notfound] Getting MISP from field [#{key}] value [#{value}]"
 
         # TODO : Get this from REST API instead
         misp_data = "This is cached data of [#{value}]"
 
-        cache.set(value, misp_data)
+        cache.set(key, misp_data, 600) #10 minutes expiration
     end
 
     #TODO : Process MISP data got from cache here
