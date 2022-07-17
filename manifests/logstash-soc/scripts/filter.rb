@@ -1,5 +1,6 @@
 #Labels {'user', 'domain', 'src_ip', 'dst_ip', 'mac', 'src_net', 'dst_net', 'src_port', 'dst_port'}
 require 'time'
+require 'memcache'
 
 def register(params)
     @mc_ip = MemCache.new :namespace => 'soc-ip',
