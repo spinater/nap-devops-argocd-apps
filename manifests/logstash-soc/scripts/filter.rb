@@ -2,15 +2,13 @@
 require 'time'
 
 def register(params)
-    @mc_ip = MemCache.new 
-        :namespace => 'soc-ip',
+    @mc_ip = MemCache.new :namespace => 'soc-ip',
         :debug => false
-        @mc_ip.servers = 'memcached.memcached.svc.cluster.local:11211'
+    @mc_ip.servers = 'memcached.memcached.svc.cluster.local:11211'
 
-    @mc_dm = MemCache.new 
-        :namespace => 'soc-domain',
+    @mc_dm = MemCache.new :namespace => 'soc-domain',
         :debug => false
-        @mc_dm.servers = 'memcached.memcached.svc.cluster.local:11211'    
+    @mc_dm.servers = 'memcached.memcached.svc.cluster.local:11211'    
 end
 
 def extract_hotspot(event, message, category)
