@@ -108,7 +108,7 @@ def load_misp_cahce(event, cache, value_field)
 
     if value.nil? or value == ''
         misp_data = "Nothing to do because the field [#{value_field}] is blank [#{value}]"
-        return [event]   
+        return [event]
     end
 
     cached_value = cache.get(value)
@@ -156,7 +156,7 @@ def filter(event)
     end
 
     load_misp_cahce(event, @mc, 'dst_ip')
-    #load_misp_cahce(event, @mc_dm, 'domain')
+    load_misp_cahce(event, @mc, 'domain')
 
     return [event]
 end
