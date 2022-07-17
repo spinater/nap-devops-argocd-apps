@@ -5,7 +5,3 @@ metadata:
 data:
   filter.rb: |-
 {{ .Files.Get "scripts/filter.rb" |  indent 4 }}
-  load-misp-cache.rb: |-
-{{ .Files.Get "scripts/load-misp-cache.rb" |  indent 4 }}
-  process-misp-fields.rb: |-
-{{ .Files.Get "scripts/process-misp-fields.rb" |  indent 4 }}
