@@ -37,6 +37,7 @@ grafana:
     cm-logstash-dashboard: cm-logstash-dashboard
     cm-events-stat: cm-events-stat
     cm-dst-network-stat: cm-dst-network-stat
+    cm-potential-intrusion: cm-potential-intrusion
 
   grafana.ini:
     log:
