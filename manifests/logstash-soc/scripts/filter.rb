@@ -136,12 +136,6 @@ def filter(event)
     arr1 = data.split(',')
     category = get_category(data)
 
-    #current_time = event.get('@timestamp') + '' #convert to string
-    #time = Time.new
-    #event.set('yyyy', time.strftime("%Y"))
-    #event.set('yyyymm', time.strftime("%Y%m"))
-    #event.set('yyyymmdd', time.strftime("%Y%m%d"))
-
     event.set('type', 'syslog')
     event.set('debug_field1', 'not-matched')
     event.set('category', category)    
@@ -157,7 +151,7 @@ def filter(event)
     elsif category == 'firewall'
         extract_firewall(event, data, category)
     elsif category == 'dns'
-        extract_dns(event, data, category)        
+        extract_dns(event, data, category)
     end
 
     load_misp_cahce(event, @mc, 'dst_ip')

@@ -57,7 +57,7 @@ logstash-syslog:
         mutate {
           # Remove temp fields, not to be shown in Loki
           # Remove to reduce label values
-          remove_field => [ "misp_domain", "misp_dst_ip", "domain", "dst_ip" ]
+          remove_field => [ "misp_domain", "misp_dst_ip", "domain", "dst_ip", "src_port" ]
         }
       }
 
