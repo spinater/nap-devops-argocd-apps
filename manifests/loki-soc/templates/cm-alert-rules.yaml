@@ -42,3 +42,12 @@ data:
               severity: warning
             annotations:
               description: Found  {{ "{{" }} printf "%v" $value {{ "}}" }} line(s) of log which less than the threshold [50]
+
+          - alert: FailedAttemptLogin
+            expr: |
+              sum(count_over_time({type="syslog",category="hotspot"} |= "login failed"[5m])) >= 1
+            for: 0s
+            labels:
+              severity: warning
+            annotations:
+              description: Found  {{ "{{" }} printf "%v" $value {{ "}}" }} occurence(s) of failed login attempt
