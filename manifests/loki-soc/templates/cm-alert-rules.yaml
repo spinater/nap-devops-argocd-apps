@@ -28,7 +28,7 @@ data:
           - alert: SystemCategoryFound
             expr: |
               sum(count_over_time({type="syslog", category="system"}[15m])) >= 1
-            for: 30s
+            for: 0s
             labels:
               severity: warning
             annotations:
