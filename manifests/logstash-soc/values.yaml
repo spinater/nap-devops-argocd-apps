@@ -31,11 +31,17 @@ logstash-syslog:
     - name: scripts
       mountPath: /scripts/
       readOnly: true
+    - name: secrets
+      mountPath: /secrets/
+      readOnly: true
 
   extraVolumes:
     - name: scripts
       configMap:
         name: ruby-filter-cm
+    - name: secrets
+      secret:
+        secretName: gcp-sa
 
   logstashPipeline:
     logstash.conf: |
@@ -71,6 +77,6 @@ logstash-syslog:
         google_pubsub {
           project_id => "nap-devops-prod" #Should be based on environment
           topic => "normalized-syslog"
-          #json_key_file => "service_account_key.json"
+          json_key_file => "/secrets/gcp-sa-file.json"
         }        
       }
