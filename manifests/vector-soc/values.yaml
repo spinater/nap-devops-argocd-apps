@@ -5,3 +5,37 @@ vector:
 
   serviceAccount:
     create: true
+
+  extraVolumeMounts:
+    - name: secrets
+      mountPath: /secrets/
+      readOnly: true
+
+  extraVolumes:
+    - name: secrets
+      secret:
+        secretName: gcp-sa
+
+  customConfig:
+    data_dir: "/vector-data-dir" #Do not change this if you don't know the impact
+    sources:
+      internal_metrics:
+        type: internal_metrics
+    
+      pubsub_normalized_syslog:
+        type: gcp_pubsub
+        credentials_path: "/secrets/gcp-sa-file.json"
+        project: "nap-devops-prod"
+        subscription: "normalized-syslog-sub"        
+
+    sinks:
+      prom_exporter:
+        type: prometheus_exporter
+        inputs: [internal_metrics]
+        address: 0.0.0.0:9090
+
+      stdout:
+        type: console
+        inputs: [pubsub_normalized_syslog]
+        encoding:
+          codec: json
