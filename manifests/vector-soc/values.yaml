@@ -36,9 +36,9 @@ vector:
         source: |-
           syslog_json_str = .message
           . = parse_json!(string!(syslog_json_str))
-          .yyyymmdd = parse_timestamp(.@timestamp, "%Y-%m-%d")
-          .yyyymm = parse_timestamp(.@timestamp, "%Y-%m")
-          .yyyy = parse_timestamp(.@timestamp, "%Y")
+          .yyyymmdd = parse_timestamp!(.@timestamp, "%Y-%m-%d")
+          .yyyymm = parse_timestamp!(.@timestamp, "%Y-%m")
+          .yyyy = parse_timestamp!(.@timestamp, "%Y")
 
     sinks:
       prom_exporter:
