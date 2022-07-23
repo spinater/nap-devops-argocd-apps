@@ -39,7 +39,7 @@ vector:
           .ts = string!(.@timestamp)
 
           date_tokens = split!(.ts, "T")
-          tokens = split!(date_tokens[0], "-")
+          tokens = split(date_tokens[0], "-")
 
           .yyyymmdd = tokens[0] + tokens[1] + tokens[2]
           .yyyymm = tokens[0] + tokens[1]
