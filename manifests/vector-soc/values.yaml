@@ -37,9 +37,10 @@ vector:
           syslog_json_str = .message
           . = parse_json!(string!(syslog_json_str))
           .ts1 = string!(.@timestamp)
+          tokens = split!(.ts1, "-")
           .yyyymmdd = .ts1
           .yyyymm = .ts1
-          .yyyy = parse_timestamp!(.ts1, format: "%Y")
+          .yyyy = tokens[0]
 
     sinks:
       prom_exporter:
