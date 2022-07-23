@@ -35,7 +35,7 @@ vector:
           - pubsub_normalized_syslog
         source: |-
           syslog_json_str = .message
-          . = parse_json!(string!(.syslog_json_str))
+          . = parse_json!(string!(syslog_json_str))
           .yyyymmdd = "yyyy-mm-dd"
 
     sinks:
