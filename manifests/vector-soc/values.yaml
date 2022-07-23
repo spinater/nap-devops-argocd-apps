@@ -1,0 +1,7 @@
+vector:
+  fullnameOverride: vector-soc
+  rbac:
+    create: true
+
+  serviceAccount:
+    create: true

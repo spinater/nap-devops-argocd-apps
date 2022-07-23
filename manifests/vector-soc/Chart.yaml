@@ -1,0 +1,12 @@
+apiVersion: v2
+name: helm-vector-soc
+version: 1.0.0
+appVersion: 1.23.0
+description: A Helm chart wrapper for Vector
+
+dependencies:
+  # https://github.com/vectordotdev/helm-charts/tree/develop/charts/vector
+  - name: vector
+    version: "0.14.0"
+    repository: "https://helm.vector.dev"
+    condition: vector.enabled
