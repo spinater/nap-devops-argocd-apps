@@ -37,7 +37,7 @@ vector:
           syslog_json_str = .message
           . = parse_json!(string!(syslog_json_str))
 
-          timestamp = "t'{{ .@timestamp }}'"
+          timestamp = "t'" + .@timestamp + "'"
 
           .yyyymmdd = parse_timestamp!(timestamp, "%Y-%m-%d")
           .yyyymm = parse_timestamp!(timestamp, "%Y-%m")
