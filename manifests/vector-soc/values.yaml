@@ -36,9 +36,11 @@ vector:
         source: |-
           syslog_json_str = .message
           . = parse_json!(string!(syslog_json_str))
-          .ts1 = string!(.@timestamp)
-          date = split!(.ts1, "T")[0]
+          .ts = string!(.@timestamp)
+
+          date = split!(.ts, "T")[0]
           tokens = split!(date, "-")
+
           .yyyymmdd = tokens[0] + tokens[1] + tokens[2]
           .yyyymm = tokens[0] + tokens[1]
           .yyyy = tokens[0]
