@@ -36,10 +36,10 @@ vector:
         source: |-
           syslog_json_str = .message
           . = parse_json!(string!(syslog_json_str))
-          ts = "t'" + .@timestamp + "'"
-          .yyyymmdd = parse_timestamp!(value: ts, format: "%Y-%m-%d")
-          .yyyymm = parse_timestamp!(value: ts, format: "%Y-%m")
-          .yyyy = parse_timestamp!(value: ts, format: "%Y")
+          ts1 = "t'" + .@timestamp + "'"
+          .yyyymmdd = parse_timestamp!(value: ts1, format: "%Y-%m-%d")
+          .yyyymm = parse_timestamp!(value: ts1, format: "%Y-%m")
+          .yyyy = parse_timestamp!(value: ts1, format: "%Y")
 
     sinks:
       prom_exporter:
