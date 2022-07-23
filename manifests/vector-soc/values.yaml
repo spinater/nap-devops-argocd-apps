@@ -39,9 +39,9 @@ vector:
 
           timestamp = "t'" + .@timestamp + "'"
 
-          .yyyymmdd = parse_timestamp!(timestamp, "%Y-%m-%d")
-          .yyyymm = parse_timestamp!(timestamp, "%Y-%m")
-          .yyyy = parse_timestamp!(timestamp, "%Y")
+          .yyyymmdd = parse_timestamp!(timestamp, format: "%Y-%m-%d")
+          .yyyymm = parse_timestamp!(timestamp, format: "%Y-%m")
+          .yyyy = parse_timestamp!(timestamp, format: "%Y")
 
     sinks:
       prom_exporter:
