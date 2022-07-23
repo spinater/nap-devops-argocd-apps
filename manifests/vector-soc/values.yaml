@@ -28,6 +28,16 @@ vector:
         project: "nap-devops-prod"
         subscription: "normalized-syslog-sub"        
 
+    transforms:
+      extract_dices:
+        type: remap
+        inputs:
+          - pubsub_normalized_syslog
+        source: |-
+          syslog_json_str = .message
+          . = parse_json!(string!(.syslog_json_str))
+          .yyyymmdd = "yyyy-mm-dd"
+
     sinks:
       prom_exporter:
         type: prometheus_exporter
@@ -36,6 +46,6 @@ vector:
 
       stdout:
         type: console
-        inputs: [pubsub_normalized_syslog]
+        inputs: [extract_dices]
         encoding:
           codec: json
