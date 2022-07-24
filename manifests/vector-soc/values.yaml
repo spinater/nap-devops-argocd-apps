@@ -1,6 +1,7 @@
 vector:
-  persistence: true
   fullnameOverride: vector-soc
+  persistence:
+    enabled: true  
   rbac:
     create: true
 
