@@ -36,18 +36,15 @@ vector:
         source: |-
           syslog_json_str = .message
           . = parse_json!(string!(syslog_json_str))
-          .ts = string!(.@timestamp)
 
+          .ts = string!(.@timestamp)
           date_tokens = split!(.ts, "T")
           tokens = split(date_tokens[0], "-")
 
-          .log = {
-            "yyyymmdd": tokens[0] + tokens[1] + tokens[2],
-            "yyyymm": tokens[0] + tokens[1],
-            "yyyy": tokens[0],
-            "category": .category,
-            "value": 1
-          }
+          .yyyymmdd = tokens[0] + tokens[1] + tokens[2]
+          .yyyymm = tokens[0] + tokens[1]
+          .yyyy = tokens[0]
+          .value = 1
 
       extract_metrics:
         type: log_to_metric
@@ -55,7 +52,7 @@ vector:
           - extract_dices
         metrics:
           - type: counter
-            field: log.value
+            field: value
             name: event_count
             namespace: syslog
             tags:
