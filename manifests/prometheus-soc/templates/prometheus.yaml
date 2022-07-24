@@ -10,12 +10,8 @@ spec:
       namespace: monitoring
       port: web
   podMonitorNamespaceSelector:
-    # See more aboue selector - https://github.com/prometheus-operator/prometheus-operator/issues/1331#issuecomment-907512548
-    matchExpressions:
-      - key: name
-        operator: In
-        values:   
-          - prometheus-soc
+    matchLabels:
+      platform-monitoring: "true"
   podMonitorSelector: {}  
   probeNamespaceSelector: {}
   probeSelector: {}
