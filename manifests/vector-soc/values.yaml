@@ -50,7 +50,7 @@ vector:
         inputs:
           - extract_dices
         source: |-
-          .metric = encode_json({
+          . = encode_json({
             "counter": {
               "value": 1
             },
@@ -74,6 +74,6 @@ vector:
 
       stdout:
         type: console
-        inputs: [internal_metrics]
+        inputs: [extract_dices]
         encoding:
           codec: json
