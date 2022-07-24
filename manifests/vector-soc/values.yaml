@@ -66,10 +66,10 @@ vector:
           })
 
     sinks:
-#      prom_exporter:
-#        type: prometheus_exporter
-#        inputs: [internal_metrics]
-#        address: 0.0.0.0:9090
+      prom_exporter:
+        type: prometheus_exporter
+        inputs: [internal_metrics]
+        address: 0.0.0.0:9090
 
       prometheus_event_exporter:
         type: prometheus_exporter
