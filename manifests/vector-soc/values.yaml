@@ -51,18 +51,20 @@ vector:
           - extract_dices
         source: |-
           . = {
-            "timestamp": .ts,
-            "counter": {
-              "value": 1
-            },
-            "kind": "absolute",
-            "name": "event_count",
-            "namespace": "syslog",
-            "tags": {
-              "category": .category,
-              "yyyy": .yyyy,
-              "yyyymm": .yyyymm,
-              "yyyymmdd": .yyyymmdd
+            "metric": {
+              "timestamp": .ts,
+              "counter": {
+                "value": 1
+              },
+              "kind": "absolute",
+              "name": "event_count",
+              "namespace": "syslog",
+              "tags": {
+                "category": .category,
+                "yyyy": .yyyy,
+                "yyyymm": .yyyymm,
+                "yyyymmdd": .yyyymmdd
+              }
             }
           }
 
