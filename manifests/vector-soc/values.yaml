@@ -21,7 +21,7 @@ vector:
     sources:
       internal_metrics:
         type: internal_metrics
-    
+
       pubsub_normalized_syslog:
         type: gcp_pubsub
         credentials_path: "/secrets/gcp-sa-file.json"
@@ -51,7 +51,6 @@ vector:
           - extract_dices
         source: |-
           . = {
-            "metric": {
               "timestamp": .ts,
               "counter": {
                 "value": 1
@@ -66,11 +65,10 @@ vector:
                 "yyyymmdd": .yyyymmdd
               }
             }
-          }
 
     sinks:
       prometheus_event_exporter:
-        type: prometheus_exporter
+        type: prometheus
         inputs: [extract_metrics]
         default_namespace: syslog
         address: 0.0.0.0:9090
