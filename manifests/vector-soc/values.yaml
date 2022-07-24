@@ -45,6 +45,22 @@ vector:
           .yyyymm = tokens[0] + tokens[1]
           .yyyy = tokens[0]
 
+      extract_metrics:
+        type: remap
+        inputs:
+          - extract_dices
+        source: |-
+          .metric = encode_json({
+            "counter": {
+              "value": 1.5
+            },
+            "kind": "incremental",
+            "name": "logins",
+            "tags": {
+              "host": "my-host.local"
+            }
+          })
+
     sinks:
       prom_exporter:
         type: prometheus_exporter
@@ -53,6 +69,6 @@ vector:
 
       stdout:
         type: console
-        inputs: [extract_dices]
+        inputs: [extract_metrics]
         encoding:
           codec: json
