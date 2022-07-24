@@ -19,11 +19,8 @@ spec:
   retention: 600d
   retentionSize: 48GB
   ruleNamespaceSelector:
-    matchExpressions:
-      - key: name
-        operator: In
-        values:   
-          - prometheus-soc 
+    matchLabels:
+      platform-monitoring: "true"
   ruleSelector: {}
   securityContext:
     fsGroup: 2000
@@ -31,11 +28,8 @@ spec:
     runAsUser: 1000  
   serviceMonitorSelector: {}
   serviceMonitorNamespaceSelector:
-    matchExpressions:
-      - key: name
-        operator: In
-        values:   
-          - prometheus-soc
+    matchLabels:
+      platform-monitoring: "true"
   storage:
     volumeClaimTemplate:
       spec:
