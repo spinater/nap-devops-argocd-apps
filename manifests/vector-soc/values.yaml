@@ -58,7 +58,10 @@ vector:
             "name": "event_count",
             "namespace": "syslog",
             "tags": {
-              "category": .category
+              "category": .category,
+              "yyyy": .yyyy,
+              "yyyymm": .yyyymm,
+              "yyyymmdd": .yyyymmdd
             }
           })
 
