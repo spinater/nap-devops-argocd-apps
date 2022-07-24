@@ -45,22 +45,23 @@ vector:
           .yyyymm = tokens[0] + tokens[1]
           .yyyy = tokens[0]
 
+          .log = {
+            "host": "10.22.11.222",
+            "message": "Sent 200 in 54.2ms",
+            "status": 200
+          }
+
       extract_metrics:
-        type: remap
+        type: log_to_metric
         inputs:
           - extract_dices
-        source: |-
-          ts = .ts
-
-          . = {}
-          .metric = {
-              "counter": {
-                "value": 1
-              },
-              "kind": "increment",
-              "name": "event_count"
-            }
-          .metric.timestamp = to_timestamp!(ts)
+        metrics:
+          - type: counter
+            field: status
+            name: event_count
+            namespace: syslog
+            tags:
+              host: "{{host}}"
 
     sinks:
       prometheus_event_exporter:
