@@ -50,7 +50,7 @@ vector:
         inputs:
           - extract_dices
         source: |-
-          .metric = {
+          metric = {
               "counter": {
                 "value": 1
               },
@@ -63,7 +63,7 @@ vector:
                 "yyyymmdd": .yyyymmdd
               }
             }
-          .metric.timestamp = to_timestamp!(.ts)
+          metric.timestamp = to_timestamp!(.ts)
 
     sinks:
       prometheus_event_exporter:
