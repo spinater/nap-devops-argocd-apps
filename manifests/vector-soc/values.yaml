@@ -55,16 +55,26 @@ vector:
               "value": 1
             },
             "kind": "incremental",
-            "name": "instance_count",
+            "name": "event_count",
+            "namespace": "syslog",
             "tags": {
               "category": .category
+              "yyyy": .yyyy
+              "yyyymm": .yyyymm
+              "yyyymmdd": .yyyymmdd
             }
           })
 
     sinks:
-      prom_exporter:
+#      prom_exporter:
+#        type: prometheus_exporter
+#        inputs: [internal_metrics]
+#        address: 0.0.0.0:9090
+
+      prometheus_event_exporter:
         type: prometheus_exporter
-        inputs: [internal_metrics]
+        inputs: [extract_metrics]
+        default_namespace: syslog
         address: 0.0.0.0:9090
 
       stdout:
