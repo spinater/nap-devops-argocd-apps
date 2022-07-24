@@ -18,6 +18,10 @@ spec:
   retentionSize: 48GB
   ruleNamespaceSelector: {}
   ruleSelector: {}
+  securityContext:
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000  
   serviceMonitorSelector: {}
   storage:
     volumeClaimTemplate:
