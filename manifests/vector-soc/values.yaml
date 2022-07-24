@@ -1,4 +1,5 @@
 vector:
+  persistence: true
   fullnameOverride: vector-soc
   rbac:
     create: true
@@ -66,7 +67,7 @@ vector:
         buffer:
           type: disk
           max_size: 268435488 #256 megabytes
-        flush_period_secs: 86400 # 1 day
+        flush_period_secs: 172800 # 2 days, new label created on daily basis
         type: prometheus_exporter
         inputs: [extract_metrics]
         default_namespace: syslog
