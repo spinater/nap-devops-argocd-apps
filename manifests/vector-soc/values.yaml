@@ -58,7 +58,11 @@ vector:
             field: log.value
             name: event_count
             namespace: syslog
-            tags: { "yyyymmdd": "yyyymmdd" }
+            tags:
+              "yyyymmdd":  '{{ printf "{{%s}}" "yyyymmdd" }}'
+              "yyyymm":  '{{ printf "{{%s}}" "yyyymm" }}'
+              "yyyy":  '{{ printf "{{%s}}" "yyyy" }}'
+              "category":  '{{ printf "{{%s}}" "category" }}'
 
     sinks:
       prometheus_event_exporter:
