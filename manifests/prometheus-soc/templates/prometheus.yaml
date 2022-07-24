@@ -1,0 +1,48 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: platform
+spec:
+  alerting:
+    alertmanagers:
+    - apiVersion: v2
+      name: alertmanager-main
+      namespace: monitoring
+      port: web
+  podMonitorNamespaceSelector:
+    # See more aboue selector - https://github.com/prometheus-operator/prometheus-operator/issues/1331#issuecomment-907512548
+    matchExpressions:
+      - key: name
+        operator: In
+        values:   
+          - prometheus-soc
+  podMonitorSelector: {}  
+  probeNamespaceSelector: {}
+  probeSelector: {}
+  replicas: 1
+  retention: 600d
+  retentionSize: 48GB
+  ruleNamespaceSelector:
+    matchExpressions:
+      - key: name
+        operator: In
+        values:   
+          - prometheus-soc 
+  ruleSelector: {}
+  securityContext:
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000  
+  serviceMonitorSelector: {}
+  serviceMonitorNamespaceSelector:
+    matchExpressions:
+      - key: name
+        operator: In
+        values:   
+          - prometheus-soc
+  storage:
+    volumeClaimTemplate:
+      spec:
+        resources:
+          requests:
+            storage: 50Gi
