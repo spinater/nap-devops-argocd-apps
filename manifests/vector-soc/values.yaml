@@ -58,13 +58,7 @@ vector:
                 "value": 1
               },
               "kind": "increment",
-              "name": "event_count",
-              "tags": {
-                "category": .category,
-                "yyyy": .yyyy,
-                "yyyymm": .yyyymm,
-                "yyyymmdd": .yyyymmdd
-              }
+              "name": "event_count"
             }
           .metric.timestamp = to_timestamp!(ts)
 
