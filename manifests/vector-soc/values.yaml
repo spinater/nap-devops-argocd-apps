@@ -55,7 +55,7 @@ vector:
               "counter": {
                 "value": 1
               },
-              "kind": "absolute",
+              "kind": "increment",
               "name": "event_count",
               "namespace": "syslog",
               "tags": {
