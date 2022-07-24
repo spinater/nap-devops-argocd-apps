@@ -61,7 +61,7 @@ vector:
             name: event_count
             namespace: syslog
             tags:
-              host: "{{host}}"
+              host: "this is host"
 
     sinks:
       prometheus_event_exporter:
