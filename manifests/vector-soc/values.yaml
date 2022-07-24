@@ -52,12 +52,12 @@ vector:
         source: |-
           .metric = encode_json({
             "counter": {
-              "value": 1.5
+              "value": 1
             },
             "kind": "incremental",
-            "name": "logins",
+            "name": "instance_count",
             "tags": {
-              "host": "my-host.local"
+              "category": .category
             }
           })
 
