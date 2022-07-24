@@ -59,7 +59,7 @@ vector:
             name: event_count
             namespace: syslog
             tags:
-              yyyymmdd: "{{ " + yyyymmdd + " }}"
+              yyyymmdd: {{ "{{" }} yyyymmdd {{ "}}" }}
               yyyymm: "yyyymm"
               yyyy: "yyyy"
               category: "category"
