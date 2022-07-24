@@ -67,8 +67,8 @@ vector:
           }
     sinks:
       prometheus_event_exporter:
-        buffer:
-          type: disk
+        #buffer:
+        #  type: disk
         type: prometheus_exporter
         inputs: [extract_metrics]
         default_namespace: syslog
