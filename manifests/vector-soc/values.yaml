@@ -66,14 +66,9 @@ vector:
           })
 
     sinks:
-      prom_exporter:
-        type: prometheus_exporter
-        inputs: [internal_metrics]
-        address: 0.0.0.0:9090
-
       prometheus_event_exporter:
         type: prometheus_exporter
-        inputs: [extract_metrics]
+        inputs: [extract_metrics, internal_metrics]
         default_namespace: syslog
         address: 0.0.0.0:9090
 
