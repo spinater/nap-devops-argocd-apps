@@ -51,13 +51,12 @@ vector:
           - extract_dices
         source: |-
           . = {
-              "timestamp": .ts,
+            "metric": {
               "counter": {
                 "value": 1
               },
               "kind": "increment",
-              "name": "event_count",
-              "namespace": "syslog",
+              "name": "event",
               "tags": {
                 "category": .category,
                 "yyyy": .yyyy,
@@ -65,9 +64,11 @@ vector:
                 "yyyymmdd": .yyyymmdd
               }
             }
-
+          }
     sinks:
       prometheus_event_exporter:
+        buffer:
+          type: disk
         type: prometheus_exporter
         inputs: [extract_metrics]
         default_namespace: syslog
