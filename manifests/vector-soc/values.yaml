@@ -56,16 +56,17 @@ vector:
             name: event_count
             namespace: syslog
             tags:
-              "yyyymmdd":  '{{ printf "{{%s}}" "yyyymmdd" }}'
-              "yyyymm":  '{{ printf "{{%s}}" "yyyymm" }}'
-              "yyyy":  '{{ printf "{{%s}}" "yyyy" }}'
-              "category":  '{{ printf "{{%s}}" "category" }}'
+              "yyyymmdd": '{{ printf "{{%s}}" "yyyymmdd" }}'
+              "yyyymm": '{{ printf "{{%s}}" "yyyymm" }}'
+              "yyyy": '{{ printf "{{%s}}" "yyyy" }}'
+              "category": '{{ printf "{{%s}}" "category" }}'
 
     sinks:
       prometheus_event_exporter:
         buffer:
           type: disk
           max_size: 268435488 #256 megabytes
+        flush_period_secs: 86400 # 1 day
         type: prometheus_exporter
         inputs: [extract_metrics]
         default_namespace: syslog
