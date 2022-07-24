@@ -11,6 +11,11 @@ grafana:
     datasources.yaml:
       apiVersion: 1
       datasources:
+      - name: Prometheus-SOC
+        type: prometheus
+        access: Server
+        url: http://prometheus-operated.prometheus-soc.svc.cluster.local:9090
+
       - name: Loki-SOC
         type: loki
         access: Server
