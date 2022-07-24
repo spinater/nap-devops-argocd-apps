@@ -51,6 +51,7 @@ vector:
           - extract_dices
         source: |-
           . = {
+            "timestamp": .ts
             "counter": {
               "value": 1
             },
