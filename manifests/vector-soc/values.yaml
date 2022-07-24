@@ -50,7 +50,7 @@ vector:
         inputs:
           - extract_dices
         source: |-
-          . = encode_json({
+          . = {
             "counter": {
               "value": 1
             },
@@ -63,7 +63,7 @@ vector:
               "yyyymm": .yyyymm,
               "yyyymmdd": .yyyymmdd
             }
-          })
+          }
 
     sinks:
       prometheus_event_exporter:
