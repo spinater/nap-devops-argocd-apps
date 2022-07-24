@@ -57,7 +57,7 @@ vector:
           - extract_dices
         metrics:
           - type: counter
-            field: status
+            field: log.status
             name: event_count
             namespace: syslog
             tags:
