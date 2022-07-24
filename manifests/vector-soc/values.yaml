@@ -50,7 +50,8 @@ vector:
         inputs:
           - extract_dices
         source: |-
-          metric = {
+          . = {}
+          .metric = {
               "counter": {
                 "value": 1
               },
