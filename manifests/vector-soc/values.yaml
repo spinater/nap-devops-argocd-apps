@@ -74,6 +74,6 @@ vector:
 
       stdout:
         type: console
-        inputs: [extract_metrics]
+        inputs: [internal_metrics, extract_metrics]
         encoding:
           codec: json
