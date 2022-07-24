@@ -41,14 +41,12 @@ vector:
           date_tokens = split!(.ts, "T")
           tokens = split(date_tokens[0], "-")
 
-          .yyyymmdd = tokens[0] + tokens[1] + tokens[2]
-          .yyyymm = tokens[0] + tokens[1]
-          .yyyy = tokens[0]
-
           .log = {
-            "host": "10.22.11.222",
-            "message": "Sent 200 in 54.2ms",
-            "status": 200
+            "yyyymmdd": tokens[0] + tokens[1] + tokens[2],
+            "yyyymm": tokens[0] + tokens[1],
+            "yyyy": tokens[0],
+            "category": .category,
+            "value": 1
           }
 
       extract_metrics:
@@ -57,11 +55,14 @@ vector:
           - extract_dices
         metrics:
           - type: counter
-            field: log.status
+            field: log.value
             name: event_count
             namespace: syslog
             tags:
-              host: "this is host"
+              yyyymmdd: "{{ " + yyyymmdd + " }}"
+              yyyymm: "yyyymm"
+              yyyy: "yyyy"
+              category: "category"
 
     sinks:
       prometheus_event_exporter:
