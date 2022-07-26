@@ -10,7 +10,7 @@ wordpress:
 
   ingress:
     annotations:
-      nginx.ingress.kubernetes.io/proxy-body-size: 20m
+      nginx.ingress.kubernetes.io/proxy-body-size: 50m
       kubernetes.io/ingress.allow-http: "true" #Wordpress will redirect to https internally
 
     ingressClassName: nginx
