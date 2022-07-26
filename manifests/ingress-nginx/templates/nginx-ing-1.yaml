@@ -4,7 +4,7 @@ kind: Ingress
 metadata:
   name: nginx-ing-1
   annotations:
-    kubernetes.io/ingress.allow-http: 'false'
+    kubernetes.io/ingress.allow-http: 'true'
     kubernetes.io/ingress.global-static-ip-name: gke-ingress-1
 spec:
   tls:
