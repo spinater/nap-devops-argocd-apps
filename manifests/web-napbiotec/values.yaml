@@ -9,6 +9,9 @@ wordpress:
     tag: 5.9.1
 
   ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 20m
+      kubernetes.io/ingress.allow-http: "true" #Wordpress will redirect to https internally  
     ingressClassName: nginx
     enabled: true
     hostname: napbiotec.io
@@ -37,8 +40,3 @@ mysql:
   auth:
     database: wordpress
     existingSecret: wordpress-db-login
-  #primary:
-    #command:
-    #- --default_authentication_plugin=mysql_native_password
-    #- --character-set-server=utf8mb4
-    #- --collation-server=utf8mb4_unicode_ci
