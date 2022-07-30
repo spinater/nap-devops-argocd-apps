@@ -46,6 +46,7 @@ vector:
           .yyyymmdd = tokens[0] + tokens[1] + tokens[2]
           .yyyymm = tokens[0] + tokens[1]
           .yyyy = tokens[0]
+          .misp_alert_category = string!(.misp_alert_category)
           .value = 1
 
       extract_metrics:
