@@ -1,6 +1,7 @@
 #Labels {'user', 'domain', 'src_ip', 'dst_ip', 'mac', 'src_net', 'dst_net', 'src_port', 'dst_port'}
 require 'time'
 require 'dalli'
+require 'net/http'
 
 def register(params)
     $stdout.sync = true
@@ -104,7 +105,31 @@ def get_category(message)
     return category
 end
 
-def load_misp_cahce(event, cache, value_field)
+def get_misp_response(attribute, value)
+    uri = URI.parse('https://misppriv.circl.lu/attributes/restSearch')
+    https = Net::HTTP.new(uri.host, uri.port)
+    https.use_ssl = true
+
+    request = Net::HTTP::Post.new(uri.path)
+    request['Accept'] = 'application/json'
+    request['Content-Type'] = 'application/json'
+    request['Authorization'] = 'aaaaaaa'
+
+    data = {
+        "returnFormat" => "json",
+        "value" => value,
+        "limit" => "1",
+        "type" => { "OR" => [ attribute ] }
+    }.to_json;
+    request.body = "#{data}"
+
+    response = https.request(request)    
+    puts response
+
+    return response
+end
+
+def load_misp_cahce(event, cache, value_field, attribute)
     value = event.get(value_field)
 
     if value.nil? or value == ''
@@ -115,14 +140,11 @@ def load_misp_cahce(event, cache, value_field)
     key = "#{value_field}:#{value}"
     misp_data = cache.get(key)
     if misp_data
-        #Found
+        #Found - Do nothing
         #puts "### [Found] Getting MISP from cached [#{value_field}] value [#{value}]"
     else
         puts "### [Notfound] Getting MISP from field [#{key}] value [#{value}]"
-
-        # TODO : Get this from REST API instead
-        misp_data = "This is cached data of [#{value}]"
-
+        misp_data = get_misp_response(attribute, value)
         cache.set(key, misp_data, 3600) #60 minutes expiration
     end
 
@@ -154,8 +176,8 @@ def filter(event)
         extract_dns(event, data, category)
     end
 
-    load_misp_cahce(event, @mc, 'dst_ip')
-    load_misp_cahce(event, @mc, 'domain')
+    load_misp_cahce(event, @mc, 'dst_ip', 'ip-dst')
+    load_misp_cahce(event, @mc, 'domain', 'domain|ip')
 
     return [event]
 end
