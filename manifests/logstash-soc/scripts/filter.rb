@@ -166,6 +166,7 @@ def load_misp_cahce(event, cache, value_field, attribute, label)
         misp_alert = 'false'
         if (attributes.count > 0)
             misp_alert = 'true'
+            event.set('misp_alert_category', label)
         end
     end
 
