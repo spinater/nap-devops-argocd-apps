@@ -135,7 +135,7 @@ def get_misp_response(attribute, value)
     return nil
 end
 
-def load_misp_cahce(event, cache, value_field, attribute)
+def load_misp_cahce(event, cache, value_field, attribute, label)
     value = event.get(value_field)
 
     if value.nil? or value == ''
@@ -143,7 +143,7 @@ def load_misp_cahce(event, cache, value_field, attribute)
         return [event]
     end
 
-    key = "#{value_field}:#{value}"
+    key = "#{value_field}:#{attribute}:#{value}"
     misp_data = cache.get(key)
     if misp_data
         #Found - Do nothing
@@ -151,7 +151,7 @@ def load_misp_cahce(event, cache, value_field, attribute)
     else
         puts "### [Notfound] Getting MISP from field [#{key}] value [#{value}]"
         misp_data = get_misp_response(attribute, value)
-        if misp_data.nil?
+        if !misp_data.nil?
             # Response with status code 200
             cache.set(key, misp_data, 3600) #60 minutes expiration
         end
@@ -159,7 +159,7 @@ def load_misp_cahce(event, cache, value_field, attribute)
 
     #TODO : Process MISP data got from cache here
 
-    return [event]    
+    return [event]
 end
 
 def filter(event)
@@ -185,8 +185,9 @@ def filter(event)
         extract_dns(event, data, category)
     end
 
-    load_misp_cahce(event, @mc, 'dst_ip', 'ip-dst')
-    load_misp_cahce(event, @mc, 'domain', 'domain|ip')
+    load_misp_cahce(event, @mc, 'dst_ip', 'ip-dst', 'alert_misp_dst_ip')
+    load_misp_cahce(event, @mc, 'dst_ip', 'domain|ip', 'alert_misp_dst_ip_domain')
+    load_misp_cahce(event, @mc, 'domain', 'domain|ip', 'alert_misp_domain')
 
     return [event]
 end
