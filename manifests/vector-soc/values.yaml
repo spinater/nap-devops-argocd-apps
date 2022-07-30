@@ -31,7 +31,7 @@ vector:
         subscription: "normalized-syslog-sub"        
 
     transforms:
-      extract_dices:
+      extract_indices:
         type: remap
         inputs:
           - pubsub_normalized_syslog
@@ -51,7 +51,7 @@ vector:
       extract_metrics:
         type: log_to_metric
         inputs:
-          - extract_dices
+          - extract_indices
         metrics:
           - type: counter
             field: value
@@ -62,6 +62,8 @@ vector:
               "yyyymm": '{{ printf "{{%s}}" "yyyymm" }}'
               "yyyy": '{{ printf "{{%s}}" "yyyy" }}'
               "category": '{{ printf "{{%s}}" "category" }}'
+              "alert_misp": '{{ printf "{{%s}}" "alert_misp" }}'
+              "misp_alert_category": '{{ printf "{{%s}}" "misp_alert_category" }}'
 
     sinks:
       prometheus_event_exporter:

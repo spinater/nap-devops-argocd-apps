@@ -29,11 +29,20 @@ helm-loki:
           - alert: LogstashError
             expr: |
               sum (count_over_time({namespace="logstash-soc"} |= "Error" [15m])) > 1
-            for: 10s
+            for: 5s
             labels:
               severity: warning
             annotations:
               description: Found  {{ printf "%v" $value }} line(s) of [Error] in [logstash-soc] namespace
+
+          - alert: VectorError
+            expr: |
+              sum (count_over_time({namespace="vector-soc"} |= "ERROR" [15m])) > 1
+            for: 5s
+            labels:
+              severity: warning
+            annotations:
+              description: Found  {{ printf "%v" $value }} line(s) of [Error] in [vector-soc] namespace
 
     grafana:
       envFromSecret: google-oidc-secret
