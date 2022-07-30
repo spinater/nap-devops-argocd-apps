@@ -2,6 +2,7 @@
 require 'time'
 require 'dalli'
 require 'net/http'
+require "json"
 
 def register(params)
     $stdout.sync = true
@@ -157,12 +158,18 @@ def load_misp_cahce(event, cache, value_field, attribute, label)
         end
     end
 
+    misp_alert = 'MISP-ERROR'
     if !misp_data.nil?
-        event.set(label, 'to-be-continue')
-    else
-        event.set(label, 'MISP-ERROR')
+        obj = JSON.parse(misp_data)
+        attributes = obj['response']['Attribute']
+        
+        misp_alert = 'false'
+        if (attributes.count > 0)
+            misp_alert = 'true'            
+        end
     end
 
+    event.set(label, misp_alert)    
     return [event]
 end
 
