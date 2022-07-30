@@ -180,7 +180,7 @@ def filter(event)
 
     event.set('type', 'syslog')
     event.set('debug_field1', 'not-matched')
-    event.set('category', category)    
+    event.set('category', category)
 
     if category == 'hotspot'
         extract_hotspot(event, data, category)
@@ -199,6 +199,16 @@ def filter(event)
     load_misp_cahce(event, @mc, 'dst_ip', 'ip-dst', 'alert_misp_dst_ip')
     load_misp_cahce(event, @mc, 'dst_ip', 'domain|ip', 'alert_misp_dst_ip_domain')
     load_misp_cahce(event, @mc, 'domain', 'domain|ip', 'alert_misp_domain')
+
+    alert1 = event.get('alert_misp_dst_ip')
+    alert2 = event.get('alert_misp_dst_ip_domain')
+    alert3 = event.get('alert_misp_domain')
+
+    found_alert = 'false'
+    if ((alert1 == 'true') || (alert2 == 'true') || (alert3 == 'true'))
+        found_alert = 'true'
+    end
+    event.set('alert_misp', found_alert)
 
     return [event]
 end
