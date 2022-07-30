@@ -119,6 +119,7 @@ def get_misp_response(attribute, value)
 
     data = {
         "returnFormat" => "json",
+        "enforceWarninglist" => false,
         "value" => value,
         "limit" => "1",
         "type" => { "OR" => [ attribute ] }
