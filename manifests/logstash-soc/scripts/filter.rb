@@ -109,11 +109,12 @@ def get_misp_response(attribute, value)
     uri = URI.parse('https://misppriv.circl.lu/attributes/restSearch')
     https = Net::HTTP.new(uri.host, uri.port)
     https.use_ssl = true
+    api_key = ENV["MISP_API_KEY"]
 
     request = Net::HTTP::Post.new(uri.path)
     request['Accept'] = 'application/json'
     request['Content-Type'] = 'application/json'
-    request['Authorization'] = 'aaaaaaa'
+    request['Authorization'] = api_key
 
     data = {
         "returnFormat" => "json",
