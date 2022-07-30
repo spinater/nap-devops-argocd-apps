@@ -124,10 +124,15 @@ def get_misp_response(attribute, value)
     }.to_json;
     request.body = "#{data}"
 
-    response = https.request(request)    
-    puts response
+    response = https.request(request)
+    if (response.code == "200")
+        puts response
 
-    return response
+        return response.body
+    end
+
+    puts "### [Error] MISP returned [#{response}]"
+    return nil
 end
 
 def load_misp_cahce(event, cache, value_field, attribute)
@@ -142,11 +147,14 @@ def load_misp_cahce(event, cache, value_field, attribute)
     misp_data = cache.get(key)
     if misp_data
         #Found - Do nothing
-        #puts "### [Found] Getting MISP from cached [#{value_field}] value [#{value}]"
+        puts "### [Found] Getting MISP from cached [#{value_field}] value [#{value}]"
     else
         puts "### [Notfound] Getting MISP from field [#{key}] value [#{value}]"
         misp_data = get_misp_response(attribute, value)
-        cache.set(key, misp_data, 3600) #60 minutes expiration
+        if misp_data
+            # Response with status code 200
+            cache.set(key, misp_data, 3600) #60 minutes expiration
+        end
     end
 
     #TODO : Process MISP data got from cache here
