@@ -151,7 +151,7 @@ def load_misp_cahce(event, cache, value_field, attribute)
     else
         puts "### [Notfound] Getting MISP from field [#{key}] value [#{value}]"
         misp_data = get_misp_response(attribute, value)
-        if misp_data
+        if misp_data.nil?
             # Response with status code 200
             cache.set(key, misp_data, 3600) #60 minutes expiration
         end
