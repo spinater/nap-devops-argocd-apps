@@ -148,7 +148,7 @@ def load_misp_cahce(event, cache, value_field, attribute, label)
     misp_data = cache.get(key)
     if misp_data
         #Found - Do nothing
-        puts "### [Found] Getting MISP from cached [#{value_field}] value [#{value}]"
+        puts "### [Found] Getting MISP from cached [#{key}] value [#{value}]"
     else
         puts "### [Notfound] Getting MISP from field [#{key}] value [#{value}]"
         misp_data = get_misp_response(attribute, value)
