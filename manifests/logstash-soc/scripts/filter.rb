@@ -126,7 +126,7 @@ def get_misp_response(attribute, value)
 
     response = https.request(request)
     if (response.code == "200")
-        puts response
+        puts response.body
 
         return response.body
     end
