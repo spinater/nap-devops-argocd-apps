@@ -162,14 +162,14 @@ def load_misp_cahce(event, cache, value_field, attribute, label)
     if !misp_data.nil?
         obj = JSON.parse(misp_data)
         attributes = obj['response']['Attribute']
-        
+
         misp_alert = 'false'
         if (attributes.count > 0)
             misp_alert = 'true'            
         end
     end
 
-    event.set(label, misp_alert)    
+    event.set(label, misp_alert)
     return [event]
 end
 
