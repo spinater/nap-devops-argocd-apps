@@ -157,7 +157,11 @@ def load_misp_cahce(event, cache, value_field, attribute, label)
         end
     end
 
-    #TODO : Process MISP data got from cache here
+    if !misp_data.nil?
+        event.set(label, 'to-be-continue')
+    else
+        event.set(label, 'MISP-ERROR')
+    end
 
     return [event]
 end
