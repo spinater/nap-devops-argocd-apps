@@ -51,3 +51,12 @@ data:
               severity: warning
             annotations:
               description: Found  {{ "{{" }} printf "%v" $value {{ "}}" }} occurence(s) of failed login attempt
+
+          - alert: MISP-Alert
+            expr: |
+              sum(count_over_time({type="syslog",alert_misp="true"}[5m])) >= 1
+            for: 0s
+            labels:
+              severity: warning
+            annotations:
+              description: Found  {{ "{{" }} printf "%v" $value {{ "}}" }} occurence(s) of MISP alert
