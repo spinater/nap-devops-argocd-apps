@@ -198,15 +198,15 @@ def filter(event)
         extract_dns(event, data, category)
     end
 
-    load_misp_cahce(event, @mc, 'dst_ip', 'ip-dst', 'alert_misp-dst_ip:ip-dst')
-    load_misp_cahce(event, @mc, 'dst_ip', 'domain|ip', 'alert_misp-dst_ip:domain|ip')
-    load_misp_cahce(event, @mc, 'domain', 'domain|ip', 'alert_misp-domain:domain|ip')
-    load_misp_cahce(event, @mc, 'domain', 'domain', 'alert_misp-domain:domain')
+    load_misp_cahce(event, @mc, 'dst_ip', 'ip-dst', 'alert_misp_dstip_ipdst')
+    load_misp_cahce(event, @mc, 'dst_ip', 'domain|ip', 'alert_misp_dstip_domainip')
+    load_misp_cahce(event, @mc, 'domain', 'domain|ip', 'alert_misp_domain_domainip')
+    load_misp_cahce(event, @mc, 'domain', 'domain', 'alert_misp_domain_domain')
 
-    alert1 = event.get('alert_misp-dst_ip:ip-dst')
-    alert2 = event.get('alert_misp-dst_ip:domain|ip')
-    alert3 = event.get('alert_misp-domain:domain|ip')
-    alert4 = event.get('alert_misp-domain:domain')
+    alert1 = event.get('alert_misp_dstip_ipdst')
+    alert2 = event.get('alert_misp_dstip_domainip')
+    alert3 = event.get('alert_misp_domain_domainip')
+    alert4 = event.get('alert_misp_domain_domain')
 
     found_alert = 'false'
     if ((alert1 == 'true') || (alert2 == 'true') || (alert3 == 'true') || (alert4 == 'true'))
