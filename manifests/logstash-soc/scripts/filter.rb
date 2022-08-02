@@ -21,7 +21,7 @@ def update_src_ip_cache(src_ip, mac, user)
     key = "ip-properties-map:#{src_ip}"
 
     obj = {}
-    ip_prop = cache.get(key)
+    ip_prop = @mc.get(key)
     if ip_prop
         #Found - Do nothing
         puts "### [Found] Getting IP property from cached [#{key}] value [#{src_ip}]"
