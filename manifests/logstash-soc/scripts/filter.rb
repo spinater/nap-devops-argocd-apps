@@ -24,7 +24,10 @@ def update_user_properties(event, src_ip)
     ip_prop = @mc.get(key)
     if ip_prop
         obj = JSON.parse(ip_prop)
-        event.set('possible_user', obj['user'])
+        user = obj['user']
+
+        event.set('possible_user', user)
+        puts "### [DEBUG] Updated field [possible_user] value [#{user}], for ip=[#{src_ip}]"
     end
 end
 
@@ -207,9 +210,9 @@ def load_misp_cahce(event, cache, value_field, attribute, label)
     misp_data = cache.get(key)
     if misp_data
         #Found - Do nothing
-        puts "### [Found] Getting MISP from cached [#{key}] value [#{value}]"
+        #puts "### [Found] Getting MISP from cached [#{key}] value [#{value}]"
     else
-        puts "### [Notfound] Getting MISP from field [#{key}] value [#{value}]"
+        #puts "### [Notfound] Getting MISP from field [#{key}] value [#{value}]"
         misp_data = get_misp_response(attribute, value)
         if !misp_data.nil?
             # Response with status code 200
