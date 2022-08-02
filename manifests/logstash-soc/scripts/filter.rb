@@ -107,9 +107,13 @@ def extract_dhcp(event, data, category)
     event.set('mac', mac)
     event.set('debug_field1', category)
 
+    puts "### [DEBUG1] state=[#{state}] category=[#{category}]"
+
     if (state == "assigned")
+        puts "### [DEBUG2] state=[#{state}] category=[#{category}]"
         update_src_ip_cache(src_ip, mac, '')
-    end    
+    end
+    puts "### [DEBUG3] state=[#{state}] category=[#{category}]"
 end
 
 def extract_dns(event, message, category)
