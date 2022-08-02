@@ -9,6 +9,39 @@ def register(params)
     @mc = Dalli::Client.new('memcached.memcached.svc.cluster.local:11211')   
 end
 
+def get_not_empty(old_value, new_value)
+    if (new_value == "")
+        return old_value
+    end
+
+    return new_value
+end
+
+def update_src_ip_cache(src_ip, mac, user)
+    key = "ip-properties-map:#{src_ip}"
+
+    obj = {}
+    ip_prop = cache.get(key)
+    if ip_prop
+        #Found - Do nothing
+        puts "### [Found] Getting IP property from cached [#{key}] value [#{src_ip}]"
+
+        obj = JSON.parse(ip_prop)
+        obj['mac'] = get_not_empty(obj['mac'], mac)
+        obj['user'] = get_not_empty(obj['user'], user)
+    else
+        puts "### [Notfound] Getting IP from field [#{key}] value [#{src_ip}]"
+        obj = {
+            "mac" => mac,
+            "user" => user
+        };
+    end
+    
+    json_str = obj.to_json
+    @mc.set(key, json_str) #No expire
+    puts "### [DEBUG] cache [#{key}] value [#{json_str}]"
+end
+
 def extract_hotspot(event, message, category)
     #hotspot,account,info,debug 0-Napbiotec: seubpong.mon (192.168.20.29): logged in
     groups = message.scan(/^.*:\s(.+?)\s\((.+?)\):.+$/i)[0]
@@ -18,6 +51,10 @@ def extract_hotspot(event, message, category)
     event.set('user', user.strip)
     event.set('src_ip', src_ip.strip)
     event.set('debug_field1', category)
+
+    if (message.include? "loged in")
+        update_src_ip_cache(src_ip, '', user)
+    end     
 end
 
 def extract_firewall(event, message, category)
@@ -64,10 +101,15 @@ def extract_dhcp(event, data, category)
     arr2 = data.split(' ')
     src_ip = arr2[4]
     mac = arr2[6]
+    state = arr2[3]
 
     event.set('src_ip', src_ip.strip)
     event.set('mac', mac)
     event.set('debug_field1', category)
+
+    if (state == "assigned")
+        update_src_ip_cache(src_ip, mac, '')
+    end    
 end
 
 def extract_dns(event, message, category)
