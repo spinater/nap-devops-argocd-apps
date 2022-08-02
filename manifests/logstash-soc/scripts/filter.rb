@@ -52,7 +52,7 @@ def extract_hotspot(event, message, category)
     event.set('src_ip', src_ip.strip)
     event.set('debug_field1', category)
 
-    if (message.include? "loged in")
+    if (message.include? "logged in")
         update_src_ip_cache(src_ip, '', user)
     end     
 end
