@@ -27,7 +27,7 @@ def update_user_properties(event, src_ip)
         user = get_not_empty("==unknown==", obj['user'])
 
         event.set('possible_user', user)
-        puts "### [DEBUG] Updated field [possible_user] value [#{user}], for ip=[#{src_ip}]"
+        #puts "### [DEBUG] Updated field [possible_user] value [#{user}], for ip=[#{src_ip}]"
     end
 end
 
