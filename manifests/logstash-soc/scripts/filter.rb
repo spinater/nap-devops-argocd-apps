@@ -25,7 +25,7 @@ def update_user_properties(event, src_ip)
     if ip_prop
         obj = JSON.parse(ip_prop)
         event.set('possible_user', obj['user'])
-    end    
+    end
 end
 
 def update_src_ip_cache(src_ip, mac, user)
