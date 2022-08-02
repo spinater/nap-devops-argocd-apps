@@ -30,7 +30,7 @@ def update_src_ip_cache(src_ip, mac, user)
         obj['mac'] = get_not_empty(obj['mac'], mac)
         obj['user'] = get_not_empty(obj['user'], user)
     else
-        puts "### [Notfound] Getting IP from field [#{key}] value [#{src_ip}]"
+        puts "### [Notfound] Getting IP property from cached [#{key}] value [#{src_ip}]"
         obj = {
             "mac" => mac,
             "user" => user
@@ -101,7 +101,7 @@ def extract_dhcp(event, data, category)
     arr2 = data.split(' ')
     src_ip = arr2[4]
     mac = arr2[6]
-    state = arr2[3]
+    state = arr2[3].strip
 
     event.set('src_ip', src_ip.strip)
     event.set('mac', mac)
