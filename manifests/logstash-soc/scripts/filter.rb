@@ -17,6 +17,17 @@ def get_not_empty(old_value, new_value)
     return new_value
 end
 
+def update_user_properties(event, src_ip)
+    key = "ip-properties-map:#{src_ip}"
+    obj = {}
+
+    ip_prop = @mc.get(key)
+    if ip_prop
+        obj = JSON.parse(ip_prop)
+        event.set('possible_user', obj['user'])
+    end    
+end
+
 def update_src_ip_cache(src_ip, mac, user)
     key = "ip-properties-map:#{src_ip}"
 
@@ -49,6 +60,7 @@ def extract_hotspot(event, message, category)
     src_ip = groups[1]
 
     event.set('user', user.strip)
+    event.set('possible_user', user.strip)
     event.set('src_ip', src_ip.strip)
     event.set('debug_field1', category)
 
@@ -81,6 +93,8 @@ def extract_firewall(event, message, category)
     event.set('dst_ip', dst_ip.strip)
     event.set('dst_port', dst_port.strip)
     event.set('debug_field1', category)
+
+    update_user_properties(event, src_ip.strip)
 end
 
 def extract_webproxy(event, data, category)
@@ -93,6 +107,7 @@ def extract_webproxy(event, data, category)
     event.set('src_ip', src_ip.strip)
     event.set('domain', URI.parse(url).host)
     event.set('debug_field1', category)
+    update_user_properties(event, src_ip.strip)
 end
 
 def extract_dhcp(event, data, category)
@@ -122,6 +137,7 @@ def extract_dns(event, message, category)
         event.set('src_ip', src_ip.strip)
         event.set('domain', domain)
         event.set('debug_field1', category)
+        update_user_properties(event, src_ip.strip)
     end
 end
 
@@ -132,7 +148,7 @@ def get_category(message)
         category = "omda-controller"
     else
         arr1 = message.split(',')
-        category = arr1[0]        
+        category = arr1[0]
     end
 
     if category.length > 20
