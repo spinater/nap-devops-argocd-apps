@@ -24,7 +24,7 @@ def update_user_properties(event, src_ip)
     ip_prop = @mc.get(key)
     if ip_prop
         obj = JSON.parse(ip_prop)
-        user = obj['user']
+        user = get_not_empty("==unknown==", obj['user'])
 
         event.set('possible_user', user)
         puts "### [DEBUG] Updated field [possible_user] value [#{user}], for ip=[#{src_ip}]"
