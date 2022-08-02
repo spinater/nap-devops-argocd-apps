@@ -107,13 +107,9 @@ def extract_dhcp(event, data, category)
     event.set('mac', mac)
     event.set('debug_field1', category)
 
-    puts "### [DEBUG1] state=[#{state}] category=[#{category}]"
-
     if (state == "assigned")
-        puts "### [DEBUG2] state=[#{state}] category=[#{category}]"
         update_src_ip_cache(src_ip, mac, '')
     end
-    puts "### [DEBUG3] state=[#{state}] category=[#{category}]"
 end
 
 def extract_dns(event, message, category)
@@ -174,7 +170,7 @@ def get_misp_response(attribute, value)
 
     response = https.request(request)
     if (response.code == "200")
-        puts response.body
+        #puts response.body
 
         return response.body
     end
