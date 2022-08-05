@@ -5,6 +5,9 @@ wordpress:
   wordpressUsername: admin
   existingSecret: 'wordpress-user-login'
 
+  readinessProbe:
+    enabled: false
+
   image:
     tag: 5.9.1
 
