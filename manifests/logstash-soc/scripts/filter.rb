@@ -67,7 +67,8 @@ def extract_hotspot(event, message, category)
     event.set('src_ip', src_ip.strip)
     event.set('debug_field1', category)
 
-    if (message.include? "logged in")
+    if ((message.include? "logged in") || 
+        (message.include? "logged out"))
         update_src_ip_cache(src_ip, '', user)
     end     
 end
