@@ -272,7 +272,7 @@ def aggregate_stats(cache, event)
     metric = cache.get(cache_key)
     if metric
         #Found - Do nothing
-        puts "### [Found] Getting aggregate metrics from field [#{cache_key}]"
+        #puts "### [Found] Getting aggregate metrics from field [#{cache_key}]"
 
         obj = JSON.parse(metric)
         obj["last_update_date"] = last_event_dtm
@@ -281,11 +281,11 @@ def aggregate_stats(cache, event)
         evt_count = obj["metric_event_count"]
         obj["metric_event_count"] = evt_count + 1
     else
-        puts "### [Notfound] Getting aggregate metrics from field [#{cache_key}]"
+        #puts "### [Notfound] Getting aggregate metrics from field [#{cache_key}]"
     end
 
     json_str = obj.to_json
-    puts json_str
+    #puts json_str
 
     cache.set(cache_key, json_str, 3600*24*2) #Expiration for 2 days
 end

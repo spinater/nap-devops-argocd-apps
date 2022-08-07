@@ -79,6 +79,7 @@ logstash-syslog:
 
       output {
         #stdout { codec => rubydebug  }
+        
         loki {
           message_field => "message"
           include_fields => [
