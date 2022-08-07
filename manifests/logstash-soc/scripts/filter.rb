@@ -253,11 +253,14 @@ end
 
 def create_or_update_metrics(event, metrics, key)
 
-    metrics_arr = []
+    metrics_arr = {
+        "metrics_arr" => []
+    }
+
     if metrics
         #Found - Do nothing
         puts "### [Found] Getting aggregate from field [#{key}]"
-        metrics_arr = JSON.parse(metrics)
+        #metrics_arr = JSON.parse(metrics)
     else
         puts "### [Notfound] Getting aggregate metrics from field [#{key}]"
     end
