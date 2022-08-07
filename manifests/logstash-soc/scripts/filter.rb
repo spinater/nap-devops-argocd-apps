@@ -245,16 +245,26 @@ def aggregate_stats(cache, event)
     pod_name = ENV["POD_NAME"]
 
     key = "#{yyyy_mm_dd}:#{pod_name}"
-    metric = cache.get(key)
 
-    if metric
+    metric = cache.get(key)
+    new_metric = create_or_update_metrics(event, metric, key)
+    cache.set(key, new_metric, 3600*24*2) #Expiration for 2 days
+end
+
+def create_or_update_metrics(event, metrics, key)
+
+    metrics_arr = []
+    if metrics
         #Found - Do nothing
         puts "### [Found] Getting aggregate from field [#{key}]"
+        metrics_arr = JSON.parse(metrics)
     else
-        puts "### [Notfound] Getting aggregate metric from field [#{key}]"
-        metric = "dummy"
-        cache.set(key, metric, 3600*24*2) #Expiration for 2 days
+        puts "### [Notfound] Getting aggregate metrics from field [#{key}]"
     end
+
+    #Do something here
+
+    return metrics_arr.to_json #This is the string will be cached
 end
 
 def filter(event)
