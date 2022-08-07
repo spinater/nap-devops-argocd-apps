@@ -288,6 +288,7 @@ def aggregate_stats(cache, event)
     #puts json_str
 
     cache.set(cache_key, json_str, 3600*24*2) #Expiration for 2 days
+    event.set("metrics", obj)
 end
 
 def filter(event)

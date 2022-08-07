@@ -75,31 +75,45 @@ logstash-syslog:
           path => "/scripts/filter.rb"
           script_params => {}
         }
+
+        clone {
+          add_field => { "to_es" => "true" }
+        }
+
+        if [to_es] == "true" {
+          mutate {
+            remove_field => [ "message" ]
+          }          
+        }
       }
 
       output {
         #stdout { codec => rubydebug  }
-        
-        loki {
-          message_field => "message"
-          include_fields => [
-            "type", 
-            "category", 
-            "alert_misp", 
-            "alert_misp_domain_domain", 
-            "alert_misp_domain_domainip", 
-            "alert_misp_dstip_domainip", 
-            "alert_misp_dstip_ipdst",
-            "debug_field1", 
-            "dst_net", 
-            "dst_port", 
-            "mac", 
-            "misp_alert_category",
-            "possible_user", 
-            "src_ip", 
-            "src_net"
-          ]
 
-          url => "http://loki-soc-gateway.loki-soc.svc.cluster.local/loki/api/v1/push"
+        if [to_es] == "true" {
+          stdout { codec => json  }
+        }
+        else {
+          loki {
+            message_field => "message"
+            include_fields => [
+              "type", 
+              "category", 
+              "alert_misp", 
+              "alert_misp_domain_domain", 
+              "alert_misp_domain_domainip", 
+              "alert_misp_dstip_domainip", 
+              "alert_misp_dstip_ipdst",
+              "debug_field1", 
+              "dst_net", 
+              "dst_port", 
+              "mac", 
+              "misp_alert_category",
+              "possible_user", 
+              "src_ip", 
+              "src_net"
+            ]
+            url => "http://loki-soc-gateway.loki-soc.svc.cluster.local/loki/api/v1/push"
+          }
         }
       }
