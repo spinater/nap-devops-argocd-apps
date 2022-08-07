@@ -240,9 +240,11 @@ end
 
 def aggregate_stats(cache, event)
     date_key = event.get('@timestamp')
+    yyyy_mm_dd = date_key.split('T')[0]
+
     pod_name = ENV["POD_NAME"]
 
-    key = "#{date_key}:#{pod_name}"
+    key = "#{yyyy_mm_dd}:#{pod_name}"
     metric = cache.get(key)
 
     if metric
