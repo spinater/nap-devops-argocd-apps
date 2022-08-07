@@ -91,7 +91,7 @@ logstash-syslog:
           include_fields => [
             "type", "category", "alert_misp", 
             "alert_misp_domain_domain", "alert_misp_domain_domainip", "alert_misp_dstip_domainip", "alert_misp_dstip_ipdst",
-            "debug_field1", "dst_net", "dst_port", "facility", "facility_label", "host", "mac", "misp_alert_category",
+            "debug_field1", "dst_net", "dst_port", "mac", "misp_alert_category",
             "possible_user", "src_ip", "src_net"
           ]
 
