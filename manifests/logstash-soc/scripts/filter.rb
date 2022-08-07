@@ -246,13 +246,13 @@ def aggregate_stats(cache, event)
 
     key = "#{yyyy_mm_dd}:#{pod_name}"
     cache_key = "metrics:#{yyyy_mm_dd}:#{pod_name}"
-
+    
     metric = cache.get(cache_key)
-    new_metric = create_or_update_metrics(event, metric, key)
+    new_metric = create_or_update_metrics(event, metric, key, cache_key)
     cache.set(cache_key, new_metric, 3600*24*2) #Expiration for 2 days
 end
 
-def create_or_update_metrics(event, metrics, key)
+def create_or_update_metrics(event, metrics, key, cache_key)
     pod_name = ENV["POD_UID"]
     category = event.get('category')
     alert_misp = event.get('alert_misp')
@@ -270,10 +270,10 @@ def create_or_update_metrics(event, metrics, key)
 
     if metrics
         #Found - Do nothing
-        #puts "### [Found] Getting aggregate from field [#{key}]"
+        puts "### [Found] Getting aggregate metrics from field [#{cache_key}]"
         metrics_arr_obj = JSON.parse(metrics)
     else
-        #puts "### [Notfound] Getting aggregate metrics from field [#{key}]"
+        puts "### [Notfound] Getting aggregate metrics from field [#{cache_key}]"
     end
 
     #Update or insert metric
@@ -302,7 +302,7 @@ def create_or_update_metrics(event, metrics, key)
         }
 
         metrics_arr.push(obj)
-        puts "### [DEBUG] Added metric to array id=[#{id}]"
+        #puts "### [DEBUG] Added metric to array id=[#{id}]"
     else
         #Found - New metrics could be added here
         obj["last_update_date"] = last_event_dtm
@@ -310,7 +310,7 @@ def create_or_update_metrics(event, metrics, key)
         evt_count = obj["metric_event_count"]
         obj["metric_event_count"] = evt_count + 1
 
-        puts "### [DEBUG] Updated metric in array id=[#{id}]"
+        #puts "### [DEBUG] Updated metric in array id=[#{id}]"
     end
 
     json_str = metrics_arr_obj.to_json
