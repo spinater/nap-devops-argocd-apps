@@ -270,10 +270,10 @@ def create_or_update_metrics(event, metrics, key, cache_key)
 
     if metrics
         #Found - Do nothing
-        puts "### [Found] Getting aggregate metrics from field [#{cache_key}]"
+        #puts "### [Found] Getting aggregate metrics from field [#{cache_key}]"
         metrics_arr_obj = JSON.parse(metrics)
     else
-        puts "### [Notfound] Getting aggregate metrics from field [#{cache_key}]"
+        #puts "### [Notfound] Getting aggregate metrics from field [#{cache_key}]"
     end
 
     #Update or insert metric
@@ -297,6 +297,7 @@ def create_or_update_metrics(event, metrics, key, cache_key)
             "yyyy_mm_dd" => yyyy_mm_dd,
             "yyyy_mm" => yyyy_mm,
             "yyyy" => yyyy,
+            "cache_key" => cache_key,
             "last_update_date" => last_event_dtm,
             "metric_event_count" => 1
         }
@@ -306,6 +307,7 @@ def create_or_update_metrics(event, metrics, key, cache_key)
     else
         #Found - New metrics could be added here
         obj["last_update_date"] = last_event_dtm
+        obj["cache_key"] = cache_key
 
         evt_count = obj["metric_event_count"]
         obj["metric_event_count"] = evt_count + 1
