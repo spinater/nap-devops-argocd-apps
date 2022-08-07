@@ -252,14 +252,15 @@ def aggregate_stats(cache, event)
 end
 
 def create_or_update_metrics(event, metrics, key)
+    pod_name = ENV["POD_NAME"]
     category = event.get('category')
     alert_misp = event.get('alert_misp')
     misp_alert_category = event.get('misp_alert_category')
-    yyyy_mm_dd = key
+    yyyy_mm_dd = key[0..9]
     yyyy_mm = yyyy_mm_dd[0..6]
-    yyyy = yyyy_mm_dd[0..4]
+    yyyy = yyyy_mm_dd[0..3]
 
-    id = "#{category}^#{alert_misp}^#{misp_alert_category}^#{yyyy_mm_dd}^#{yyyy_mm}^#{yyyy}"
+    id = "#{pod_name}^#{category}^#{alert_misp}^#{misp_alert_category}^#{yyyy_mm_dd}^#{yyyy_mm}^#{yyyy}"
 
     metrics_arr_obj = {
         "metrics_arr" => []
@@ -287,6 +288,7 @@ def create_or_update_metrics(event, metrics, key)
         #Not found
         obj = { 
             "id" => id,
+            "pod" => pod_name,
             "category" => category,
             "alert_misp" => alert_misp,
             "misp_alert_category" => misp_alert_category,
