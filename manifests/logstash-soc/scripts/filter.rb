@@ -238,6 +238,23 @@ def load_misp_cahce(event, cache, value_field, attribute, label)
     return [event]
 end
 
+def aggregate_stats(event)
+    date_key = event.get('@timestamp')
+    pod_name = ENV["POD_NAME"]
+
+    key = "#{date_key}:#{pod_name}"
+    metric = cache.get(key)
+
+    if metric
+        #Found - Do nothing
+        puts "### [Found] Getting aggregate from field [#{key}]"
+    else
+        puts "### [Notfound] Getting aggregate metric from field [#{key}]"
+        #metric = get_aggregate_metric()
+        #cache.set(key, metric, 3600*24*2) #Expiration for 2 days
+    end
+end
+
 def filter(event)
     data = event.get('message')
     arr1 = data.split(',')
@@ -276,6 +293,8 @@ def filter(event)
         found_alert = 'true'
     end
     event.set('alert_misp', found_alert)
+
+    aggregate_stats(event)
 
     return [event]
 end
