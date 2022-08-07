@@ -286,7 +286,7 @@ def create_or_update_metrics(event, metrics, key)
     if obj.nil?
         #Not found
         obj = { 
-            "id" => id
+            "id" => id,
             "category" => category,
             "alert_misp" => alert_misp,
             "misp_alert_category" => misp_alert_category,
