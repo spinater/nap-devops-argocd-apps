@@ -25,7 +25,7 @@ logstash-syslog:
     - name: POD_NAME
       valueFrom:
         fieldRef:
-        fieldPath: metadata.name
+          fieldPath: metadata.name
 
     - name: MISP_API_KEY
       valueFrom:
@@ -88,5 +88,5 @@ logstash-syslog:
           project_id => "nap-devops-prod" #Should be based on environment
           topic => "normalized-syslog"
           json_key_file => "/secrets/gcp-sa-file.json"
-        }        
+        }
       }
