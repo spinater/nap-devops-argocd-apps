@@ -78,6 +78,7 @@ logstash-syslog:
 
         clone {
           add_field => { "to_es" => "true" }
+          clones => ["es"]
         }
 
         if [to_es] == "true" {
