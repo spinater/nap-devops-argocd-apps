@@ -239,7 +239,7 @@ def load_misp_cahce(event, cache, value_field, attribute, label)
 end
 
 def aggregate_stats(cache, event)
-    date_key = event.get('@timestamp')
+    date_key = event.get('@timestamp') + '' #convert to string
     yyyy_mm_dd = date_key.split('T')[0]
 
     pod_name = ENV["POD_NAME"]
