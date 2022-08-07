@@ -93,7 +93,8 @@ logstash-syslog:
         #stdout { codec => rubydebug  }
 
         if [type] == "es" {
-          stdout { codec => json_lines  }
+          #stdout { codec => json_lines  }
+          # TODO : Send this to ES
         }
         else {
           loki {
