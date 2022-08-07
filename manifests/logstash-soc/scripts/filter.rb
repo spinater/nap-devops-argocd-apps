@@ -259,6 +259,7 @@ def create_or_update_metrics(event, metrics, key)
     yyyy_mm_dd = key[0..9]
     yyyy_mm = yyyy_mm_dd[0..6]
     yyyy = yyyy_mm_dd[0..3]
+    last_event_dtm = event.get('@timestamp').to_s
 
     id = "#{pod_name}^#{category}^#{alert_misp}^#{misp_alert_category}^#{yyyy_mm_dd}^#{yyyy_mm}^#{yyyy}"
 
@@ -295,6 +296,7 @@ def create_or_update_metrics(event, metrics, key)
             "yyyy_mm_dd" => yyyy_mm_dd,
             "yyyy_mm" => yyyy_mm,
             "yyyy" => yyyy,
+            "last_update_date" => last_event_dtm,
             "metric_event_count" => 1
         }
 
@@ -302,6 +304,7 @@ def create_or_update_metrics(event, metrics, key)
         puts "### [DEBUG] Added metric to array id=[#{id}]"
     else
         #Found - New metrics could be added here
+        obj["last_update_date"] = last_event_dtm
 
         evt_count = obj["metric_event_count"]
         obj["metric_event_count"] = evt_count + 1
