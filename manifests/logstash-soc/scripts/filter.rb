@@ -238,7 +238,7 @@ def load_misp_cahce(event, cache, value_field, attribute, label)
     return [event]
 end
 
-def aggregate_stats(event)
+def aggregate_stats(cache, event)
     date_key = event.get('@timestamp')
     pod_name = ENV["POD_NAME"]
 
@@ -294,7 +294,7 @@ def filter(event)
     end
     event.set('alert_misp', found_alert)
 
-    aggregate_stats(event)
+    aggregate_stats(@mc, event)
 
     return [event]
 end
