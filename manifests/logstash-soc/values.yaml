@@ -88,10 +88,4 @@ logstash-syslog:
         loki {
           url => "http://loki-soc-gateway.loki-soc.svc.cluster.local/loki/api/v1/push"
         }
-
-        google_pubsub {
-          project_id => "nap-devops-prod" #Should be based on environment
-          topic => "normalized-syslog"
-          json_key_file => "/secrets/gcp-sa-file.json"
-        }
       }
