@@ -3,7 +3,7 @@ require 'time'
 require 'dalli'
 require 'net/http'
 require "json"
-require 'pg'
+#require 'pg'
 
 def register(params)
     $stdout.sync = true
