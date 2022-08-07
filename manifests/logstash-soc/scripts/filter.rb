@@ -252,22 +252,62 @@ def aggregate_stats(cache, event)
 end
 
 def create_or_update_metrics(event, metrics, key)
+    category = event.get('category')
+    alert_misp = event.get('alert_misp')
+    misp_alert_category = event.get('misp_alert_category')
+    yyyy_mm_dd = key
+    yyyy_mm = yyyy_mm_dd[0..6]
+    yyyy = yyyy_mm_dd[0..4]
 
-    metrics_arr = {
+    id = "#{category}^#{alert_misp}^#{misp_alert_category}^#{yyyy_mm_dd}^#{yyyy_mm}^#{yyyy}"
+
+    metrics_arr_obj = {
         "metrics_arr" => []
     }
 
     if metrics
         #Found - Do nothing
         puts "### [Found] Getting aggregate from field [#{key}]"
-        metrics_arr = JSON.parse(metrics)
+        metrics_arr_obj = JSON.parse(metrics)
     else
         puts "### [Notfound] Getting aggregate metrics from field [#{key}]"
     end
 
-    #Do something here
+    #Update or insert metric
+    metrics_arr = metrics_arr_obj['metrics_arr']
 
-    return metrics_arr.to_json #This is the string will be cached
+    obj = nil
+    metrics_arr.each_with_index do |metric_obj, index|
+        if (metric_obj["id"] == id)
+            obj = metric_obj
+        end
+    end
+
+    if obj.nil?
+        #Not found
+        obj = { 
+            "id" => id
+            "category" => category,
+            "alert_misp" => alert_misp,
+            "misp_alert_category" => misp_alert_category,
+            "yyyy_mm_dd" => yyyy_mm_dd,
+            "yyyy_mm" => yyyy_mm,
+            "yyyy" => yyyy,
+            "metric_event_count" => 1
+        }
+
+        metrics_arr.push(obj)
+        puts "### [DEBUG] Added metric to array id=[#{id}]"
+    else
+        #Found - New metrics could be added here
+
+        evt_count = obj["metric_event_count"]
+        obj["metric_event_count"] = evt_count + 1
+
+        puts "### [DEBUG] Updated metric in array id=[#{id}]"
+    end
+
+    return metrics_arr_obj.to_json #This is the string will be cached
 end
 
 def filter(event)
