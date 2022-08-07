@@ -83,8 +83,8 @@ logstash-syslog:
 
         if [type] == "es" {
           prune {
-              interpolate => true
-              whitelist_names => [ "metrics" ]
+            interpolate => true
+            whitelist_names => [ "type", "metrics" ]
           }          
         }
       }
