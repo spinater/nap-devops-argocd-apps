@@ -252,8 +252,8 @@ def aggregate_stats(cache, event)
         puts "### [Found] Getting aggregate from field [#{key}]"
     else
         puts "### [Notfound] Getting aggregate metric from field [#{key}]"
-        #metric = get_aggregate_metric()
-        #cache.set(key, metric, 3600*24*2) #Expiration for 2 days
+        metric = "dummy"
+        cache.set(key, metric, 3600*24*2) #Expiration for 2 days
     end
 end
 
