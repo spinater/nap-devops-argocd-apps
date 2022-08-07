@@ -252,7 +252,7 @@ def aggregate_stats(cache, event)
 end
 
 def create_or_update_metrics(event, metrics, key)
-    pod_name = ENV["POD_NAME"]
+    pod_name = ENV["POD_UID"]
     category = event.get('category')
     alert_misp = event.get('alert_misp')
     misp_alert_category = event.get('misp_alert_category')
