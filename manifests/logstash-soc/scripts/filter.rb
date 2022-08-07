@@ -316,7 +316,7 @@ def create_or_update_metrics(event, metrics, key, cache_key)
     end
 
     json_str = metrics_arr_obj.to_json
-    puts json_str
+    #puts json_str
 
     return json_str #This is the string will be cached
 end
