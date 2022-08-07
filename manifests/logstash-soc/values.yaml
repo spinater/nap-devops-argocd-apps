@@ -77,13 +77,14 @@ logstash-syslog:
         }
 
         clone {
-          add_field => { "to_es" => "true" }
+          # Create field name 'type' = es
           clones => ["es"]
         }
 
-        if [to_es] == "true" {
-          mutate {
-            remove_field => [ "message" ]
+        if [type] == "es" {
+          prune {
+              interpolate => true
+              whitelist_names => [ "metrics" ]
           }          
         }
       }
@@ -91,8 +92,8 @@ logstash-syslog:
       output {
         #stdout { codec => rubydebug  }
 
-        if [to_es] == "true" {
-          stdout { codec => json_lines  } 
+        if [type] == "es" {
+          stdout { codec => json_lines  }
         }
         else {
           loki {
