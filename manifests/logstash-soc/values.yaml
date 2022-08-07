@@ -92,7 +92,7 @@ logstash-syslog:
         #stdout { codec => rubydebug  }
 
         if [to_es] == "true" {
-          stdout { codec => json  }
+          stdout { codec => ndjson  }
         }
         else {
           loki {
