@@ -309,7 +309,10 @@ def create_or_update_metrics(event, metrics, key)
         puts "### [DEBUG] Updated metric in array id=[#{id}]"
     end
 
-    return metrics_arr_obj.to_json #This is the string will be cached
+    json_str = metrics_arr_obj.to_json
+    puts json_str
+
+    return json_str #This is the string will be cached
 end
 
 def filter(event)
