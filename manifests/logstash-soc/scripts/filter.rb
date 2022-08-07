@@ -240,85 +240,54 @@ end
 
 def aggregate_stats(cache, event)
     date_key = event.get('@timestamp').to_s
+    last_event_dtm = date_key
+
     yyyy_mm_dd = date_key.split('T')[0]
+    yyyy_mm = yyyy_mm_dd[0..6]
+    yyyy = yyyy_mm_dd[0..3]
 
     pod_name = ENV["POD_NAME"]
-
-    key = "#{yyyy_mm_dd}:#{pod_name}"
-    cache_key = "metrics:#{yyyy_mm_dd}:#{pod_name}"
-    
-    metric = cache.get(cache_key)
-    new_metric = create_or_update_metrics(event, metric, key, cache_key)
-    cache.set(cache_key, new_metric, 3600*24*2) #Expiration for 2 days
-end
-
-def create_or_update_metrics(event, metrics, key, cache_key)
-    pod_name = ENV["POD_UID"]
+    pod_uid = ENV["POD_UID"]
     category = event.get('category')
     alert_misp = event.get('alert_misp')
     misp_alert_category = event.get('misp_alert_category')
-    yyyy_mm_dd = key[0..9]
-    yyyy_mm = yyyy_mm_dd[0..6]
-    yyyy = yyyy_mm_dd[0..3]
-    last_event_dtm = event.get('@timestamp').to_s
 
-    id = "#{pod_name}^#{category}^#{alert_misp}^#{misp_alert_category}^#{yyyy_mm_dd}^#{yyyy_mm}^#{yyyy}"
+    id = "#{pod_uid}^#{category}^#{alert_misp}^#{misp_alert_category}^#{yyyy_mm_dd}^#{yyyy_mm}^#{yyyy}"
+    cache_key = "metrics:#{id}"
 
-    metrics_arr_obj = {
-        "metrics_arr" => []
+    obj = { 
+        "id" => id,
+        "pod" => pod_name,
+        "category" => category,
+        "alert_misp" => alert_misp,
+        "misp_alert_category" => misp_alert_category,
+        "yyyy_mm_dd" => yyyy_mm_dd,
+        "yyyy_mm" => yyyy_mm,
+        "yyyy" => yyyy,
+        "cache_key" => cache_key,
+        "last_update_date" => last_event_dtm,
+        "metric_event_count" => 1
     }
 
-    if metrics
+    metric = cache.get(cache_key)
+    if metric
         #Found - Do nothing
-        #puts "### [Found] Getting aggregate metrics from field [#{cache_key}]"
-        metrics_arr_obj = JSON.parse(metrics)
-    else
-        #puts "### [Notfound] Getting aggregate metrics from field [#{cache_key}]"
-    end
+        puts "### [Found] Getting aggregate metrics from field [#{cache_key}]"
 
-    #Update or insert metric
-    metrics_arr = metrics_arr_obj['metrics_arr']
-
-    obj = nil
-    metrics_arr.each_with_index do |metric_obj, index|
-        if (metric_obj["id"] == id)
-            obj = metric_obj
-        end
-    end
-
-    if obj.nil?
-        #Not found
-        obj = { 
-            "id" => id,
-            "pod" => pod_name,
-            "category" => category,
-            "alert_misp" => alert_misp,
-            "misp_alert_category" => misp_alert_category,
-            "yyyy_mm_dd" => yyyy_mm_dd,
-            "yyyy_mm" => yyyy_mm,
-            "yyyy" => yyyy,
-            "cache_key" => cache_key,
-            "last_update_date" => last_event_dtm,
-            "metric_event_count" => 1
-        }
-
-        metrics_arr.push(obj)
-        #puts "### [DEBUG] Added metric to array id=[#{id}]"
-    else
-        #Found - New metrics could be added here
+        obj = JSON.parse(metric)
         obj["last_update_date"] = last_event_dtm
         obj["cache_key"] = cache_key
 
         evt_count = obj["metric_event_count"]
         obj["metric_event_count"] = evt_count + 1
-
-        #puts "### [DEBUG] Updated metric in array id=[#{id}]"
+    else
+        puts "### [Notfound] Getting aggregate metrics from field [#{cache_key}]"
     end
 
-    json_str = metrics_arr_obj.to_json
-    #puts json_str
+    json_str = obj.to_json
+    puts json_str
 
-    return json_str #This is the string will be cached
+    cache.set(cache_key, json_str, 3600*24*2) #Expiration for 2 days
 end
 
 def filter(event)
