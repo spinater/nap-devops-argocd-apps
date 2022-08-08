@@ -36,7 +36,7 @@ grafana:
         jsonData:
           interval: null
           timeField: metrics.last_update_date
-          esVersion: '7.10.0'
+          esVersion: '8.0.0'
           tlsSkipVerify: true
           tlsAuthWithCACert: false
 
