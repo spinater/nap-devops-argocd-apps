@@ -129,8 +129,7 @@ logstash-syslog:
         }
 
         if [type] == "es" {
-          #stdout { codec => json_lines  }
-          
+          #stdout { codec => json_lines  }          
           elasticsearch {
             hosts => [ "https://es-soc-es-http.es-soc.svc.cluster.local:9200" ]
             ssl_certificate_verification => false
