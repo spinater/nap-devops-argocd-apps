@@ -104,21 +104,7 @@ logstash-syslog:
       output {
         #stdout { codec => rubydebug  }
 
-        if [type] == "es" {
-          #stdout { codec => json_lines  }
-          elasticsearch {
-            hosts => [ "https://es-soc-es-http.es-soc.svc.cluster.local:9200" ]
-            ssl_certificate_verification => false
-            index => "metrics-%{[metrics][yyyy]}"
-            data_stream => "false"
-            user => "${ES_USER}"
-            password => "${ES_PASSWORD}"
-            action => "update"
-            doc_as_upsert => "true"
-            document_id => "%{[metrics][id]}"
-          }          
-        }
-        else {
+        if [type] == "syslog" {
           loki {
             message_field => "message"
             include_fields => [
@@ -140,5 +126,20 @@ logstash-syslog:
             ]
             url => "http://loki-soc-gateway.loki-soc.svc.cluster.local/loki/api/v1/push"
           }
+        }
+
+        if [type] == "es" {
+          #stdout { codec => json_lines  }
+          elasticsearch {
+            hosts => [ "https://es-soc-es-http.es-soc.svc.cluster.local:9200" ]
+            ssl_certificate_verification => false
+            index => "metrics-%{[metrics][yyyy]}"
+            data_stream => "false"
+            user => "${ES_USER}"
+            password => "${ES_PASSWORD}"
+            action => "update"
+            doc_as_upsert => "true"
+            document_id => "%{[metrics][id]}"
+          }          
         }
       }
