@@ -18,7 +18,7 @@ logstash-syslog:
   extraEnvs:
     - name: DUMMY_FOR_RESTART #If need to restart pod manually then change this
       value: "0001"
-  
+
     - name: LS_JAVA_OPTS
       value: "-Xmx256m -Xms256m"
 
@@ -37,6 +37,18 @@ logstash-syslog:
         secretKeyRef:
           name: misp-secret
           key: misp-api-token
+
+    - name: ES_USER
+      valueFrom:
+        secretKeyRef:
+          name: es-secret
+          key: ES_USER
+
+    - name: ES_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: es-secret
+          key: ES_USER
 
   logstashConfig:
     logstash.yml: |
