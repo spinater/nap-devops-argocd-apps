@@ -251,13 +251,15 @@ def aggregate_stats(cache, event)
     category = event.get('category')
     alert_misp = event.get('alert_misp')
     misp_alert_category = event.get('misp_alert_category')
+    mc_pid = cache.stats["pid"]
 
-    id = "#{pod_uid}^#{category}^#{alert_misp}^#{misp_alert_category}^#{yyyy_mm_dd}^#{yyyy_mm}^#{yyyy}"
-    cache_key = "metrics:#{id}"
+    id = "#{pod_uid}^#{mc_pid}^#{category}^#{alert_misp}^#{misp_alert_category}^#{yyyy_mm_dd}^#{yyyy_mm}^#{yyyy}"
+    cache_key = "metrics:#{id}"    
 
     obj = { 
         "id" => id,
         "pod" => pod_name,
+        "memcached_pid" => mc_pid,
         "category" => category,
         "alert_misp" => alert_misp,
         "misp_alert_category" => misp_alert_category,
@@ -277,6 +279,7 @@ def aggregate_stats(cache, event)
         obj = JSON.parse(metric)
         obj["last_update_date"] = last_event_dtm
         obj["cache_key"] = cache_key
+        obj["memcached_pid"] = mc_pid
 
         evt_count = obj["metric_event_count"]
         obj["metric_event_count"] = evt_count + 1
@@ -285,7 +288,7 @@ def aggregate_stats(cache, event)
     end
 
     json_str = obj.to_json
-    #puts json_str
+    puts json_str
 
     cache.set(cache_key, json_str, 3600*24*2) #Expiration for 2 days
     event.set("metrics", obj)
