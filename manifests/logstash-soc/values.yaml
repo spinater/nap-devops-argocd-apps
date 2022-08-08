@@ -88,24 +88,23 @@ logstash-syslog:
           script_params => {}
         }
 
-        #clone {
-        #  # Create field name 'type' = es
-        #  clones => ["es"]
-        #}
+        clone {
+          # Create field name 'type' = es
+          clones => ["es"]
+        }
 
-        #if [type] == "es" {
-        #  prune {
-        #    interpolate => true
-        #    whitelist_names => [ "type", "metrics" ]
-        #  }          
-        #}
+        if [type] == "es" {
+          prune {
+            interpolate => true
+            whitelist_names => [ "type", "metrics" ]
+          }          
+        }
       }
 
       output {
         #stdout { codec => rubydebug  }
 
-        #if [type] == "syslog" {
-
+        if [type] == "syslog" {
           loki {
             message_field => "message"
             include_fields => [
@@ -127,8 +126,22 @@ logstash-syslog:
             ]
             url => "http://loki-soc-gateway.loki-soc.svc.cluster.local/loki/api/v1/push"
           }
+        }
 
-        #}
+        if [type] == "es" {
+          #stdout { codec => json_lines  }
 
+          elasticsearch {
+            hosts => [ "https://es-soc-es-http.es-soc.svc.cluster.local:9200" ]
+            ssl_certificate_verification => false
+            index => "metrics-%{[metrics][yyyy]}"
+            data_stream => "false"
+            user => "${ES_USER}"
+            password => "${ES_PASSWORD}"
+            action => "update"
+            doc_as_upsert => "true"
+            document_id => "%{[metrics][id]}"
+          }          
+        }
 
       }
