@@ -128,18 +128,5 @@ logstash-syslog:
           }
         }
 
-        if [type] == "es" {
-          #stdout { codec => json_lines  }
-          elasticsearch {
-            hosts => [ "https://es-soc-es-http.es-soc.svc.cluster.local:9200" ]
-            ssl_certificate_verification => false
-            index => "metrics-%{[metrics][yyyy]}"
-            data_stream => "false"
-            user => "${ES_USER}"
-            password => "${ES_PASSWORD}"
-            action => "update"
-            doc_as_upsert => "true"
-            document_id => "%{[metrics][id]}"
-          }          
-        }
+
       }
