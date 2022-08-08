@@ -19,4 +19,4 @@ spec:
               service:
                 name: es-soc-kb-http
                 port:
-                  number: 5610
+                  number: 5601
