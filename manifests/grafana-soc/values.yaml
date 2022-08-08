@@ -21,6 +21,19 @@ grafana:
         access: Server
         url: http://loki-soc-query-frontend.loki-soc.svc.cluster.local:3100
 
+      - name: ES-App
+        type: elasticsearch
+        access: Server
+        url: https://es-soc-es-http.es-soc.svc.cluster.local:9200
+        basicAuth: 'true'
+        basicAuthUser: ${ES_USER}
+        basicAuthPassword: ${ES_PASSWORD}
+        database: "metrics-*"
+        jsonData:
+          timeField: metrics.last_update_date
+          esVersion: '7.10.0'
+          tlsSkipVerify: 'true'
+
       - name: Loki-App
         type: loki
         access: Server
