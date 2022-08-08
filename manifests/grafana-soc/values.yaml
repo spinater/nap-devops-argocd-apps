@@ -34,6 +34,7 @@ grafana:
         basicAuthPassword: ${ES_PASSWORD}
         database: "metrics-*"
         jsonData:
+          interval: Daily
           timeField: metrics.last_update_date
           esVersion: '7.10.0'
           tlsSkipVerify: true
