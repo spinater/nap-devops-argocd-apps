@@ -251,10 +251,10 @@ def aggregate_stats(cache, event)
     category = event.get('category')
     alert_misp = event.get('alert_misp')
     misp_alert_category = event.get('misp_alert_category')
-    mc_pid = cache.stats["pid"]
+    mc_pid = cache.stats[:pid]
 
     id = "#{pod_uid}^#{mc_pid}^#{category}^#{alert_misp}^#{misp_alert_category}^#{yyyy_mm_dd}^#{yyyy_mm}^#{yyyy}"
-    cache_key = "metrics:#{id}"    
+    cache_key = "metrics:#{id}"
 
     obj = { 
         "id" => id,
