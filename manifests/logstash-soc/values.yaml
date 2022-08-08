@@ -88,17 +88,17 @@ logstash-syslog:
           script_params => {}
         }
 
-        clone {
-          # Create field name 'type' = es
-          clones => ["es"]
-        }
+        #clone {
+        #  # Create field name 'type' = es
+        #  clones => ["es"]
+        #}
 
-        if [type] == "es" {
-          prune {
-            interpolate => true
-            whitelist_names => [ "type", "metrics" ]
-          }          
-        }
+        #if [type] == "es" {
+        #  prune {
+        #    interpolate => true
+        #    whitelist_names => [ "type", "metrics" ]
+        #  }          
+        #}
       }
 
       output {
