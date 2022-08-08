@@ -48,7 +48,7 @@ logstash-syslog:
       valueFrom:
         secretKeyRef:
           name: es-secret
-          key: ES_USER
+          key: ES_PASSWORD
 
   logstashConfig:
     logstash.yml: |
