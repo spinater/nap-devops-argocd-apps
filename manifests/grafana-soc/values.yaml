@@ -6,7 +6,9 @@ grafana:
   fullnameOverride: grafana-soc
   envFromSecret: google-oidc-secret
   envFromSecrets:
-    - es-secret
+    - name: es-secret
+      optional: false
+
   envRenderSecret: {}
 
   datasources:
