@@ -107,7 +107,7 @@ logstash-syslog:
         if [type] == "es" {
           #stdout { codec => json_lines  }
           elasticsearch {
-            hosts => [ "es-soc-es-http.es-soc.svc.cluster.local:9200" ]
+            hosts => [ "https://es-soc-es-http.es-soc.svc.cluster.local:9200" ]
             index => "metrics-%{[metrics][yyyy]}"
             data_stream => "false"
             user => "${ES_USER}"
