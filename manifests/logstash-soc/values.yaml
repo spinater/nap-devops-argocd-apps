@@ -114,7 +114,7 @@ logstash-syslog:
             password => "${ES_PASSWORD}"
             action => "update"
             doc_as_upsert => "true"
-            #document_id => "%{[metrics][id]}"
+            document_id => "%{[metrics][id]}"
           }          
         }
         else {
