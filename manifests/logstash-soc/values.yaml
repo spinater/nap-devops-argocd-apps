@@ -106,6 +106,16 @@ logstash-syslog:
 
         if [type] == "es" {
           #stdout { codec => json_lines  }
+          elasticsearch {
+            hosts => [ "es-soc-kb-http.es-soc.svc.cluster.local:5601" ]
+            #index => "metrics-%{[metrics][yyyy]}"
+            data_stream => "false"
+            user => "${ES_USER}"
+            password => "${ES_PASSWORD}"
+            action => "update"
+            doc_as_upsert => "true"
+            #document_id => "%{[metrics][id]}"
+          }          
         }
         else {
           loki {
