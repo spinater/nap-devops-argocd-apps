@@ -104,7 +104,8 @@ logstash-syslog:
       output {
         #stdout { codec => rubydebug  }
 
-        if [type] == "syslog" {
+        #if [type] == "syslog" {
+
           loki {
             message_field => "message"
             include_fields => [
@@ -126,7 +127,8 @@ logstash-syslog:
             ]
             url => "http://loki-soc-gateway.loki-soc.svc.cluster.local/loki/api/v1/push"
           }
-        }
+
+        #}
 
 
       }
