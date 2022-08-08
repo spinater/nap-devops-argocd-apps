@@ -108,6 +108,7 @@ logstash-syslog:
           #stdout { codec => json_lines  }
           elasticsearch {
             hosts => [ "https://es-soc-es-http.es-soc.svc.cluster.local:9200" ]
+            ssl_certificate_verification => false
             index => "metrics-%{[metrics][yyyy]}"
             data_stream => "false"
             user => "${ES_USER}"
