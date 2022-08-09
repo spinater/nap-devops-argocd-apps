@@ -245,6 +245,8 @@ def aggregate_stats(cache, event)
     yyyy_mm_dd = date_key.split('T')[0]
     yyyy_mm = yyyy_mm_dd[0..6]
     yyyy = yyyy_mm_dd[0..3]
+    mm = yyyy_mm_dd[5..6]
+    dd = yyyy_mm_dd[8..9]
 
     pod_name = ENV["POD_NAME"]
     pod_uid = ENV["POD_UID"]
@@ -266,6 +268,8 @@ def aggregate_stats(cache, event)
         "yyyy_mm_dd" => yyyy_mm_dd,
         "yyyy_mm" => yyyy_mm,
         "yyyy" => yyyy,
+        "mm" => mm,
+        "dd" => dd,
         "cache_key" => cache_key,
         "last_update_date" => last_event_dtm,
         "metric_event_count" => 1
@@ -280,6 +284,8 @@ def aggregate_stats(cache, event)
         obj["last_update_date"] = last_event_dtm
         obj["cache_key"] = cache_key
         obj["memcached_pid"] = mc_pid
+        obj["mm"] = mm
+        obj["dd"] = dd
 
         evt_count = obj["metric_event_count"]
         obj["metric_event_count"] = evt_count + 1
