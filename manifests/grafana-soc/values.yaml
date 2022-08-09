@@ -62,6 +62,7 @@ grafana:
     cm-events-stat: cm-events-stat
     cm-dst-network-stat: cm-dst-network-stat
     cm-potential-intrusion: cm-potential-intrusion
+    cm-event-summ-by-date: cm-event-summ-by-date
 
   grafana.ini:
     log:
