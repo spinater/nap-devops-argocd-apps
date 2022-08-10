@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 7,
-  "iteration": 1660136901666,
+  "iteration": 1660137764022,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -93,6 +93,10 @@
               {
                 "id": "displayName",
                 "value": "[Event]"
+              },
+              {
+                "id": "unit",
+                "value": "string"
               }
             ]
           },
@@ -304,7 +308,7 @@
   },
   "timezone": "Asia/Bangkok",
   "title": "005 - Event Summary by Date",
-  "uid": "WcILYVmVk",
-  "version": 8,
+  "uid": "ADT6EVm4z",
+  "version": 1,
   "weekStart": ""
 }
