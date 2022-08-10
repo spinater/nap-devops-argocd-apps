@@ -25,9 +25,25 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 7,
+  "iteration": 1660095272014,
   "links": [],
   "liveNow": false,
   "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "panels": [],
+      "repeat": "month",
+      "title": "Events Summary - ${month}",
+      "type": "row"
+    },
     {
       "datasource": {
         "type": "elasticsearch",
@@ -54,42 +70,29 @@
               "type": "linear"
             }
           },
+          "decimals": 1,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-blue",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
-          }
+          },
+          "unit": "locale"
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "metrics.yyyy_mm_dd"
+              "options": "metrics.dd.keyword"
             },
             "properties": [
               {
-                "id": "mappings",
-                "value": [
-                  {
-                    "options": {
-                      "pattern": "(.+?)-(.+?)-(.+?)T(.*)",
-                      "result": {
-                        "index": 0,
-                        "text": "$3"
-                      }
-                    },
-                    "type": "regex"
-                  }
-                ]
+                "id": "displayName",
+                "value": "[Event]"
               }
             ]
           },
@@ -102,10 +105,6 @@
               {
                 "id": "unit",
                 "value": "locale"
-              },
-              {
-                "id": "displayName",
-                "value": "[Events]"
               }
             ]
           }
@@ -115,7 +114,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 1
       },
       "id": 2,
       "options": {
@@ -124,7 +123,6 @@
         "groupWidth": 0.7,
         "legend": {
           "calcs": [
-            "sum",
             "count"
           ],
           "displayMode": "list",
@@ -137,7 +135,7 @@
           "mode": "single",
           "sort": "none"
         },
-        "xField": "metrics.yyyy_mm_dd",
+        "xField": "metrics.dd.keyword",
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
@@ -147,19 +145,8 @@
           "alias": "",
           "bucketAggs": [
             {
-              "field": "metrics.yyyy_mm_dd",
+              "field": "metrics.dd.keyword",
               "id": "2",
-              "settings": {
-                "min_doc_count": "1",
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "10"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "type.keyword",
-              "id": "3",
               "settings": {
                 "min_doc_count": "1",
                 "order": "desc",
@@ -173,6 +160,7 @@
             "type": "elasticsearch",
             "uid": "PB85CA22D94403BC9"
           },
+          "hide": false,
           "metrics": [
             {
               "field": "metrics.metric_event_count",
@@ -180,20 +168,74 @@
               "type": "sum"
             }
           ],
-          "query": "metrics.yyyy:\"2022\"",
+          "query": "metrics.yyyy:${year} AND metrics.mm:${month}",
           "refId": "A",
           "timeField": "metrics.last_update_date"
         }
       ],
-      "title": "Event Summary - 01",
+      "title": "Event Summary - ${month}",
       "type": "barchart"
     }
   ],
+  "refresh": "",
   "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "2022",
+          "value": "2022"
+        },
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "PB85CA22D94403BC9"
+        },
+        "definition": "{\"find\": \"terms\", \"field\": \"metrics.yyyy.keyword\"}",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Year",
+        "multi": false,
+        "name": "year",
+        "options": [],
+        "query": "{\"find\": \"terms\", \"field\": \"metrics.yyyy.keyword\"}",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "PB85CA22D94403BC9"
+        },
+        "definition": "{\"find\": \"terms\", \"field\": \"metrics.mm.keyword\", \"query\":\"metrics.yyyy.keyword:$year\"}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Month",
+        "multi": true,
+        "name": "month",
+        "options": [],
+        "query": "{\"find\": \"terms\", \"field\": \"metrics.mm.keyword\", \"query\":\"metrics.yyyy.keyword:$year\"}",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 2,
+        "type": "query"
+      }
+    ]
   },
   "time": {
     "from": "now/y",
@@ -204,7 +246,7 @@
   },
   "timezone": "Asia/Bangkok",
   "title": "005 - Event Summary by Date",
-  "uid": "E8oxpGm4z",
-  "version": 1,
+  "uid": "BH5nF7iVz",
+  "version": 24,
   "weekStart": ""
 }
