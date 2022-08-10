@@ -25,8 +25,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
-  "iteration": 1660115047569,
+  "id": 7,
+  "iteration": 1660136901666,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -169,7 +169,7 @@
               "type": "sum"
             }
           ],
-          "query": "metrics.yyyy:${year} AND metrics.mm:${month}",
+          "query": "metrics.yyyy:${year} AND metrics.mm:${month} AND metrics.category.keyword:${category} AND\nmetrics.alert_misp.keyword:${alert}",
           "refId": "A",
           "timeField": "metrics.last_update_date"
         }
@@ -178,7 +178,7 @@
       "type": "barchart"
     }
   ],
-  "refresh": "10s",
+  "refresh": "30s",
   "schemaVersion": 36,
   "style": "dark",
   "tags": [],
@@ -186,7 +186,7 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "2022",
           "value": "2022"
         },
@@ -235,6 +235,63 @@
         "skipUrlSync": false,
         "sort": 2,
         "type": "query"
+      },
+      {
+        "allValue": "",
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "PB85CA22D94403BC9"
+        },
+        "definition": "{\"find\": \"terms\", \"field\": \"metrics.category.keyword\", \"query\":\"metrics.yyyy.keyword:$year\"}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Category",
+        "multi": true,
+        "name": "category",
+        "options": [],
+        "query": "{\"find\": \"terms\", \"field\": \"metrics.category.keyword\", \"query\":\"metrics.yyyy.keyword:$year\"}",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "PB85CA22D94403BC9"
+        },
+        "definition": "{\"find\": \"terms\", \"field\": \"metrics.alert_misp.keyword\", \"query\":\"metrics.yyyy.keyword:$year\"}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "MISP Alert",
+        "multi": true,
+        "name": "alert",
+        "options": [],
+        "query": "{\"find\": \"terms\", \"field\": \"metrics.alert_misp.keyword\", \"query\":\"metrics.yyyy.keyword:$year\"}",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
@@ -247,7 +304,7 @@
   },
   "timezone": "Asia/Bangkok",
   "title": "005 - Event Summary by Date",
-  "uid": "5q4pJniVk",
-  "version": 1,
+  "uid": "WcILYVmVk",
+  "version": 8,
   "weekStart": ""
 }
