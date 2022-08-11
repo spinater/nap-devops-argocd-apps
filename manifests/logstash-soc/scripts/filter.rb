@@ -240,6 +240,9 @@ end
 
 def aggregate_stats(cache, event)
     date_key = event.get('@timestamp').to_s
+    src_net = event.get('src_net')
+    dst_net = event.get('dst_net')
+
     last_event_dtm = date_key
 
     yyyy_mm_dd = date_key.split('T')[0]
@@ -253,15 +256,16 @@ def aggregate_stats(cache, event)
     category = event.get('category')
     alert_misp = event.get('alert_misp')
     misp_alert_category = event.get('misp_alert_category')
-    mc_pid = cache.stats[:pid] #TODO : Will find the way to get memcached PID
-
-    id = "#{pod_uid}^#{mc_pid}^#{category}^#{alert_misp}^#{misp_alert_category}^#{yyyy_mm_dd}^#{yyyy_mm}^#{yyyy}"
+    net_pair = "#{src_net}^#{dst_net}"
+    
+    id = "#{pod_uid}^#{net_pair}^#{category}^#{alert_misp}^#{misp_alert_category}^#{yyyy_mm_dd}^#{yyyy_mm}^#{yyyy}"
     cache_key = "metrics:#{id}"
 
     obj = { 
         "id" => id,
         "pod" => pod_name,
-        "memcached_pid" => mc_pid,
+        "src_net" => src_net,
+        "dst_net" => dst_net,
         "category" => category,
         "alert_misp" => alert_misp,
         "misp_alert_category" => misp_alert_category,
@@ -283,7 +287,6 @@ def aggregate_stats(cache, event)
         obj = JSON.parse(metric)
         obj["last_update_date"] = last_event_dtm
         obj["cache_key"] = cache_key
-        obj["memcached_pid"] = mc_pid
         obj["mm"] = mm
         obj["dd"] = dd
 
