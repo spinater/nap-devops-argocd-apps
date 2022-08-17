@@ -231,6 +231,10 @@ def load_misp_cahce(event, cache, value_field, attribute, label)
         if (attributes.count > 0)
             misp_alert = 'true'
             event.set('misp_alert_category', label)
+
+            if (value_field == 'dst_ip')
+                event.set('dst_ip_alert', value)
+            end
         end
     end
 
