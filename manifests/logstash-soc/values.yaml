@@ -118,6 +118,7 @@ logstash-syslog:
               "debug_field1", 
               "dst_net", 
               "dst_port", 
+              "dst_ip_alert", 
               "mac", 
               "misp_alert_category",
               "possible_user", 
