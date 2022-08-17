@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: cm-event-summ-by-date
-data:
-  001-logstash.json: |-
-{{ .Files.Get "dashboards/005-event-summ-by-date.json" |  indent 4 }}

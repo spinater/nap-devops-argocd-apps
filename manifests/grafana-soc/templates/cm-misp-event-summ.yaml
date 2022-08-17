@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-misp-event-summ
+data:
+  005-misp-event-summ.json: |-
+{{ .Files.Get "dashboards/005-misp-event-summ.json" |  indent 4 }}
