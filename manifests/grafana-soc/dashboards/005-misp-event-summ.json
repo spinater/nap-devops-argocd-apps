@@ -25,7 +25,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 7,
-  "iteration": 1660741223902,
+  "iteration": 1660823982073,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -65,8 +65,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 12,
+        "h": 16,
+        "w": 8,
         "x": 0,
         "y": 1
       },
@@ -99,7 +99,7 @@
             "type": "loki",
             "uid": "P3207ED7BE1A28479"
           },
-          "expr": "sum(count_over_time({type=\"syslog\",dst_ip_alert!=\"\",possible_user=~\"${user}\"}[$__interval])) by (possible_user)",
+          "expr": "sum(count_over_time({type=\"syslog\",dst_ip_alert!=\"\",dst_ip_alert=~\"${dst_ip_alert}\",possible_user=~\"${user}\"}[$__interval])) by (possible_user)",
           "legendFormat": "{{possible_user}}",
           "refId": "A"
         }
@@ -130,9 +130,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
+        "h": 16,
+        "w": 7,
+        "x": 8,
         "y": 1
       },
       "id": 4,
@@ -166,7 +166,7 @@
             "type": "loki",
             "uid": "P3207ED7BE1A28479"
           },
-          "expr": "sum(count_over_time({type=\"syslog\",dst_ip_alert!=\"\",possible_user=~\"${user}\"}[$__interval])) by (dst_ip_alert)",
+          "expr": "sum(count_over_time({type=\"syslog\",dst_ip_alert!=\"\",dst_ip_alert=~\"${dst_ip_alert}\",possible_user=~\"${user}\"}[$__interval])) by (dst_ip_alert)",
           "legendFormat": "{{dst_ip_alert}}",
           "refId": "A"
         }
@@ -198,10 +198,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
-        "w": 24,
-        "x": 0,
-        "y": 10
+        "h": 16,
+        "w": 9,
+        "x": 15,
+        "y": 1
       },
       "id": 6,
       "options": {
@@ -209,7 +209,7 @@
           "displayMode": "table",
           "placement": "right",
           "sortBy": "Value",
-          "sortDesc": false,
+          "sortDesc": true,
           "values": [
             "value"
           ]
@@ -234,7 +234,7 @@
             "type": "loki",
             "uid": "P3207ED7BE1A28479"
           },
-          "expr": "sum(count_over_time({type=\"syslog\",dst_ip_alert!=\"\", possible_user=~\"${user}\"}[$__interval])) by (dst_ip_alert, possible_user)",
+          "expr": "sum(count_over_time({type=\"syslog\",dst_ip_alert!=\"\",dst_ip_alert=~\"${dst_ip_alert}\", possible_user=~\"${user}\"}[$__interval])) by (dst_ip_alert, possible_user)",
           "legendFormat": "{{possible_user}} -> {{dst_ip_alert}}",
           "refId": "A"
         }
@@ -276,17 +276,45 @@
         "skipUrlSync": false,
         "sort": 1,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "loki",
+          "uid": "P3207ED7BE1A28479"
+        },
+        "definition": "label_values({dst_ip_alert!=\"\"}, dst_ip_alert)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Dest IP",
+        "multi": true,
+        "name": "dst_ip_alert",
+        "options": [],
+        "query": "label_values({dst_ip_alert!=\"\"}, dst_ip_alert)",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "Asia/Bangkok",
   "title": "005 - MISP Event Summary",
-  "uid": "yWd0PUiVk",
-  "version": 1,
+  "uid": "M1rp7ui4z",
+  "version": 3,
   "weekStart": ""
 }
