@@ -6,4 +6,4 @@ genuine-api:
     controller: deployment
     image:
       name: gcr.io/its-artifact-commons/genuine-api
-      tag: develop-611f1b6
+      tag: develop-d477eac
