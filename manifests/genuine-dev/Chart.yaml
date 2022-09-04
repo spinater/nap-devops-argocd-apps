@@ -10,7 +10,7 @@ appVersion: "1.0"
 
 dependencies:
   - name: "generic-app"
-    alias: generic-app
-    condition: generic-app.enabled
+    alias: genuine-api
+    condition: genuine-api.enabled
     repository: "https://charts.visonneau.fr/"
     version: "0.0.14"
