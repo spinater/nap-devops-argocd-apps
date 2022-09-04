@@ -10,7 +10,7 @@ spec:
           custom: "true"
   template:
     metadata:
-      name: 'genuine-dev-{{name}}'
+      name: 'genuine-dev'
     spec:
       project: "default"
       source:
