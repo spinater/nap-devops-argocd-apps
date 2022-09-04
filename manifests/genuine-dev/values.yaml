@@ -1,0 +1,9 @@
+generic-app:
+  enabled: true
+  nameOverride: genuine
+
+  pods:
+    controller: deployment
+    image:
+      name: gcr.io/its-artifact-commons/genuine-api
+      tag: v1.0.0
