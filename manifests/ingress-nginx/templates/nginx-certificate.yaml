@@ -65,6 +65,6 @@ spec:
     - '{{ .Values.domain6 }}'
     - '*.{{ .Values.domain6 }}'    
   issuerRef:
-    name: lets-encrypt-issuer-top-prod
+    name: lets-encrypt-issuer-prod
     kind: ClusterIssuer
     group: cert-manager.io
