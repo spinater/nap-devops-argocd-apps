@@ -12,6 +12,7 @@ spec:
     - secretName: nginx-cert-admx
     - secretName: nginx-cert-napbiotec
     - secretName: nginx-cert-napbiotec-com
+    - secretName: nginx-cert-genuine-napbiotec-io
   rules:
     - host: '*.{{ .Values.domain }}'
       http:
@@ -74,6 +75,26 @@ spec:
                 port:
                   number: 443
     - host: '{{ .Values.domain4 }}'
+      http:
+        paths:
+          - path: /*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.backendService }}
+                port:
+                  number: 443
+    - host: '{{ .Values.domain5 }}'
+      http:
+        paths:
+          - path: /*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.backendService }}
+                port:
+                  number: 443
+    - host: '{{ .Values.domain6 }}'
       http:
         paths:
           - path: /*

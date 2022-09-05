@@ -7,3 +7,13 @@ genuine-api:
     image:
       name: gcr.io/its-artifact-commons/genuine-api
       tag: develop-d477eac
+
+  ingress:
+    enabled: true
+    service:
+      name: genuine-dev
+      port:
+        name: http
+
+    hosts:
+      - api.genuine-dev.napbiotec.io
