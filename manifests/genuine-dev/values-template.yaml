@@ -1,0 +1,4 @@
+genuine-api:
+  pods:
+    image:
+      tag: "<<genuine-api-image-tag>>"
