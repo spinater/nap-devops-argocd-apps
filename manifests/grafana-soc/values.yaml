@@ -2,6 +2,8 @@ domain: grafana-soc.devops.napbiotec.io
 
 grafana:
   enabled: true
+  image:
+    tag: 8.5.13
 
   fullnameOverride: grafana-soc
   envFromSecret: google-oidc-secret
