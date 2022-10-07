@@ -17,7 +17,7 @@ velero:
     backupStorageLocation:
       name: default
       # Bucket to store backups in. Required.
-      bucket: napbiotec-cloud-backup
+      bucket: napbiotec-cloud-backup #in the nap-infra project
       # Directory inside bucket
       prefix: nap-devops-prod
       # None for GCP
