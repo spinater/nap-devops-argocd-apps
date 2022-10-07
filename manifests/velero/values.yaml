@@ -1,0 +1,34 @@
+velero:
+  # Init containers to add to the Velero deployment's pod spec. At least one plugin provider image is required.
+  initContainers: #[]
+    - name: velero-plugin-for-gcp
+      image: velero/velero-plugin-for-gcp:v1.5.0
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - mountPath: /target
+          name: plugins
+
+  installCRDs: true
+  configuration:
+    # Cloud provider being used (e.g. aws, azure, gcp).
+    provider: gcp
+
+    # Parameters for the `default` BackupStorageLocation. See
+    backupStorageLocation:
+      name: default
+      # Bucket to store backups in. Required.
+      bucket: napbiotec-cloud-backup
+      # Directory inside bucket
+      prefix: nap-devops-prod
+      # None for GCP
+      config: {}
+
+    # Parameters for the `default` VolumeSnapshotLocation. See
+    volumeSnapshotLocation:
+      name: default
+      config: {}
+
+  credentials:
+    useSecret: true
+    existingSecret: gcp-sa
+    secretContents: {}
