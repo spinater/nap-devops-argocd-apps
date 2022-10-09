@@ -33,7 +33,7 @@ grafana:
         url: https://es-soc-es-http.es-soc.svc.cluster.local:9200
         basicAuth: true
         basicAuthUser: ${ES_USER}
-        database: "metrics-*"
+        database: "syslog-events-*"
         jsonData:
           interval: null
           timeField: '@timestamp'
