@@ -452,15 +452,16 @@ def aggregate_stats(cache, event)
 end
 
 def filter(event)
+    data = event.get('message')
+    arr1 = data.split(',')     
+    category = get_category(data)
+
+    event.set('evt_category_org', category)
     tokens = populate_event_category(event)
     parse_fields(event, tokens)
     populate_ts_aggregate(event)    
     create_metric(event)
 
-
-    data = event.get('message')
-    arr1 = data.split(',')
-    category = get_category(data)
 
     event.set('type', 'syslog')
     event.set('debug_field1', 'not-matched')
