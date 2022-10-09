@@ -496,6 +496,32 @@ def aggregate_stats(cache, event)
     event.set("metrics", obj)
 end
 
+def add_alert_metadata(event)
+    meta_fields = [
+        'evt_alert_by_dstip', 
+        'evt_alert_by_dstipdmip',
+        'evt_alert_by_dmdmip',
+        'evt_alert_by_dmdm'
+    ]
+
+    arr = []
+    meta_fields.each do |field|
+        flag = event.get(field)
+        if (flag == 'true')
+            fn = "#{field}_info"
+            fv = event.get(fn)
+            kv = "[#{fn} => #{fv}]"
+            arr.push(kv)
+        end
+    end
+
+    if (arr.count > 0)
+        metadata = arr.join(",")
+        msg = event.get('message')
+        event.set('message', "#{msg}\n\e[31m#{metadata}\e[0m")
+    end
+end
+
 def filter(event)
     data = event.get('message')
     arr1 = data.split(',')     
@@ -512,6 +538,7 @@ def filter(event)
     load_cti_cahce(event, @mc, 'evt_dst_ip', 'domain|ip', 'evt_alert_by_dstipdmip')
     load_cti_cahce(event, @mc, 'evt_domain', 'domain|ip', 'evt_alert_by_dmdmip')
     load_cti_cahce(event, @mc, 'evt_domain', 'domain', 'evt_alert_by_dmdm')
+    add_alert_metadata(event)
 
     populate_ts_aggregate(event)    
     create_metric(event)
