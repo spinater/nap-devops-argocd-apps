@@ -74,7 +74,7 @@ def load_fields_pattern(file_name)
         end
   
         rectype, pattern = line.split('|')        
-        rec_map[rectype] = pattern
+        rec_map[rectype] = pattern.strip
 
         puts("DEBUG2 : #{rectype}->#{pattern.strip}")
     end
@@ -220,7 +220,11 @@ def populate_event_category(event)
         if m = message.match(/#{pattern}/)
             tokens = m.captures
             category = key
+
+            puts "### [Match] [#{key}] [#{message}], [#{pattern}]"
             break
+        else
+            puts "### [Not Match] [#{key}] [#{message}], [#{pattern}]"
         end
     end
 
