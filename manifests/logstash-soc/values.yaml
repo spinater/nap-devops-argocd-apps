@@ -102,7 +102,7 @@ logstash-syslog:
         if [type] == "es" {
           prune {
             interpolate => true
-            whitelist_names => [ "type", "metrics" ]
+            whitelist_names => [ "type", "metrics", "@timestamp" ]
           }          
         }
       }
@@ -136,7 +136,23 @@ logstash-syslog:
           }
         } 
 
-        # TODO : Will use BigQuery instead
+        if [type] == "es" {
+          elasticsearch {
+            hosts => [ "https://es-soc-es-http.es-soc.svc.cluster.local:9200" ]
+            ssl_certificate_verification => false
+            user => "${ES_USER}"
+            password => "${ES_PASSWORD}"
+            action => "create"
+
+            ecs_compatibility => "v8"
+            http_compression => "true"
+
+            index => "syslog-events-%{[metrics][evt_ts_yyyy]}%{[metrics][evt_ts_mm]}%{[metrics][evt_ts_dd]}"
+            template_name => "syslog-events"
+            template_overwrite => "true"
+          }
+        }
+
         #if [type] == "es" {
         #  #stdout { codec => json_lines  }     
         #  elasticsearch {
@@ -151,5 +167,4 @@ logstash-syslog:
         #    document_id => "%{[metrics][id]}"
         #  }          
         #}
-
       }

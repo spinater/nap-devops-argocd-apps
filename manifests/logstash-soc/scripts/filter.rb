@@ -3,7 +3,7 @@ require 'time'
 require 'dalli'
 require 'net/http'
 require "json"
-#require 'pg'
+require 'securerandom'
 
 def register(params)
     $stdout.sync = true
@@ -46,9 +46,9 @@ def load_fields_map(file_name)
                 rec_map[rectype] = Hash.new(rectype)
                 fields_map = rec_map[rectype]
             else
-                field_name, json_field = token.split("=")
-                fields_map[field_name] = json_field.strip.split(".")
-                puts("DEBUG1 : #{rectype}:#{field_name}->#{json_field.strip}")
+                field_name, index = token.split("=")
+                fields_map[field_name] = index.strip
+                puts("DEBUG : #{rectype}:#{field_name}->#{index}")
             end
             cnt = cnt+1
         end
@@ -232,6 +232,65 @@ def populate_event_category(event)
     return tokens
 end
 
+def parse_fields(event, tokens)
+    category = event.get('evt_category')    
+    fields_map = @record_def[category]
+
+    if !fields_map.nil?
+        fields_map.each do |field, index|
+            idx = index.to_i - 1 # zero base index
+            value = tokens[idx]
+            if !value.nil?
+                event.set(field, value)
+            else
+                #puts("Error - Field index [#{idx}], delimit by [#{delimit}] not found in category [#{category}]")
+                event.set('evt_debug', "Index not found field=[#{field}] idx=[#{index}]")
+            end
+        end
+    else
+        #puts("Error - Category [#{category}] not found in fields-map.cfg")
+        event.set('evt_debug', "Unable to map fields #{category}")
+    end
+end
+
+def generate_fields(event)
+    fields = []
+    event.to_hash.each do |key, value|
+        if key.match(/^evt_.*$/)
+            fields.push(key)
+        end
+    end
+
+    sorted_fields = fields.sort
+    return sorted_fields
+end
+
+def create_metric(event)
+    sorted_fields = generate_fields(event)
+
+    obj = Hash.new()
+    obj["@timestamp"] = event.get('@timestamp')
+    obj["id"] = SecureRandom.uuid # Maybe needed in the future to link back to Loki
+    obj["pod_name_syslog"] = ENV["POD_NAME"]
+
+    sorted_fields.each do |field|
+        value = event.get(field).to_s
+        obj[field] = value.strip
+    end
+
+    event.set("metrics", obj)
+end
+
+def populate_ts_aggregate(event)
+    dtm = DateTime.now
+    dtm += Rational('7/24') # Thailand timezone +7
+
+    event.set('evt_ts_yyyy', dtm.year)
+    event.set('evt_ts_mm', dtm.mon.to_s.rjust(2,'0'))
+    event.set('evt_ts_dd', dtm.mday.to_s.rjust(2,'0'))
+    event.set('evt_ts_hh', dtm.hour.to_s.rjust(2,'0'))
+end
+
 def get_category(message)
     category = "undefined"
 
@@ -395,6 +454,10 @@ end
 
 def filter(event)
     tokens = populate_event_category(event)
+    parse_fields(event, tokens)
+    populate_ts_aggregate(event)    
+    create_metric(event)
+
 
     data = event.get('message')
     arr1 = data.split(',')
