@@ -221,10 +221,10 @@ def populate_event_category(event)
             tokens = m.captures
             category = key
 
-            puts "### [Match] [#{key}] [#{message}], [#{pattern}]"
+            #puts "### [Match] [#{key}] [#{message}], [#{pattern}]"
             break
         else
-            puts "### [Not Match] [#{key}] [#{message}], [#{pattern}]"
+            #puts "### [Not Match] [#{key}] [#{message}], [#{pattern}]"
         end
     end
 
