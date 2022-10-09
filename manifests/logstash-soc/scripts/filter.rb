@@ -344,6 +344,51 @@ def get_misp_response(attribute, value)
     return nil
 end
 
+def load_cti_cahce(event, cache, value_field, attribute, label)
+    value = event.get(value_field)
+
+    if value.nil? or value == ''
+        #puts "Nothing to do because the field [#{value_field}] is blank [#{value}]"
+        return
+    end
+
+    hit = event.get('cti_cache_hit_cnt')
+    miss = event.get('cti_cache_miss_cnt')
+
+    key = "cti:#{value_field}:#{attribute}:#{value}"
+    misp_data = cache.get(key)
+    if misp_data        
+        event.set('cti_cache_hit_cnt', hit+1)
+    else
+        event.set('cti_cache_miss_cnt', miss+1)
+        misp_data = get_misp_response(attribute, value)
+        if !misp_data.nil?
+            # Response with status code 200
+            cache.set(key, misp_data, 3600) #60 minutes expiration
+        end
+    end
+
+    misp_alert = 'unknown'
+    if !misp_data.nil?
+        #TODO : We may keep CSV in Memcache instead of JSON to improve performance
+        obj = JSON.parse(misp_data)
+        attributes = obj['response']['Attribute']
+        
+        misp_alert = 'false'
+        if (attributes.count > 0)
+            misp_alert = 'true'
+
+            evt = attributes[0]
+            event.set("#{label}_category", evt['category'])
+            event.set("#{label}_info", evt['Event']['info'])
+        end
+
+        event.set(label, misp_alert)
+    end
+
+    return [event]
+end
+
 def load_misp_cahce(event, cache, value_field, attribute, label)
     value = event.get(value_field)
 
@@ -459,10 +504,16 @@ def filter(event)
     event.set('evt_category_org', category)
     tokens = populate_event_category(event)
     parse_fields(event, tokens)
+
+    load_cti_cahce(event, @mc, 'evt_dst_ip', 'ip-dst', 'evt_alert_by_dstip')
+    load_cti_cahce(event, @mc, 'evt_dst_ip', 'domain|ip', 'evt_alert_by_dstipdmip')
+    load_cti_cahce(event, @mc, 'evt_domain', 'domain|ip', 'evt_alert_by_dmdmip')
+    load_cti_cahce(event, @mc, 'evt_domain', 'domain', 'evt_alert_by_dmdm')
+
     populate_ts_aggregate(event)    
     create_metric(event)
 
-
+    ##### OLD #####
     event.set('type', 'syslog')
     event.set('debug_field1', 'not-matched')
     event.set('category', category)
@@ -480,6 +531,7 @@ def filter(event)
     elsif category == 'dns'
         extract_dns(event, data, category)
     end
+
 
     load_misp_cahce(event, @mc, 'dst_ip', 'ip-dst', 'alert_misp_dstip_ipdst')
     load_misp_cahce(event, @mc, 'dst_ip', 'domain|ip', 'alert_misp_dstip_domainip')
