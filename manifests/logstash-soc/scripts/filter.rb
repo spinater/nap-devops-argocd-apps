@@ -48,7 +48,7 @@ def load_fields_map(file_name)
             else
                 field_name, json_field = token.split("=")
                 fields_map[field_name] = json_field.strip.split(".")
-                puts("DEBUG : #{rectype}:#{field_name}->#{json_field.strip}")
+                puts("DEBUG1 : #{rectype}:#{field_name}->#{json_field.strip}")
             end
             cnt = cnt+1
         end
@@ -75,9 +75,11 @@ def load_fields_pattern(file_name)
   
         rectype, pattern = line.split('|')        
         rec_map[rectype] = pattern
+
+        puts("DEBUG2 : #{rectype}->#{pattern.strip}")
     end
     fo.close
-  
+
     return rec_map
 end
 
