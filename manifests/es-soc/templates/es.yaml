@@ -65,3 +65,5 @@ spec:
   count: 1
   elasticsearchRef:
     name: es-soc
+  config:
+    monitoring.ui.ccs.enabled: false
