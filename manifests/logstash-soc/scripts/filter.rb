@@ -7,7 +7,9 @@ require "json"
 
 def register(params)
     $stdout.sync = true
-    @mc = Dalli::Client.new('memcached.memcached.svc.cluster.local:11211')   
+    @mc = Dalli::Client.new('memcached.memcached.svc.cluster.local:11211')
+    @record_def = load_fields_map('/configs/fields-map.cfg')
+    @fields_pattern = load_fields_pattern('/configs/pattern-map.cfg')
 end
 
 def get_not_empty(old_value, new_value)
@@ -16,6 +18,67 @@ def get_not_empty(old_value, new_value)
     end
 
     return new_value
+end
+
+def load_fields_map(file_name)
+    rec_map = Hash.new()
+    fo = File.new(file_name, "r")
+  
+    while (line = fo.gets)
+        #comment line
+        if line.match(/^#.*$/)
+            next
+        end
+  
+        #blank line
+        if line.match(/^\s*$/)
+            next
+        end
+  
+        tokens = line.split(":")
+        cnt = 0
+        rectype = ''
+        fields_map = nil
+  
+        tokens.each do |token|
+            if (cnt == 0)
+                rectype = token
+                rec_map[rectype] = Hash.new(rectype)
+                fields_map = rec_map[rectype]
+            else
+                field_name, json_field = token.split("=")
+                fields_map[field_name] = json_field.strip.split(".")
+                puts("DEBUG : #{rectype}:#{field_name}->#{json_field.strip}")
+            end
+            cnt = cnt+1
+        end
+    end
+    fo.close
+  
+    return rec_map
+end
+
+def load_fields_pattern(file_name)
+    rec_map = Hash.new()
+    fo = File.new(file_name, "r")
+  
+    while (line = fo.gets)
+        #comment line
+        if line.match(/^#.*$/)
+            next
+        end
+  
+        #blank line
+        if line.match(/^\s*$/)
+            next
+        end
+  
+        rectype, pattern = line.split('|')        
+        rec_map[rectype] = pattern
+    end
+    fo.close
+  
+    return rec_map
 end
 
 def update_user_properties(event, src_ip)
