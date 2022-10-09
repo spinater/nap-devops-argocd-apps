@@ -269,7 +269,6 @@ def create_metric(event)
     sorted_fields = generate_fields(event)
 
     obj = Hash.new()
-    obj["@timestamp"] = event.get('@timestamp')
     obj["id"] = SecureRandom.uuid # Maybe needed in the future to link back to Loki
     obj["pod_name_syslog"] = ENV["POD_NAME"]
 
