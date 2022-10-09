@@ -67,6 +67,7 @@ grafana:
     #cm-event-summ-by-date: cm-event-summ-by-date
     cm-misp-event-summ: cm-misp-event-summ
     cm-connection-summ: cm-connection-summ
+    cm-log-summ: cm-log-summ
 
   grafana.ini:
     log:

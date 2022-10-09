@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-log-summ
+data:
+  000-1-log-sum.json: |-
+{{ .Files.Get "dashboards/000-1-log-sum.json" |  indent 4 }}
