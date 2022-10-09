@@ -497,7 +497,7 @@ def filter(event)
     end
     event.set('alert_misp', found_alert)
 
-    aggregate_stats(@mc, event)
+    #aggregate_stats(@mc, event)
 
     return [event]
 end
