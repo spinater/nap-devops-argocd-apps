@@ -211,6 +211,23 @@ def extract_dns(event, message, category)
     end
 end
 
+def populate_event_category(event)
+    category = "undefined"
+    message = event.get('message')
+
+    tokens = nil
+    @fields_pattern.each do |key, pattern|
+        if m = message.match(/#{pattern}/)
+            tokens = m.captures
+            category = key
+            break
+        end
+    end
+
+    event.set('evt_category', category)
+    return tokens
+end
+
 def get_category(message)
     category = "undefined"
 
@@ -373,6 +390,8 @@ def aggregate_stats(cache, event)
 end
 
 def filter(event)
+    tokens = populate_event_category(event)
+
     data = event.get('message')
     arr1 = data.split(',')
     category = get_category(data)

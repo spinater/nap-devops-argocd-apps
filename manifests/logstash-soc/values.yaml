@@ -115,7 +115,8 @@ logstash-syslog:
             message_field => "message"
             include_fields => [
               "type", 
-              "category", 
+              "category",
+              "evt_category", 
               "alert_misp", 
               "alert_misp_domain_domain", 
               "alert_misp_domain_domainip", 
