@@ -249,7 +249,7 @@ def parse_fields(event, tokens)
         end
     else
         #puts("Error - Category [#{category}] not found in fields-map.cfg")
-        event.set('evt_debug', "Unable to map fields #{category}")
+        event.set('evt_debug', "Unable to map fields [#{category}]")
     end
 end
 
