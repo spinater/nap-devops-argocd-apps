@@ -505,6 +505,9 @@ def filter(event)
     tokens = populate_event_category(event)
     parse_fields(event, tokens)
 
+    event.set('cti_cache_hit_cnt', 0)
+    event.set('cti_cache_miss_cnt', 0)
+
     load_cti_cahce(event, @mc, 'evt_dst_ip', 'ip-dst', 'evt_alert_by_dstip')
     load_cti_cahce(event, @mc, 'evt_dst_ip', 'domain|ip', 'evt_alert_by_dstipdmip')
     load_cti_cahce(event, @mc, 'evt_domain', 'domain|ip', 'evt_alert_by_dmdmip')
