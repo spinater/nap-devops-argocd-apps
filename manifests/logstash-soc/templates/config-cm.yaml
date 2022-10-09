@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ruby-config-cm
+  annotations:
+    checksum/config1: {{ .Files.Get "configs/fields-map.cfg" | sha256sum }}
+    checksum/config2: {{ .Files.Get "configs/pattern-map.cfg" | sha256sum }}
+data:
+  fields-map.cfg: |-
+{{ .Files.Get "configs/fields-map.cfg" | indent 4 }}
+  pattern-map.cfg: |-
+{{ .Files.Get "configs/pattern-map.cfg" | indent 4 }}

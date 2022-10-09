@@ -62,6 +62,9 @@ logstash-syslog:
     - name: secrets
       mountPath: /secrets/
       readOnly: true
+    - name: configs
+      mountPath: /configs/
+      readOnly: true
 
   extraVolumes:
     - name: scripts
@@ -70,6 +73,9 @@ logstash-syslog:
     - name: secrets
       secret:
         secretName: gcp-sa
+    - name: configs
+      configMap:
+        name: ruby-config-cm
 
   logstashPipeline:
     logstash.conf: |
