@@ -3,7 +3,7 @@ domain: grafana-soc.devops.napbiotec.io
 grafana:
   enabled: true
   image:
-    tag: 8.5.13
+    tag: "9.1.5"
 
   fullnameOverride: grafana-soc
   envFromSecret: google-oidc-secret
@@ -33,14 +33,15 @@ grafana:
         url: https://es-soc-es-http.es-soc.svc.cluster.local:9200
         basicAuth: true
         basicAuthUser: ${ES_USER}
-        basicAuthPassword: ${ES_PASSWORD}
         database: "metrics-*"
         jsonData:
           interval: null
-          timeField: metrics.last_update_date
+          timeField: '@timestamp'
           esVersion: '8.0.0'
           tlsSkipVerify: true
           tlsAuthWithCACert: false
+        secureJsonData:
+          basicAuthPassword: ${ES_PASSWORD}
 
       - name: Loki-App
         type: loki
