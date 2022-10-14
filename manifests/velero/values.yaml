@@ -39,7 +39,7 @@ velero:
     secretContents: {}
 
   schedules:
-    dailybacup:
+    dailybackup:
       schedule: "0 20 * * *"
       useOwnerReferencesInBackup: false
       template:
