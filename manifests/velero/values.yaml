@@ -1,4 +1,6 @@
 velero:
+  fullnameOverride: velero
+
   # Init containers to add to the Velero deployment's pod spec. At least one plugin provider image is required.
   initContainers: #[]
     - name: velero-plugin-for-gcp
@@ -27,8 +29,18 @@ velero:
     volumeSnapshotLocation:
       name: default
       config: {}
+    defaultVolumesToRestic: true
+
+  deployRestic: true
 
   credentials:
     useSecret: true
     existingSecret: gcp-sa
     secretContents: {}
+
+  schedules:
+    dailybacup:
+      schedule: "0 17 * * *"
+      useOwnerReferencesInBackup: false
+      template:
+        ttl: "168h"
