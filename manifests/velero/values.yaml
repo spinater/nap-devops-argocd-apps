@@ -40,7 +40,7 @@ velero:
 
   schedules:
     dailybackup:
-      schedule: "0 20 * * *"
+      schedule: "0 13 10 * *"
       useOwnerReferencesInBackup: false
       template:
         ttl: "168h"
