@@ -44,6 +44,15 @@ helm-loki:
             annotations:
               description: Found  {{ printf "%v" $value }} line(s) of [Error] in [vector-soc] namespace
 
+          - alert: VeleroBackupError
+            expr: |
+              sum (count_over_time({namespace="velero"} |~ "error|ERROR|Error" [15m])) > 1
+            for: 5s
+            labels:
+              severity: warning
+            annotations:
+              description: Found  {{ printf "%v" $value }} line(s) of [Error] in [velero] namespace
+
     grafana:
       envFromSecret: google-oidc-secret
       envRenderSecret: {}
