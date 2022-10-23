@@ -30,7 +30,7 @@ spec:
             storage: 100Gi
         storageClassName: standard
   - name: data
-    count: 1
+    count: 2
     podTemplate:
       spec:
         initContainers:
