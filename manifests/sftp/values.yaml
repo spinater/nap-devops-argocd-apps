@@ -1,0 +1,8 @@
+k8s-sftp-gcs:
+  enabled: true
+  fullnameOverride: sftp
+
+  users:
+    - user: hik-vision
+      password: hikvision-1234 #will move to vault
+      bucket: napbiotec-sftp

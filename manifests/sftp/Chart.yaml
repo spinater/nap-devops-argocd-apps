@@ -1,0 +1,17 @@
+apiVersion: v2
+name: helm-sftp
+description: A Helm chart for sftp
+
+type: application
+
+version: 1.0.0
+
+appVersion: "1.0"
+
+dependencies:
+  #### Start HIS API core ####
+  - name: "k8s-sftp-gcs"
+    alias: k8s-sftp-gcs
+    condition: k8s-sftp-gcs.enabled
+    repository: "https://danuk.github.io/k8s-sftp-gcs/"
+    version: "0.1.2"
