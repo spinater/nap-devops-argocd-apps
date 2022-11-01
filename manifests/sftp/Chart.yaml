@@ -9,9 +9,8 @@ version: 1.0.0
 appVersion: "1.0"
 
 dependencies:
-  #### Start HIS API core ####
-  - name: "k8s-sftp-gcs"
-    alias: k8s-sftp-gcs
-    condition: k8s-sftp-gcs.enabled
-    repository: "https://danuk.github.io/k8s-sftp-gcs/"
-    version: "0.1.2"
+  - name: "generic-app"
+    alias: sftp-gcs
+    condition: sftp-gcs.enabled
+    repository: "https://charts.visonneau.fr/"
+    version: "0.0.14"
