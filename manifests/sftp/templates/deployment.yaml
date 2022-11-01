@@ -31,6 +31,13 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: USER1_PASSWORD
+              value: test1234
+              #valueFrom:
+              #  secretKeyRef:
+              #    name: mysecret
+              #    key: password
           volumeMounts:
             - mountPath: /etc/sftp
               name: users

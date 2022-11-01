@@ -6,6 +6,7 @@ data:
   gcs-mounts.sh: |-
     #!/bin/bash
     {{ range $item, $user := .Values.users -}}
+    echo "DEBUG ${USER1_PASSWORD}"
     runuser -l {{ $user.user }} -c \
       {{- if $user.onlyDir }}
       'export GOOGLE_APPLICATION_CREDENTIALS=/credentials/gcloud-key.json; gcsfuse --only-dir {{ $user.onlyDir }} {{ $user.bucket }} /home/{{ $user.user }}/ftp'
