@@ -25,12 +25,6 @@ sftp-gcs:
         containerPort: 22
         protocol: TCP
 
-    securityContext:
-      privileged: true
-      capabilities:
-        add:
-        - SYS_ADMIN
-
     env: []
     #  - name: GEOIP_REDIS_HOST
     #    value: redis-master
