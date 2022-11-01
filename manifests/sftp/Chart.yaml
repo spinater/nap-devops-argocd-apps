@@ -8,9 +8,4 @@ version: 1.0.0
 
 appVersion: "1.0"
 
-dependencies:
-  - name: "generic-app"
-    alias: sftp-gcs
-    condition: sftp-gcs.enabled
-    repository: "https://charts.visonneau.fr/"
-    version: "0.0.14"
+dependencies: []

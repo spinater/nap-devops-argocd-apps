@@ -1,57 +1,45 @@
+replicaCount: 3
+nameOverride: "sftp-gcs"
+fullnameOverride: "sftp-gcs"
+
 users:
   - user: hik-vision
     password: <<USER1_PASSWORD>>
     bucket: napbiotec-sftp
 
-sftp-gcs:
-  enabled: true
-  nameOverride: sftp-gcs
+service:
+  type: LoadBalancer
+  port: 2022
+  annotations: {}
 
-  service:
-    enabled: true
-    ports:
-      - port: 2022
-        targetPort: sftp
-        protocol: TCP
-        name: sftp
+image:
+  repository: danuk/k8s-sftp-gcs
+  tag: latest
+  pullPolicy: IfNotPresent
 
-  pods:
-    controller: deployment
-    image:
-      name: danuk/k8s-sftp-gcs
-      tag: latest
-    ports:
-      - name: sftp
-        containerPort: 22
-        protocol: TCP
+imagePullSecrets: []
 
-    env: []
-    #  - name: GEOIP_REDIS_HOST
-    #    value: redis-master
+podAnnotations: {}
 
-    volumeMounts:
-      - mountPath: /etc/sftp
-        name: users
-      - mountPath: /etc/sftp.d/
-        name: gcs-mounts
-      - mountPath: /credentials
-        name: sftp-gcloud-key
-      - name: ssh-key
-        mountPath: /etc/ssh/ssh_host_rsa_key
-        subPath: ssh_host_rsa_key
+podSecurityContext: {}
+  # fsGroup: 2000
 
-    volumes:
-      - name: users
-        configMap:
-          name: users
-      - name: gcs-mounts
-        configMap:
-          name: gcs-mounts
-          defaultMode: 0744
-      - name: sftp-gcloud-key
-        secret:
-          secretName: sftp-gcloud-key
-      - name: ssh-key
-        secret:
-          secretName: ssh-secret-key
-          defaultMode: 0400
+securityContext:
+  privileged: true
+  capabilities:
+    add:
+    - SYS_ADMIN
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
