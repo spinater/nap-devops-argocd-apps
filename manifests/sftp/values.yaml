@@ -3,7 +3,7 @@ nameOverride: "sftp-gcs"
 fullnameOverride: "sftp-gcs"
 
 users:
-  - user: hik-vision
+  - user: hikvision
     password: "" #Password defined in vault instead
     bucket: napbiotec-sftp
 
