@@ -4,7 +4,7 @@ fullnameOverride: "sftp-gcs"
 
 users:
   - user: hik-vision
-    password: <<USER1_PASSWORD>>
+    password: "" #Password defined in vault instead
     bucket: napbiotec-sftp
 
 service:

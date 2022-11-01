@@ -31,13 +31,6 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            - name: USER1_PASSWORD
-              value: test1234
-              #valueFrom:
-              #  secretKeyRef:
-              #    name: mysecret
-              #    key: password
           volumeMounts:
             - mountPath: /etc/sftp
               name: users
@@ -56,9 +49,9 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
          - name: users
-           configMap:
-             name: users
-             defaultMode: 0744
+           secret:
+             secretName: sftp-users
+             defaultMode: 0400
          - name: gcs-mounts
            configMap:
              name: gcs-mounts
