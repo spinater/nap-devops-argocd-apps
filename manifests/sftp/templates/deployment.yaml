@@ -58,6 +58,7 @@ spec:
          - name: users
            configMap:
              name: users
+             defaultMode: 0744
          - name: gcs-mounts
            configMap:
              name: gcs-mounts
