@@ -10,27 +10,21 @@ logstash-http:
   extraEnvs:
     - name: DUMMY_FOR_RESTART #If need to restart pod manually then change this
       value: "000"
+
     - name: LS_JAVA_OPTS
       value: "-Xmx512m -Xms512m"
-    - name: LOKI_AUTH_USER
-      valueFrom:
-        secretKeyRef:
-          name: loki-basic-authen
-          key: LOKI_AUTH_USER
-    - name: LOKI_AUTH_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: loki-basic-authen
-          key: LOKI_AUTH_PASSWORD
+
     - name: POD_NAME
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
+
     - name: ES_USER
       valueFrom:
         secretKeyRef:
           name: es-soc-basic-authen
           key: username
+
     - name: ES_PASSWORD
       valueFrom:
         secretKeyRef:
