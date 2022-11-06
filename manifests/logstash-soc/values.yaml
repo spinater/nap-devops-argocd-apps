@@ -22,13 +22,13 @@ logstash-http:
     - name: ES_USER
       valueFrom:
         secretKeyRef:
-          name: es-soc-basic-authen
+          name: es-secret
           key: username
 
     - name: ES_PASSWORD
       valueFrom:
         secretKeyRef:
-          name: es-soc-basic-authen
+          name: es-secret
           key: password
 
   service:
