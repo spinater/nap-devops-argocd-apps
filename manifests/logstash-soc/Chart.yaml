@@ -23,9 +23,14 @@ version: 1.0.0
 appVersion: "1.0"
 
 dependencies:
-  #### Start HIS API core ####
   - name: "logstash"
     alias: logstash-syslog
     condition: logstash-syslog.enabled
+    repository: "https://helm.elastic.co"
+    version: "7.17.3"
+
+  - name: "logstash"
+    alias: logstash-http
+    condition: logstash-http.enabled
     repository: "https://helm.elastic.co"
     version: "7.17.3"

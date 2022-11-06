@@ -1,3 +1,92 @@
+####### HTTP ############
+logstash-http:
+  enabled: true
+  replicas: 1
+  antiAffinity: soft
+  fullnameOverride: logstash-http 
+  image: gcr.io/its-artifact-commons/logstash-loki
+  imageTag: develop-2ad49d4
+
+  extraEnvs:
+    - name: DUMMY_FOR_RESTART #If need to restart pod manually then change this
+      value: "000"
+    - name: LS_JAVA_OPTS
+      value: "-Xmx512m -Xms512m"
+    - name: LOKI_AUTH_USER
+      valueFrom:
+        secretKeyRef:
+          name: loki-basic-authen
+          key: LOKI_AUTH_USER
+    - name: LOKI_AUTH_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: loki-basic-authen
+          key: LOKI_AUTH_PASSWORD
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: ES_USER
+      valueFrom:
+        secretKeyRef:
+          name: es-soc-basic-authen
+          key: username
+    - name: ES_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: es-soc-basic-authen
+          key: password
+
+  service:
+    ports:
+      - name: http-input
+        port: 8080
+        targetPort: 8080
+        protocol: TCP
+
+  logstashConfig:
+    logstash.yml: |
+      http.host: "0.0.0.0"
+      pipeline.ecs_compatibility: "disabled"
+
+  extraVolumeMounts:
+    - name: scripts
+      mountPath: /scripts/
+      readOnly: true
+    - name: configs
+      mountPath: /configs/
+      readOnly: true
+
+  extraVolumes:
+    - name: scripts
+      configMap:
+        name: ruby-filter-cm
+    - name: configs
+      configMap:
+        name: ruby-config-cm
+
+  logstashPipeline:
+    logstash.conf: |
+      input {
+        http {
+          id => "http_input"
+          codec => "json_lines"
+          port => "8080"
+        }
+      }
+
+      filter {
+        ruby {
+          path => "/scripts/http.rb"
+          script_params => {}
+        }
+      }
+
+      output {
+        stdout { codec => json_lines }
+      }
+
+####### SYSLOG ############
 logstash-syslog:
   enabled: true
 
@@ -152,19 +241,4 @@ logstash-syslog:
             template_overwrite => "true"
           }
         }
-
-        #if [type] == "es" {
-        #  #stdout { codec => json_lines  }     
-        #  elasticsearch {
-        #    hosts => [ "https://es-soc-es-http.es-soc.svc.cluster.local:9200" ]
-        #    ssl_certificate_verification => false
-        #    index => "metrics-%{[metrics][yyyy]}"
-        #    data_stream => "false"
-        #    user => "${ES_USER}"
-        #    password => "${ES_PASSWORD}"
-        #    action => "update"
-        #    doc_as_upsert => "true"
-        #    document_id => "%{[metrics][id]}"
-        #  }          
-        #}
       }
