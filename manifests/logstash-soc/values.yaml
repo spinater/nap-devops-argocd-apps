@@ -1,3 +1,6 @@
+domain: devops.napbiotec.io
+hookBackend: logstash-http
+
 ####### HTTP ############
 logstash-http:
   enabled: true
