@@ -9,5 +9,7 @@ def register(params)
 end
 
 def filter(event)
+    puts("DEBUG - Event hooked")
+
     return [event]
 end
