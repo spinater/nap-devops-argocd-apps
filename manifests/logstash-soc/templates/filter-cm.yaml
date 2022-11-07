@@ -5,3 +5,5 @@ metadata:
 data:
   filter.rb: |-
 {{ .Files.Get "scripts/filter.rb" |  indent 4 }}
+  http.rb: |-
+{{ .Files.Get "scripts/http.rb" |  indent 4 }}
