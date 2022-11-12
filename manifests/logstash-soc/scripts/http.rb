@@ -15,7 +15,7 @@ def filter(event)
     puts("DEBUG - Event hooked [#{nas_src}]")
 
     if (nas_src == 'office-hq')
-        msg = event.get('Message Content')
+        msg = event.get('Message Content').delete!("\n")
 
         event.set('category', 'synology')
         event.set('type', 'notification')
