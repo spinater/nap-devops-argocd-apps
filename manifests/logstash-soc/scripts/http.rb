@@ -9,7 +9,19 @@ def register(params)
 end
 
 def filter(event)
-    puts("DEBUG - Event hooked")
+    header = event.get('headers')
+    nas_src = header['nas_source']
+
+    puts("DEBUG - Event hooked [#{nas_src}]")
+
+    if (nas_src == 'office-hq')
+        msg = event.get('Message Content')
+
+        event.set('category', 'synology')
+        event.set('type', 'notification')
+
+        event.set('message', msg)
+    end
 
     return [event]
 end

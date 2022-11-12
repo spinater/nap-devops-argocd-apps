@@ -83,6 +83,15 @@ logstash-http:
 
       output {
         stdout { codec => json_lines }
+
+        loki {
+          message_field => "message"
+          include_fields => [
+            "type", 
+            "category"
+          ]
+          url => "http://loki-soc-gateway.loki-soc.svc.cluster.local/loki/api/v1/push"
+        }
       }
 
 ####### SYSLOG ############
