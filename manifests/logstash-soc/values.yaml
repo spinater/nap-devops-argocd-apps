@@ -69,8 +69,8 @@ logstash-http:
           id => "http_input"
           codec => "json_lines"
           port => "8080"
-          user => "${WEBHOOK_USER}"
-          password => "${WEBHOOK_PASSWORD}"
+          #user => "${WEBHOOK_USER}"
+          #password => "${WEBHOOK_PASSWORD}"
         }
       }
 
