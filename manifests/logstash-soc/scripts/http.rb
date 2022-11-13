@@ -13,7 +13,7 @@ def filter(event)
     nas_src = header['nas_source']
     storage_data = event.get('StorageData')
 
-    puts("DEBUG - Event hooked [#{nas_src}]")
+    #puts("DEBUG - Event hooked [#{nas_src}]")
 
     if (nas_src == 'office-hq')
         msg = event.get('Message Content').delete!("\n")
