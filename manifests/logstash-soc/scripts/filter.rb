@@ -314,6 +314,9 @@ def get_category(message)
 end
 
 def get_misp_response(attribute, value)
+    # Not use for now due to rate limit
+    return nil
+
     uri = URI.parse('https://misppriv.circl.lu/attributes/restSearch')
     https = Net::HTTP.new(uri.host, uri.port)
     https.use_ssl = true
