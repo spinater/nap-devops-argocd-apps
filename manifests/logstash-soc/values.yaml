@@ -82,7 +82,7 @@ logstash-http:
       }
 
       output {
-        stdout { codec => json_lines }
+        #stdout { codec => json_lines }
 
         loki {
           message_field => "message"
