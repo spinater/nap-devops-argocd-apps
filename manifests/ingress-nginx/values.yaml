@@ -4,6 +4,7 @@ domain3: aldamex.com
 domain4: napbiotec.com
 domain5: genuine.napbiotec.io
 domain6: genuine-dev.napbiotec.io
+domain7: aldamexthailand.com
 
 backendService: ingress-nginx-production-controller
 

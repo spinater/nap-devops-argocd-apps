@@ -21,6 +21,8 @@ wordpress:
     hostname: aldamex.com
     extraHosts:
       - name: www.aldamex.com
+      - name: aldamexthailand.com
+      - name: www.aldamexthailand.com
 
   service:
     type: ClusterIP

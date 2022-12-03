@@ -5,7 +5,7 @@ genuine-api:
   pods:
     controller: deployment
     image:
-      name: gcr.io/its-artifact-commons/genuine-api
+      name: gcr.io/its-artifact-commons/jenuine-api
 
   ingress:
     enabled: true
