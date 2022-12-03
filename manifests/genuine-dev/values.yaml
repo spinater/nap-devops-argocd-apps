@@ -10,7 +10,7 @@ genuine-api:
       - name: PORT
         value: "8080"
 
-      - name: ASPNETCORE_AppSettings_DbSetting_ConnectionString
+      - name: DbSetting__ConnectionString
         valueFrom:
           secretKeyRef:
             name: mongodb-secret
