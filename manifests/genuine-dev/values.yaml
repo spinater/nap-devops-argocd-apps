@@ -13,7 +13,7 @@ genuine-api:
       - name: ASPNETCORE_AppSettings_DbSetting_ConnectionString
         valueFrom:
           secretKeyRef:
-            name: jenuine-dev-mongodb-url
+            name: mongodb-secret
             key: MONGODB_URL
             optional: false
 
