@@ -10,6 +10,13 @@ genuine-api:
       - name: PORT
         value: "8080"
 
+      - name: ASPNETCORE_AppSettings_DbSetting_ConnectionString
+        valueFrom:
+          secretKeyRef:
+            name: jenuine-dev-mongodb-url
+            key: MONGODB_URL
+            optional: false
+
   ingress:
     enabled: true
     service:
