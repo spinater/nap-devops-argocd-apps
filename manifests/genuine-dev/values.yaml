@@ -6,6 +6,9 @@ genuine-api:
     controller: deployment
     image:
       name: gcr.io/its-artifact-commons/jenuine-api
+    env:
+      - name: PORT
+        value: "8080"
 
   ingress:
     enabled: true
