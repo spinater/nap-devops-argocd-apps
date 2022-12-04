@@ -6,6 +6,17 @@ genuine-api:
     controller: deployment
     image:
       name: gcr.io/its-artifact-commons/jenuine-api
+
+    volumes:
+      - name: secret
+        secret:
+          secretName: basic-authe-secret
+          optional: false
+
+    volumeMounts:
+      - name: secret
+        mountPath: /secrets
+
     env:
       - name: PORT
         value: "8080"
@@ -16,6 +27,9 @@ genuine-api:
             name: mongodb-secret
             key: MONGODB_URL
             optional: false
+
+      - name: BasicAuthen__File
+        value: "/secrets/credentials.txt"
 
   ingress:
     enabled: true
