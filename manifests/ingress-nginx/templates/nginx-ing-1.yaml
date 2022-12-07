@@ -44,7 +44,29 @@ spec:
               service:
                 name: {{ .Values.backendService }}
                 port:
-                  number: 443                  
+                  number: 443
+
+    - host: '*.{{ .Values.domain7 }}'
+      http:
+        paths:
+          - path: /*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.backendService }}
+                port:
+                  number: 443
+    - host: '{{ .Values.domain7 }}'
+      http:
+        paths:
+          - path: /*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.backendService }}
+                port:
+                  number: 443
+
     - host: '*.{{ .Values.domain3 }}'
       http:
         paths:
@@ -105,13 +127,3 @@ spec:
                 name: {{ .Values.backendService }}
                 port:
                   number: 443
-#    - host: '{{ .Values.domain7 }}'
-#      http:
-#        paths:
-#          - path: /*
-#            pathType: ImplementationSpecific
-#            backend:
-#              service:
-#                name: {{ .Values.backendService }}
-#                port:
-#                  number: 443
