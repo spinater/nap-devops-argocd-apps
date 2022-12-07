@@ -7,5 +7,5 @@ metadata:
   name: managed-cert-aldamex-thailand
 spec:
   domains:
-    - '*.{{ .Values.domain7 }}'
+    - 'www.{{ .Values.domain7 }}'
     - '{{ .Values.domain7 }}'
