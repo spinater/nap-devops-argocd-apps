@@ -104,13 +104,13 @@ def update_src_ip_cache(src_ip, mac, user)
     ip_prop = @mc.get(key)
     if ip_prop
         #Found - Do nothing
-        puts "### [Found] Getting IP property from cached [#{key}] value [#{src_ip}]"
+        #puts "### [Found] Getting IP property from cached [#{key}] value [#{src_ip}]"
 
         obj = JSON.parse(ip_prop)
         obj['mac'] = get_not_empty(obj['mac'], mac)
         obj['user'] = get_not_empty(obj['user'], user)
     else
-        puts "### [Notfound] Getting IP property from cached [#{key}] value [#{src_ip}]"
+        #puts "### [Notfound] Getting IP property from cached [#{key}] value [#{src_ip}]"
         obj = {
             "mac" => mac,
             "user" => user
@@ -119,7 +119,7 @@ def update_src_ip_cache(src_ip, mac, user)
     
     json_str = obj.to_json
     @mc.set(key, json_str) #No expire
-    puts "### [DEBUG] cache [#{key}] value [#{json_str}]"
+    #puts "### [DEBUG] cache [#{key}] value [#{json_str}]"
 end
 
 def extract_hotspot(event, message, category)
@@ -426,7 +426,7 @@ def load_misp_cahce(event, cache, value_field, attribute, label)
         #Found - Do nothing
         #puts "### [Found] Getting MISP from cached [#{key}] value [#{value}]"
     else
-        puts "### [Notfound] Getting MISP from field [#{key}] value [#{value}]"
+        #puts "### [Notfound] Getting MISP from field [#{key}] value [#{value}]"
         misp_data = get_misp_response(attribute, value)
         if !misp_data.nil?
             # Response with status code 200
