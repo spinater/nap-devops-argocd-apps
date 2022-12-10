@@ -282,10 +282,6 @@ def create_metric(event)
         obj[field] = value.strip
     end
 
-    if category.nil? or category == ''
-        event.set('evt_category', category_org)
-    end
-
     if payload.nil? or payload == ''
         obj = Hash.new()
     else
@@ -294,6 +290,10 @@ def create_metric(event)
     
     obj["id"] = SecureRandom.uuid
     obj["pod_name_syslog"] = ENV["POD_NAME"]
+
+    if category.nil? or category == ''
+        obj["evt_category"] = category_org
+    end    
 end
 
 def populate_ts_aggregate(event)
