@@ -287,7 +287,10 @@ def create_metric(event)
 
     if category.nil? or category == ''
         obj["evt_category"] = category_org
-    end    
+        puts("DEBUG3 - [#{obj}]")
+    end
+
+    event.set("metrics", obj)
 end
 
 def populate_ts_aggregate(event)
