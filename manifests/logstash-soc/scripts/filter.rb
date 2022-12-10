@@ -290,10 +290,14 @@ def populate_ts_aggregate(event)
     event.set('evt_ts_hh', dtm.hour.to_s.rjust(2,'0'))
 end
 
-def get_category(message)
+def get_category(event, message)
     category = "undefined"
 
-    if message.include? "Omada Controller"
+    if match = message.match(/^.+? .+? genuine-(.+?)-.+?-.+? dotnet (.+?) - - (.*)$/)
+        env, version, payload = match.captures
+        category = "genuine-#{env}"
+        event.set('genuine_payload', payload)
+    elsif message.include? "Omada Controller"
         category = "omda-controller"
     else
         arr1 = message.split(',')
@@ -528,7 +532,7 @@ end
 def filter(event)
     data = event.get('message')
     arr1 = data.split(',')     
-    category = get_category(data)
+    category = get_category(event, data)
 
     event.set('evt_category_org', category)
     tokens = populate_event_category(event)
