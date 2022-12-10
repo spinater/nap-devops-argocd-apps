@@ -267,12 +267,13 @@ end
 
 def create_metric(event)
     payload = event.get('genuine_payload')
+    category = event.get('evt_category')
+    category_org = event.get('evt_category_org')
 
     if payload.nil? or payload == ''
         obj = Hash.new()
     else
         obj = JSON.parse(payload)
-        puts("DEBUG2 genuine_payload - [#{payload}]")
     end 
 
     sorted_fields = generate_fields(event)
@@ -281,14 +282,18 @@ def create_metric(event)
         obj[field] = value.strip
     end
 
+    if category.nil? or category == ''
+        event.set('evt_category', category_org)
+    end
+
+    if payload.nil? or payload == ''
+        obj = Hash.new()
+    else
+        obj = JSON.parse(payload)
+    end 
+    
     obj["id"] = SecureRandom.uuid
     obj["pod_name_syslog"] = ENV["POD_NAME"]
-
-    event.set("metrics", obj)
-    if payload.nil? or payload == ''
-    else
-        puts("DEBUG3 genuine_payload - [#{obj}]")
-    end     
 end
 
 def populate_ts_aggregate(event)
@@ -308,7 +313,6 @@ def get_category(event, message)
         env, version, payload = match.captures
         category = "genuine-#{env}"
         event.set('genuine_payload', payload)
-        puts("DEBUG1 genuine_payload - [#{payload}]")
     elsif message.include? "Omada Controller"
         category = "omda-controller"
     else
