@@ -31,6 +31,12 @@ genuine-api:
       - name: BasicAuthen__File
         value: "/secrets/credentials.txt"
 
+      - name: AuditLog__Host
+        value: "logstash-syslog.logstash-soc.svc.cluster.local"
+
+      - name: AuditLog__Port
+        value: "5140"
+
   ingress:
     enabled: true
     service:
