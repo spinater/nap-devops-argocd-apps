@@ -272,6 +272,7 @@ def create_metric(event)
         obj = Hash.new()
     else
         obj = JSON.parse(payload)
+        puts("DEBUG2 genuine_payload - [${payload}]")
     end 
 
     sorted_fields = generate_fields(event)
@@ -303,6 +304,7 @@ def get_category(event, message)
         env, version, payload = match.captures
         category = "genuine-#{env}"
         event.set('genuine_payload', payload)
+        puts("DEBUG1 genuine_payload - [${payload}]")
     elsif message.include? "Omada Controller"
         category = "omda-controller"
     else
