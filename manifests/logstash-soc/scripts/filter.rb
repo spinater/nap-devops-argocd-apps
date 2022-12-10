@@ -285,7 +285,7 @@ def create_metric(event)
     obj["id"] = SecureRandom.uuid
     obj["pod_name_syslog"] = ENV["POD_NAME"]
 
-    if category.nil? or category == ''
+    if category.nil? or category == '' or category == 'undefined'
         obj["evt_category"] = category_org
         puts("DEBUG3 - [#{obj}]")
     end
