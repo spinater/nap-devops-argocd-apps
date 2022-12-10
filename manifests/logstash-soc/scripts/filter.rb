@@ -266,18 +266,19 @@ def generate_fields(event)
 end
 
 def create_metric(event)
-    obj = Hash.new()
     payload = event.get('genuine_payload')
 
     if payload.nil? or payload == ''
-        sorted_fields = generate_fields(event)
-        sorted_fields.each do |field|
-            value = event.get(field).to_s
-            obj[field] = value.strip
-        end    
+        obj = Hash.new()
     else
         obj = JSON.parse(payload)
-    end    
+    end 
+
+    sorted_fields = generate_fields(event)
+    sorted_fields.each do |field|
+        value = event.get(field).to_s
+        obj[field] = value.strip
+    end
 
     obj["id"] = SecureRandom.uuid
     obj["pod_name_syslog"] = ENV["POD_NAME"]
