@@ -285,6 +285,10 @@ def create_metric(event)
     obj["pod_name_syslog"] = ENV["POD_NAME"]
 
     event.set("metrics", obj)
+    if payload.nil? or payload == ''
+    else
+        puts("DEBUG3 genuine_payload - [#{obj}]")
+    end     
 end
 
 def populate_ts_aggregate(event)
