@@ -281,12 +281,6 @@ def create_metric(event)
         value = event.get(field).to_s
         obj[field] = value.strip
     end
-
-    if payload.nil? or payload == ''
-        obj = Hash.new()
-    else
-        obj = JSON.parse(payload)
-    end 
     
     obj["id"] = SecureRandom.uuid
     obj["pod_name_syslog"] = ENV["POD_NAME"]
