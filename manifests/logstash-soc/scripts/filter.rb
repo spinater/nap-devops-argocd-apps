@@ -287,7 +287,6 @@ def create_metric(event)
 
     if category.nil? or category == '' or category == 'undefined'
         obj["evt_category"] = category_org
-        puts("DEBUG3 - [#{obj}]")
     end
 
     event.set("metrics", obj)
