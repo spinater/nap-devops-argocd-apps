@@ -28,6 +28,13 @@ genuine-api:
             key: MONGODB_URL
             optional: false
 
+      - name: AssetRegistration__SymetricKey
+        valueFrom:
+          secretKeyRef:
+            name: redirect-secret
+            key: REDIRECT_KEY
+            optional: false
+
       - name: BasicAuthen__File
         value: "/secrets/credentials.txt"
 
