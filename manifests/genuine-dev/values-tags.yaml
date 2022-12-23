@@ -1,4 +1,4 @@
 genuine-api:
   pods:
     image:
-      tag: "develop-e25c189"
+      tag: "develop-2649fa9"
