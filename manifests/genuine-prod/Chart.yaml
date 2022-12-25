@@ -1,0 +1,16 @@
+apiVersion: v2
+name: helm-genuine
+description: A Helm chart for genuine
+
+type: application
+
+version: 1.0.0
+
+appVersion: "1.0"
+
+dependencies:
+  - name: "generic-app"
+    alias: genuine-api
+    condition: genuine-api.enabled
+    repository: "https://charts.visonneau.fr/"
+    version: "0.0.14"

@@ -1,0 +1,4 @@
+genuine-api:
+  pods:
+    image:
+      tag: "develop-1521a0f"
