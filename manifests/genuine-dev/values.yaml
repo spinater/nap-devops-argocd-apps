@@ -53,3 +53,33 @@ genuine-api:
 
     hosts:
       - api.genuine-dev.napbiotec.io
+
+genuine-worker:
+  enabled: true
+  nameOverride: genuine-worker
+
+  pods:
+    controller: deployment
+    image:
+      name: gcr.io/its-artifact-commons/jenuine-worker
+
+    volumes:
+      - name: secret
+        secret:
+          secretName: basic-authe-secret
+          optional: false
+
+    volumeMounts:
+      - name: secret
+        mountPath: /secrets
+
+    env:
+      - name: DbSetting__ConnectionString
+        valueFrom:
+          secretKeyRef:
+            name: mongodb-secret
+            key: MONGODB_URL
+            optional: false
+
+  ingress:
+    enabled: false
