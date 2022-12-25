@@ -2,10 +2,10 @@ cluster:
   name: kafka-nap
   kafka:
     diskSize: 100Gi
-    replicas: 3
+    replicas: 1
   zooKeeper:
     diskSize: 3Gi
-    replicas: 3
+    replicas: 1
 topics:
   topic1:
     name: kafka-genuine

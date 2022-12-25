@@ -11,10 +11,6 @@ spec:
     enableSaramaLogging: true
   kafka:
     template:
-#    authorization:
-#      type: simple
-#      superUsers:
-#        - CN=nothing
     metricsConfig:
       type: jmxPrometheusExporter
       valueFrom:
@@ -27,15 +23,6 @@ spec:
         port: 9092
         type: internal
         tls: false
-        #authentication:
-        #  type: scram-sha-512 #For kafka-ui internally use
-
-#      - name: tls
-#        port: 9093
-#        type: internal
-#        tls: true
-#        authentication:
-#          type: tls #scram-sha-512
     storage:
       type: jbod
       volumes:
@@ -45,13 +32,6 @@ spec:
         deleteClaim: false
   zookeeper:
     template:
-      # NOTE : When Zookeeper restart and CrashLoopBack we will need to 'kubect exec' into zookeeper 
-      #      : pod and remove /var/lib/zookeeper/data/version-2 folder
-
-      #zookeeperContainer:
-      #  env:
-      #  - name: ZOOKEEPER_SNAPSHOT_CHECK_ENABLED
-      #    value: "false"
     metricsConfig:
       type: jmxPrometheusExporter
       valueFrom:
@@ -74,10 +54,4 @@ spec:
         javaSystemProperties:
           - name: log4j2.formatMsgNoLookups
             value: "true"
-#    userOperator:
-#      reconciliationIntervalSeconds: 10
-#      logging:
-#        type: inline
-#        loggers:
-#          rootLogger.level: INFO
 {{- end }}
