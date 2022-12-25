@@ -1,0 +1,10 @@
+genuine-api:
+  ingress:
+    enabled: true
+    service:
+      name: genuine-dev
+      port:
+        name: http
+
+    hosts:
+      - api.genuine-dev.napbiotec.io

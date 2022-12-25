@@ -44,16 +44,6 @@ genuine-api:
       - name: AuditLog__Port
         value: "5140"
 
-  ingress:
-    enabled: true
-    service:
-      name: genuine-dev
-      port:
-        name: http
-
-    hosts:
-      - api.genuine-dev.napbiotec.io
-
 genuine-worker:
   enabled: true
   nameOverride: genuine-worker

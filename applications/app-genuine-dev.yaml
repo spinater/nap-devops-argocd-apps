@@ -22,6 +22,7 @@ spec:
           valueFiles:
             - values.yaml
             - values-tags.yaml
+            - values-development.yaml
       destination:
         name: in-cluster
         namespace: genuine-dev
