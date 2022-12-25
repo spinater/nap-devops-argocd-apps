@@ -1,0 +1,83 @@
+{{- with .Values.cluster }}
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: {{ .name }}
+spec:
+  kafkaExporter:
+    topicRegex: ".*"
+    groupRegex: ".*"
+    logging: debug
+    enableSaramaLogging: true
+  kafka:
+    template:
+#    authorization:
+#      type: simple
+#      superUsers:
+#        - CN=nothing
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-metrics
+          key: kafka-metrics-config.yml
+    replicas: {{ .kafka.replicas }}
+    listeners:
+      - name: internal
+        port: 9092
+        type: internal
+        tls: false
+        #authentication:
+        #  type: scram-sha-512 #For kafka-ui internally use
+
+#      - name: tls
+#        port: 9093
+#        type: internal
+#        tls: true
+#        authentication:
+#          type: tls #scram-sha-512
+    storage:
+      type: jbod
+      volumes:
+      - id: 0
+        type: persistent-claim
+        size: {{ .kafka.diskSize }}
+        deleteClaim: false
+  zookeeper:
+    template:
+      # NOTE : When Zookeeper restart and CrashLoopBack we will need to 'kubect exec' into zookeeper 
+      #      : pod and remove /var/lib/zookeeper/data/version-2 folder
+
+      #zookeeperContainer:
+      #  env:
+      #  - name: ZOOKEEPER_SNAPSHOT_CHECK_ENABLED
+      #    value: "false"
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-metrics
+          key: zookeeper-metrics-config.yml
+    replicas: {{ .zooKeeper.replicas }}
+    storage:
+      type: persistent-claim
+      size: {{ .zooKeeper.diskSize }}
+      deleteClaim: false
+  entityOperator:
+    template:
+      topicOperatorContainer:
+        env:
+        - name: STRIMZI_USE_ZOOKEEPER_TOPIC_STORE
+          value: "true"  
+    topicOperator:
+      jvmOptions:
+        javaSystemProperties:
+          - name: log4j2.formatMsgNoLookups
+            value: "true"
+#    userOperator:
+#      reconciliationIntervalSeconds: 10
+#      logging:
+#        type: inline
+#        loggers:
+#          rootLogger.level: INFO
+{{- end }}

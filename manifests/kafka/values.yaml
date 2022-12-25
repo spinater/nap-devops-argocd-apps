@@ -1,0 +1,21 @@
+cluster:
+  name: kafka-nap
+  kafka:
+    diskSize: 100Gi
+    replicas: 3
+  zooKeeper:
+    diskSize: 3Gi
+    replicas: 3
+topics:
+  topic1:
+    name: kafka-genuine
+    cluster: kafka-nap
+    partitions: 5
+    replicas: 1
+    config:
+      retention.ms: 72000000
+      segment.bytes: 1073741824
+users:
+  forui:
+    name: kafka-ui
+    cluster: kafka-nap
