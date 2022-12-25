@@ -1,4 +1,4 @@
 genuine-api:
   pods:
     image:
-      tag: "develop-08a781a"
+      tag: "<<genuine-api-image-tag>>"
