@@ -5,4 +5,4 @@ genuine-api:
 genuine-worker:
   pods:
     image:
-      tag: "<<genuine-worker-image-tag>>"
+      tag: "develop-1b03e90"
