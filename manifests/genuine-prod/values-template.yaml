@@ -2,3 +2,7 @@ genuine-api:
   pods:
     image:
       tag: "<<genuine-api-image-tag>>"
+genuine-worker:
+  pods:
+    image:
+      tag: "<<genuine-worker-image-tag>>"

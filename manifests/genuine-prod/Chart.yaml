@@ -14,3 +14,9 @@ dependencies:
     condition: genuine-api.enabled
     repository: "https://charts.visonneau.fr/"
     version: "0.0.14"
+
+  - name: "generic-app"
+    alias: genuine-worker
+    condition: genuine-api.enabled
+    repository: "https://charts.visonneau.fr/"
+    version: "0.0.14"

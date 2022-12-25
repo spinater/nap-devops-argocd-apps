@@ -2,3 +2,7 @@ genuine-api:
   pods:
     image:
       tag: "v1.0.1"
+genuine-worker:
+  pods:
+    image:
+      tag: "develop-2a5f0e9"
