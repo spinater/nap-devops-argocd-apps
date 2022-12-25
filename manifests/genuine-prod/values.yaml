@@ -47,7 +47,7 @@ genuine-api:
   ingress:
     enabled: true
     service:
-      name: genuine
+      name: genuine-prod
       port:
         name: http
 
