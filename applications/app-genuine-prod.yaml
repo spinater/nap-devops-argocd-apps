@@ -21,7 +21,7 @@ spec:
           ignoreMissingValueFiles: true
           valueFiles:
             - values.yaml
-            - values-tags.yaml
+            - values-tags-production.yaml
             - values-production.yaml
       destination:
         name: in-cluster
